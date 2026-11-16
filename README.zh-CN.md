@@ -1,0 +1,132 @@
+# 模型量化保真度评估
+
+[English](README.md) | [简体中文](README.zh-CN.md)
+
+通过 OpenAI 兼容的模型 server，比较参考模型与量化候选模型的下一 token 概率和短续写一致性。参考数据缓存一次，即可重复评估多个候选模型。
+
+参考模型与候选模型需要使用兼容的 tokenizer 和 chat template。工具已用于 MiniMax 和 Qwen，评估核心只依赖 Python 标准库；模型加载、量化 kernel、补丁和 GPU 分配由模型 server 管理。
+
+## MiniMax M3.1 测试结果
+
+以下是此前 **300 条 prompt、每模型 3 轮**测试的原始总体结果。每条生成 32 个 token，请求全部 32 个位置的概率。当前公开版提供的是 240 条 prompt；**下表不是在公开版 240 条数据集上重新跑出的结果**，这里只发布历史数值汇总。
+
+| 模型 | 平均分桶 KL（nat）↓ | 同前缀 Top-1↑ | 完整 32-token↑ |
+|---|---:|---:|---:|
+| MXFP8（复测） | 0.01577440 | 97.55% | 49.56% |
+| MXFP4 | 0.03158934 | 96.50% | 38.44% |
+| MXFP4 RT | 0.03519367 | 96.20% | 38.67% |
+| MXFP4 QADv1 | 0.02610190 | 96.86% | 44.33% |
+
+四个候选模型在同一个后续引擎环境中评估，统一对比旧环境生成的固定 MXFP8 参考缓存。MXFP8 这一行是复测，因此它与参考缓存也不完全一致。每模型三轮合计 900 条生成序列、28,800 个同前缀位置，各轮均完整完成，评估错误为 0。
+
+相对普通 MXFP4，QADv1 的平均分桶 KL 降低 **17.37%**，同前缀 Top-1 提高 **0.36 个百分点**，完整 32-token 一致率提高 **5.89 个百分点**。QADv1 三轮评估耗时合计 **44.81 分钟**，不含服务启动。这些结果反映历史输入上的保真度变化，不能直接当作任务答题正确率。
+
+[原始总体结果与口径](docs/minimax-results.md) · [按公开类别重新汇总的结果](docs/results.md)
+
+## 快速开始
+
+```bash
+python -m pip install -e .
+
+# 检查参考与候选 server 的接口能力。
+m31-eval doctor --base-url http://localhost:8000/v1 --probe \
+  --output cache/reference-doctor.json
+m31-eval doctor --base-url http://localhost:8001/v1 --probe \
+  --output cache/candidate-doctor.json
+
+# 缓存参考模型，明确评分全部 32 个位置。
+m31-eval reference \
+  --dataset data/mixed/quick240.jsonl \
+  --base-url http://localhost:8000/v1 \
+  --reference-kind mxfp8 \
+  --metric coarse --tokens 32 --positions {0..31} \
+  --max-prompt-tokens 65536 --concurrency 2 \
+  --time-budget 1800 --output cache/reference
+
+# 将候选模型与同一份固定参考比较。
+m31-eval evaluate \
+  --reference cache/reference \
+  --base-url http://localhost:8001/v1 \
+  --concurrency 2 --time-budget 1800 \
+  --output logs/candidate-r1
+```
+
+例如：在 8000 端口启动 MXFP8、在 8001 端口启动 MXFP4，先缓存 MXFP8，再评估 MXFP4。BF16 和应用算法后的模型使用相同接入方法，并按实际参考设置 `--reference-kind`。
+
+以上命令使用 Bash 的 `{0..31}` 展开；其他 shell 请显式列出 0 到 31。CLI 默认只评分 8 个位置，因此评估全部 32 个位置时需要保留该参数。一个接口提供多个模型时，用 `--model` 指定模型名。认证默认读取 `OPENAI_API_KEY`，也可通过 `--api-key-env` 指定其他环境变量。
+
+## Server 接口要求
+
+token 级保真度需要原生 `/tokenize`、`/detokenize`、`/v1/completions` 接口，返回 token ID 和原始下一 token logprobs。分桶 KL 还需要查询指定参考 token ID 的概率，即使它不在候选模型自己的 Top-K 中。
+
+vLLM 使用 `--logprobs-mode raw_logprobs`，并确认当前版本支持指定 token 的概率查询。正式评估前，检查 doctor 输出中的 `tokenize` 和 `requested_token_logprobs`。只有 Chat 接口的代理无法计算 token KL；`chat`、`responses` 模式计算的是消息一致性。
+
+工具只连接已有 server，不负责启动服务、安装模型补丁或配置量化 kernel。
+
+## 指标定义
+
+| 指标 | 含义 | 方向 |
+|---|---|---|
+| 平均分桶 KL（nat） | 在相同参考前缀下，比较两个模型的下一 token 概率分布 | 越低越好 |
+| 同前缀 Top-1 一致率 | 使用同一输入和参考续写前缀时，最高概率 token 相同的位置比例 | 越高越好 |
+| 完整 32-token 一致率 | 两个模型分别独立生成，32 个 token ID 全部相同的输入比例 | 越高越好 |
+
+分桶 KL 使用参考模型确定的最多 20 个 token，各占一个桶；其余词表概率合并为一个尾桶。候选模型使用同一分桶。每个位置先将各桶的 KL 贡献**求和**，再平均每条 prompt 的有效位置，最后平均 prompt；不对 21 个桶取平均。这是完整词表 KL 的下界。
+
+生成使用 greedy decoding（`temperature=0`），概率评分使用 raw logprobs。参考分布近乎确定、候选尾桶为零等情况可能导致部分位置没有有限 KL，需要同时查看有效位置覆盖数。Top-1 和完整序列一致性分别计算。
+
+原生 summary 中的部分指标采用原始 task/document 等权汇总。展示直接按位置计数的 Top-1 时，应统计 `samples.jsonl` 中的 `top1_agreement`，不能用 task 等权均值替代。详细公式和输出字段见[指标说明](docs/metrics.md)。
+
+## 固定公开数据集
+
+当前提供 **240 条 prompt，4 类各 60 条**：
+
+| 类别 | 数量 | 来源 |
+|---|---:|---|
+| 终端任务 | 60 | Terminal-Bench 4.0 原始任务 instruction |
+| 数学 | 60 | NVIDIA OpenMathReasoning problem |
+| 非拉丁语 | 60 | Global-MMLU-Lite：阿拉伯语、孟加拉语、印地语、日语、韩语、中文各 10 条 |
+| 长文档 | 60 | CPython 文档和 Project Gutenberg 文本 |
+
+共有 200 个原始 task/document。长文档部分从 20 份文档各取 3 个窗口；这些窗口不是 60 份独立文档。development/holdout 为 192/48 条，同一文档的窗口放在同一 split。该划分没有证明与模型实际校准集或训练集不重叠。
+
+长文档窗口的 32K/64K/128K 指**字符数**，不是 token 数；正式评估前应使用当前模型的 tokenizer 做长度审计。原始来源、固定版本、转换方式和许可见[data/mixed](data/mixed)与[数据集说明](docs/dataset.md)。
+
+公开版拥有独立数据 hash，不能直接复用其他 prompt 清单生成的 reference cache。也可以通过 `--dataset` 接入自己的 JSONL，数量和领域配额不限于当前公开版。
+
+## 多轮测试与候选对比
+
+固定 server 参数、输入和参考缓存，每轮使用不同输出目录：
+
+```bash
+m31-eval evaluate --reference cache/reference \
+  --base-url http://localhost:8001/v1 --concurrency 2 \
+  --output logs/candidate-r2
+
+m31-eval evaluate --reference cache/reference \
+  --base-url http://localhost:8001/v1 --concurrency 2 \
+  --output logs/candidate-r3
+
+m31-eval compare --old logs/candidate-r1 --new logs/improved-r1 \
+  --aggregation domain_macro --output logs/comparison.json
+```
+
+建议先复测参考模型，观察 A/A 的数值波动。比较算法时保持引擎版本和服务参数一致，同时查看分类结果、KL 覆盖率和置信区间。保真度提升是快速筛选信号，真实任务能力仍需独立验证。
+
+## 保存的数据与历史结果
+
+评估保存 `run.json`、`summary.json` 和逐条 `samples.jsonl`，包含生成 token ID/text、逐位置概率证据、KL、Top-1 和来源标识。本地缓存与运行输出默认不提交到 Git。
+
+[历史公开类别结果](docs/results.md)仅保留数值汇总，由旧实验中保留的 4 个公开类别重新计算，不是使用新参考缓存重新测试。它与 README 中的原始 300 条总体结果采用不同数据范围，应分别解读。
+
+## 方法背景
+
+本项目参考 [Unsloth Dynamic 3.0](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs#divergence-300-32) 的多领域输入、短续写和参考模型比较策略。具体输入、固定分桶 KL 和报告口径由本项目定义，不是对 Unsloth 未公开的 300 条清单及 Divergence-300@32 完整计分公式的精确复现。
+
+Harbor 是评估框架与 registry，Terminal-Bench 是可以在其中运行的 benchmark。当前只取 Terminal-Bench 4.0 的输入，通过 server API 测保真度，不运行完整任务容器和 verifier。
+
+## 开发验证
+
+```bash
+PYTHONPATH=src python -m unittest discover -s tests -v
+```

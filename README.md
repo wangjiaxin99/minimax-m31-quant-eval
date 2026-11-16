@@ -1,8 +1,27 @@
 # Quantization Fidelity Evaluation
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 Compare a reference model and quantized candidates through OpenAI-compatible model servers. Cache the reference once, then measure how closely each candidate preserves its next-token probabilities and short greedy continuations.
 
 The evaluator is model-independent when the reference and candidate share compatible tokenizers and chat templates. It has been used with MiniMax and Qwen models. Evaluation uses Python's standard library; a model server is the only runtime requirement beyond Python.
+
+## MiniMax M3.1 results
+
+Historical **300-prompt** evaluation, three rounds per model, with 32 generated tokens and all 32 positions requested. These are the original overall numbers; they are not measurements on the current public 240-prompt dataset. Only numerical aggregates from that historical prompt set are published here.
+
+| Model | Mean bucketed KL (nat) ↓ | Shared-prefix Top-1 ↑ | Exact 32-token ↑ |
+|---|---:|---:|---:|
+| MXFP8 (rerun) | 0.01577440 | 97.55% | 49.56% |
+| MXFP4 | 0.03158934 | 96.50% | 38.44% |
+| MXFP4 RT | 0.03519367 | 96.20% | 38.67% |
+| MXFP4 QADv1 | 0.02610190 | 96.86% | 44.33% |
+
+Each candidate was evaluated in the same later engine environment against one fixed MXFP8 reference cache captured in an earlier environment. The MXFP8 row is a rerun against that cache, so its agreement is not 100%. Each model contributes 900 sequences and 28,800 shared-prefix positions across three rounds; all rounds completed with zero evaluation errors.
+
+QADv1 reduces mean bucketed KL by **17.37%** versus ordinary MXFP4, improves Top-1 agreement by **0.36 percentage points**, and improves exact 32-token agreement by **5.89 percentage points**. Its three rounds took **44.81 minutes** in total, excluding server startup. This is evidence of higher fidelity on that historical prompt set, not a benchmark task-success result.
+
+[Original overall results and scope](docs/minimax-results.md) · [Recomputed public-category results](docs/results.md)
 
 ## Quick start
 
