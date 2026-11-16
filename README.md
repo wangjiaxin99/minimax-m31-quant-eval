@@ -6,7 +6,18 @@ Compare a reference model and quantized candidates through OpenAI-compatible mod
 
 The evaluator is model-independent when the reference and candidate share compatible tokenizers and chat templates. It has been used with MiniMax and Qwen models. Evaluation uses Python's standard library; a model server is the only runtime requirement beyond Python.
 
-## MiniMax M3.1 results
+## MiniMax LH and RT: public 240-prompt rerun
+
+Fresh MXFP8 reference captured in the same environment; 240 public prompts, all 32 positions, three rounds per candidate (2026-11-16). Zero evaluation errors.
+
+| Model | Mean KL (nat) ↓ | Shared-prefix Top-1 ↑ | Exact 32-token ↑ | Total evaluation (min) |
+|---|---:|---:|---:|---:|
+| LH | 0.03843885 | 96.21% | 34.31% | 36.79 |
+| RT | 0.04018061 | 95.93% | 33.89% | 40.98 |
+
+[New results README, rounds, categories and observed ranges](examples/minimax-lh-rt-public240-20261116/README.md)
+
+## Historical MiniMax M3.1 results
 
 Historical **300-prompt** evaluation, three rounds per model, with 32 generated tokens and all 32 positions requested. These are the original overall numbers; they are not measurements on the current public 240-prompt dataset. Only numerical aggregates from that historical prompt set are published here.
 
