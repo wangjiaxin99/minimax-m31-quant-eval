@@ -1,0 +1,2124 @@
+{
+  "schema": 1,
+  "files": [
+    {
+      "path": "terminal-2.1/LICENSE",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "terminal-2.1/README.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/README.md",
+      "bytes": 3773,
+      "sha256": "e34440f95de7f122d00839cd87b151a65d63046c74456615aaf3141c7fea2682"
+    },
+    {
+      "path": "terminal-2.1/tasks/adaptive-rejection-sampler/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/adaptive-rejection-sampler/instruction.md",
+      "bytes": 2731,
+      "sha256": "e6d28c28acd76bef61817427c74c2a29e3e8d75f535cbd708afcbfd02c54013f"
+    },
+    {
+      "path": "terminal-2.1/tasks/adaptive-rejection-sampler/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/adaptive-rejection-sampler/task.toml",
+      "bytes": 1089,
+      "sha256": "6ed7b37f74beb46e9d47b0f5fad53025667c9548baff4e96d467b56d429fab1a"
+    },
+    {
+      "path": "terminal-2.1/tasks/bn-fit-modify/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/bn-fit-modify/instruction.md",
+      "bytes": 1256,
+      "sha256": "5f5207ce23c375270c26719fb66d89843bc88cf1d40671ed87c6b7bab4d394e5"
+    },
+    {
+      "path": "terminal-2.1/tasks/bn-fit-modify/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/bn-fit-modify/task.toml",
+      "bytes": 919,
+      "sha256": "6493f7162da424a4fd95da721bd3fd1ce7e5dd26e792132cb9c46db536b67090"
+    },
+    {
+      "path": "terminal-2.1/tasks/break-filter-js-from-html/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/break-filter-js-from-html/instruction.md",
+      "bytes": 559,
+      "sha256": "ad42558111b2a8e8534bdf52b584b804348e1a8d68d756f812a31d5147e65be5"
+    },
+    {
+      "path": "terminal-2.1/tasks/break-filter-js-from-html/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/break-filter-js-from-html/task.toml",
+      "bytes": 879,
+      "sha256": "f820eb1b47e4ccc548b87d9a418fef519137dcf975ad73d0fb5246df00a9669b"
+    },
+    {
+      "path": "terminal-2.1/tasks/build-cython-ext/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/build-cython-ext/instruction.md",
+      "bytes": 1614,
+      "sha256": "7e52874e45f88505bd21540229719de6639a401477557d814489981d472f0e34"
+    },
+    {
+      "path": "terminal-2.1/tasks/build-cython-ext/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/build-cython-ext/task.toml",
+      "bytes": 939,
+      "sha256": "c472f0e7522c128fb7f03e00b50c8cdf2e5e6474daa1e094e7441f4b54e770b2"
+    },
+    {
+      "path": "terminal-2.1/tasks/build-pmars/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/build-pmars/instruction.md",
+      "bytes": 588,
+      "sha256": "dd4a3aa762e6b3c09e67bd7f61d9b6afbe379dcd7297c2c0ebe2e9bd0082215e"
+    },
+    {
+      "path": "terminal-2.1/tasks/build-pmars/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/build-pmars/task.toml",
+      "bytes": 1012,
+      "sha256": "7ee2eac27b99fd462e0760552a430454db693f86608af5bb570b020270e4c9cd"
+    },
+    {
+      "path": "terminal-2.1/tasks/build-pov-ray/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/build-pov-ray/instruction.md",
+      "bytes": 511,
+      "sha256": "56c8ecdd0084a07f8c97986c43af5c37ed03dd5aa994da6735cf59806162d1b2"
+    },
+    {
+      "path": "terminal-2.1/tasks/build-pov-ray/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/build-pov-ray/task.toml",
+      "bytes": 1074,
+      "sha256": "b90a47ec26c1191d3c523cc094ea96b170e42fbfe176ef1f814c57d05390c097"
+    },
+    {
+      "path": "terminal-2.1/tasks/caffe-cifar-10/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/caffe-cifar-10/instruction.md",
+      "bytes": 642,
+      "sha256": "46907b0ee048f74269c29a15e0e086546b2b1220149597017da8b5ccc05a0cea"
+    },
+    {
+      "path": "terminal-2.1/tasks/caffe-cifar-10/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/caffe-cifar-10/task.toml",
+      "bytes": 840,
+      "sha256": "2831165ad9d9e8bbc646e6d85c0a2290640dcc4f13749547a2937c7675012a8b"
+    },
+    {
+      "path": "terminal-2.1/tasks/cancel-async-tasks/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/cancel-async-tasks/instruction.md",
+      "bytes": 537,
+      "sha256": "23d22f7039b50682941652c716f96dac314b8585c32c133614cac77dc067f47e"
+    },
+    {
+      "path": "terminal-2.1/tasks/cancel-async-tasks/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/cancel-async-tasks/task.toml",
+      "bytes": 927,
+      "sha256": "14db0675e04408f2133b0067e8dbddf66a1d6e7baf6b8d38bef8ecccfc4e58a8"
+    },
+    {
+      "path": "terminal-2.1/tasks/chess-best-move/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/chess-best-move/instruction.md",
+      "bytes": 260,
+      "sha256": "6ba25be4e291a4ad04ae42b2dddefcdaef67ca45ca9d5dce661a2e517b19ce7a"
+    },
+    {
+      "path": "terminal-2.1/tasks/chess-best-move/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/chess-best-move/task.toml",
+      "bytes": 849,
+      "sha256": "d8f01d3c84ed5836edbb49c6c3b3cc7b5b96d951cf01a0987467c9206fb22f9e"
+    },
+    {
+      "path": "terminal-2.1/tasks/circuit-fibsqrt/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/circuit-fibsqrt/instruction.md",
+      "bytes": 851,
+      "sha256": "a7f500266a878d04ac9de39fba76220cfad216d8f6b8063bba93bebb3d4ab9ea"
+    },
+    {
+      "path": "terminal-2.1/tasks/circuit-fibsqrt/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/circuit-fibsqrt/task.toml",
+      "bytes": 943,
+      "sha256": "9f5aa1f7ebbbcec90fd109121e9bd509af3cfff6b4cec701bd91947988f40972"
+    },
+    {
+      "path": "terminal-2.1/tasks/cobol-modernization/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/cobol-modernization/instruction.md",
+      "bytes": 1215,
+      "sha256": "a87074f1141b7345394cd88053d0debb0dc8f7de95308882c6538ee9a3b359da"
+    },
+    {
+      "path": "terminal-2.1/tasks/cobol-modernization/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/cobol-modernization/task.toml",
+      "bytes": 882,
+      "sha256": "4b620211dc3d6b1b989f0210c5ecd2f606974581c8bce27bd78659d48cf0cfbd"
+    },
+    {
+      "path": "terminal-2.1/tasks/code-from-image/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/code-from-image/instruction.md",
+      "bytes": 321,
+      "sha256": "8c3af6483e409defef9786da51f318ae2ca71afe2327b94471d2f0e2e367442c"
+    },
+    {
+      "path": "terminal-2.1/tasks/code-from-image/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/code-from-image/task.toml",
+      "bytes": 890,
+      "sha256": "3a13c1e252bb8759f51215be0b2b2cb1b4c697f0dd570f2d7702cc28b28f08de"
+    },
+    {
+      "path": "terminal-2.1/tasks/compile-compcert/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/compile-compcert/instruction.md",
+      "bytes": 325,
+      "sha256": "d6efce07c47484fcd13c7918f68bd4af6314392de43751c4cad1e62530c2ad06"
+    },
+    {
+      "path": "terminal-2.1/tasks/compile-compcert/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/compile-compcert/task.toml",
+      "bytes": 924,
+      "sha256": "1d9618d7178cfa15918a293da126b867f3a7db160e604d4fec369949884dac39"
+    },
+    {
+      "path": "terminal-2.1/tasks/configure-git-webserver/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/configure-git-webserver/instruction.md",
+      "bytes": 451,
+      "sha256": "62151b7371bc364277a3c118bba755334c640fb0cefc7a5af106e6e763cf1d97"
+    },
+    {
+      "path": "terminal-2.1/tasks/configure-git-webserver/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/configure-git-webserver/task.toml",
+      "bytes": 932,
+      "sha256": "ebb40d72f689512cbd90d865d88ef966b6665ab215544f9247b898b7fa94751b"
+    },
+    {
+      "path": "terminal-2.1/tasks/constraints-scheduling/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/constraints-scheduling/instruction.md",
+      "bytes": 2415,
+      "sha256": "342def78177f9bc41bea4d11af679bc385a9dda2ac8a1e425be384a5b7f937b6"
+    },
+    {
+      "path": "terminal-2.1/tasks/constraints-scheduling/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/constraints-scheduling/task.toml",
+      "bytes": 1119,
+      "sha256": "7b9842de16d74e8faf8c7c0aa03b0b81145941cb12dd322d81ae23fc48607250"
+    },
+    {
+      "path": "terminal-2.1/tasks/count-dataset-tokens/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/count-dataset-tokens/instruction.md",
+      "bytes": 424,
+      "sha256": "baa843c8da9804d68ced71b2e4dea91afb19dd33de2c867b4a15542563a888f9"
+    },
+    {
+      "path": "terminal-2.1/tasks/count-dataset-tokens/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/count-dataset-tokens/task.toml",
+      "bytes": 956,
+      "sha256": "8220a1b8e6e08ecb95556920de358b6aa74b112d8a79625db6915f6b316ccd18"
+    },
+    {
+      "path": "terminal-2.1/tasks/crack-7z-hash/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/crack-7z-hash/instruction.md",
+      "bytes": 123,
+      "sha256": "f5f89400c549eefb2c245caa7770356737b7a12098e6879787e846d9cb5eb822"
+    },
+    {
+      "path": "terminal-2.1/tasks/crack-7z-hash/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/crack-7z-hash/task.toml",
+      "bytes": 869,
+      "sha256": "8e192bcbe00e817419bde7ff9b562a5fa0c1e24ec4f3384cba4a31eda0a7b013"
+    },
+    {
+      "path": "terminal-2.1/tasks/custom-memory-heap-crash/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/custom-memory-heap-crash/instruction.md",
+      "bytes": 975,
+      "sha256": "53c68ae14a3c3af9a97c40bfd9bdc30a5d98b37eaa2f69f763475745f70f108d"
+    },
+    {
+      "path": "terminal-2.1/tasks/custom-memory-heap-crash/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/custom-memory-heap-crash/task.toml",
+      "bytes": 954,
+      "sha256": "ed474be1983e212913aa8866ebb66216acbe36aef2339ac375d232aa46617481"
+    },
+    {
+      "path": "terminal-2.1/tasks/db-wal-recovery/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/db-wal-recovery/instruction.md",
+      "bytes": 658,
+      "sha256": "5a20375162921b8911c67035d1905df7fd335d1bed03044271e608b2c3c93b26"
+    },
+    {
+      "path": "terminal-2.1/tasks/db-wal-recovery/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/db-wal-recovery/task.toml",
+      "bytes": 926,
+      "sha256": "1cdc2c615e259bc10265efbe71b518332070c1c002e226566399e9788f18d0aa"
+    },
+    {
+      "path": "terminal-2.1/tasks/distribution-search/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/distribution-search/instruction.md",
+      "bytes": 1143,
+      "sha256": "aba2e1835b2f827686402c3d3ff9b309aab8c9cbac26e23fc46aaeb34e958915"
+    },
+    {
+      "path": "terminal-2.1/tasks/distribution-search/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/distribution-search/task.toml",
+      "bytes": 932,
+      "sha256": "70c8e73cafd0a75306375bec2c2e1e4d82e0cb969fd7e38a63e7c344de43b681"
+    },
+    {
+      "path": "terminal-2.1/tasks/dna-assembly/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/dna-assembly/instruction.md",
+      "bytes": 1906,
+      "sha256": "88998c98beabdd966ab46c04ede822bbc74796696aa1bf87c567a9131210533c"
+    },
+    {
+      "path": "terminal-2.1/tasks/dna-assembly/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/dna-assembly/task.toml",
+      "bytes": 913,
+      "sha256": "7b571544b64d9be1c91526837e5d805c2181afe0e6fd57a7f0676bba36c868d7"
+    },
+    {
+      "path": "terminal-2.1/tasks/dna-insert/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/dna-insert/instruction.md",
+      "bytes": 1108,
+      "sha256": "49fce0ee8b73d7ccdf4b8476c6bb87cf362689fd1d77b21a0d8737d16019a473"
+    },
+    {
+      "path": "terminal-2.1/tasks/dna-insert/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/dna-insert/task.toml",
+      "bytes": 930,
+      "sha256": "1a9efd5c826d64d31c4874b395f1f9c488b2f26581b0c752fc4619ff177f25eb"
+    },
+    {
+      "path": "terminal-2.1/tasks/extract-elf/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/extract-elf/instruction.md",
+      "bytes": 680,
+      "sha256": "f1dd8c8fd9f01101d2ecb65665bdedc33adc868abd853b3adf556f6aa4982073"
+    },
+    {
+      "path": "terminal-2.1/tasks/extract-elf/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/extract-elf/task.toml",
+      "bytes": 817,
+      "sha256": "14e2c28fd7cc1c9c7b64ab0db5565899fed538e38c55074824647cacc3f7a172"
+    },
+    {
+      "path": "terminal-2.1/tasks/extract-moves-from-video/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/extract-moves-from-video/instruction.md",
+      "bytes": 227,
+      "sha256": "6697dca6199359a7409962db4609ad5909a8fe2b35e606a61ea63f1d25e44858"
+    },
+    {
+      "path": "terminal-2.1/tasks/extract-moves-from-video/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/extract-moves-from-video/task.toml",
+      "bytes": 968,
+      "sha256": "2c9e1b466871da3c3703ec3c6d9835f154b8f1cc34af1f1ba45d64fec56f3605"
+    },
+    {
+      "path": "terminal-2.1/tasks/feal-differential-cryptanalysis/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/feal-differential-cryptanalysis/instruction.md",
+      "bytes": 548,
+      "sha256": "b4093780b283e5c9838997769fb7bca090e3f4cbbd2d7cb275ba60cdfd722572"
+    },
+    {
+      "path": "terminal-2.1/tasks/feal-differential-cryptanalysis/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/feal-differential-cryptanalysis/task.toml",
+      "bytes": 928,
+      "sha256": "dcb9f2f15047eee0be15ca18c39c357f89187a94aae6baeff276221e2383eecb"
+    },
+    {
+      "path": "terminal-2.1/tasks/feal-linear-cryptanalysis/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/feal-linear-cryptanalysis/instruction.md",
+      "bytes": 618,
+      "sha256": "a2f1669d4067af6c7b8ac05ff7d5849ca5df68397c94701645c4b9a3b6f71b03"
+    },
+    {
+      "path": "terminal-2.1/tasks/feal-linear-cryptanalysis/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/feal-linear-cryptanalysis/task.toml",
+      "bytes": 917,
+      "sha256": "a39ec2c427af534c96c719dc87f70eb536956b487ce909d04b6365160e7c9fc4"
+    },
+    {
+      "path": "terminal-2.1/tasks/filter-js-from-html/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/filter-js-from-html/instruction.md",
+      "bytes": 658,
+      "sha256": "48d6ac95e8ccb552195ce9fbdea86ba8d5d7ccf54e159c31590797802c5cf171"
+    },
+    {
+      "path": "terminal-2.1/tasks/filter-js-from-html/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/filter-js-from-html/task.toml",
+      "bytes": 876,
+      "sha256": "f7f888951c97b8120371139bb78d39499c2d3cd7aa3836d57fd6d8b9e4199344"
+    },
+    {
+      "path": "terminal-2.1/tasks/financial-document-processor/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/financial-document-processor/instruction.md",
+      "bytes": 1055,
+      "sha256": "b21cf2af1891922732327bf586d14b250d36d96de7867479c15bd1c58ef0db58"
+    },
+    {
+      "path": "terminal-2.1/tasks/financial-document-processor/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/financial-document-processor/task.toml",
+      "bytes": 985,
+      "sha256": "163ee252895c05d36ca37137dba4d6c24b46be28d56ce84ef8bb35bb5b894bda"
+    },
+    {
+      "path": "terminal-2.1/tasks/fix-code-vulnerability/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/fix-code-vulnerability/instruction.md",
+      "bytes": 3873,
+      "sha256": "89b1abdf0af19399f720233b5cdf6b2e8e0ff7b6e3fe3e2a3af0d4d298a8641a"
+    },
+    {
+      "path": "terminal-2.1/tasks/fix-code-vulnerability/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/fix-code-vulnerability/task.toml",
+      "bytes": 967,
+      "sha256": "9aa2bd14ce9408289d199d0608bc3fa65b8b5e23374c9641020de62197dbf1e2"
+    },
+    {
+      "path": "terminal-2.1/tasks/fix-git/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/fix-git/instruction.md",
+      "bytes": 158,
+      "sha256": "f98174e47ba5ce040f6fad22ef3cbca4dd27b3192868ea5d082077222c3ec4e8"
+    },
+    {
+      "path": "terminal-2.1/tasks/fix-git/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/fix-git/task.toml",
+      "bytes": 879,
+      "sha256": "f59d711003b974e4ef8ed63556614e2ea9ea7d0e394af13b2071225e3fda7805"
+    },
+    {
+      "path": "terminal-2.1/tasks/fix-ocaml-gc/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/fix-ocaml-gc/instruction.md",
+      "bytes": 471,
+      "sha256": "a8867e4f8a537b3b1622ca2b80cbb278eeba772ce95602ed735c2581d23b2dec"
+    },
+    {
+      "path": "terminal-2.1/tasks/fix-ocaml-gc/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/fix-ocaml-gc/task.toml",
+      "bytes": 920,
+      "sha256": "423aab8ce6f44ce9349dcde647ca3cbd09afd5ac023910c25699ed687a3c71b2"
+    },
+    {
+      "path": "terminal-2.1/tasks/gcode-to-text/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/gcode-to-text/instruction.md",
+      "bytes": 216,
+      "sha256": "ee524a8f846b35f1784a7c9fb01c17f077f6b3b61c8b61d0d2f2a87c0be3166b"
+    },
+    {
+      "path": "terminal-2.1/tasks/gcode-to-text/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/gcode-to-text/task.toml",
+      "bytes": 885,
+      "sha256": "3aa7a504fe5b3c6eaab16881b0e6dbbe8ac6d4f59084fa49b1e98ad9c71ea00c"
+    },
+    {
+      "path": "terminal-2.1/tasks/git-leak-recovery/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/git-leak-recovery/instruction.md",
+      "bytes": 474,
+      "sha256": "54ac693fd26a4c003f610d62c4b2671f1d1d04ac5b1286f780605e385a9a5861"
+    },
+    {
+      "path": "terminal-2.1/tasks/git-leak-recovery/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/git-leak-recovery/task.toml",
+      "bytes": 937,
+      "sha256": "d7f23fda4a6ba3fff902d2a475db8ff74feb5d328980696a77068c02c57d3044"
+    },
+    {
+      "path": "terminal-2.1/tasks/git-multibranch/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/git-multibranch/instruction.md",
+      "bytes": 1093,
+      "sha256": "54014a38d7526d65faeb6c11d9b7ed3d4a5cb5d973d68d3da3b68b8c0289e125"
+    },
+    {
+      "path": "terminal-2.1/tasks/git-multibranch/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/git-multibranch/task.toml",
+      "bytes": 988,
+      "sha256": "4b9981604578a31205257cca36a28d0c89c9d8d1058541330acd11d3f8d65f82"
+    },
+    {
+      "path": "terminal-2.1/tasks/gpt2-codegolf/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/gpt2-codegolf/instruction.md",
+      "bytes": 451,
+      "sha256": "1c8de5f0365407d57fbec968bbeb76cba2648a02fbb2045d323d2798ff5dbccc"
+    },
+    {
+      "path": "terminal-2.1/tasks/gpt2-codegolf/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/gpt2-codegolf/task.toml",
+      "bytes": 872,
+      "sha256": "a3fa186d438a42af5909384b8dc0dfdc2ab7a3a68af9159e9d00464988895af0"
+    },
+    {
+      "path": "terminal-2.1/tasks/headless-terminal/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/headless-terminal/instruction.md",
+      "bytes": 755,
+      "sha256": "004ac3efa98dd4c564f3888fe199962772d23de405c96ec9232c1eab1a2089e8"
+    },
+    {
+      "path": "terminal-2.1/tasks/headless-terminal/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/headless-terminal/task.toml",
+      "bytes": 938,
+      "sha256": "abe0de1ac3adff1fbf0e22e1765efbc061a412891fd255926ed92a5ccacf69e6"
+    },
+    {
+      "path": "terminal-2.1/tasks/hf-model-inference/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/hf-model-inference/instruction.md",
+      "bytes": 1264,
+      "sha256": "29151c5b2306f522f38fa905de3d34566865829355e5ca0895f4fca04d51dcc1"
+    },
+    {
+      "path": "terminal-2.1/tasks/hf-model-inference/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/hf-model-inference/task.toml",
+      "bytes": 943,
+      "sha256": "951ae476f4d078a25b7a487430148971e3a2222d93c4e0a932442440807eb3b7"
+    },
+    {
+      "path": "terminal-2.1/tasks/install-windows-3.11/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/install-windows-3.11/instruction.md",
+      "bytes": 949,
+      "sha256": "6757fff2157378201478ef17ff3da4d4992aa586fa577dd518c63b98bb1945c5"
+    },
+    {
+      "path": "terminal-2.1/tasks/install-windows-3.11/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/install-windows-3.11/task.toml",
+      "bytes": 1047,
+      "sha256": "0485184bd16cc74883396115d93520bd25b36d23d61e248da88c0dceeab2eeac"
+    },
+    {
+      "path": "terminal-2.1/tasks/kv-store-grpc/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/kv-store-grpc/instruction.md",
+      "bytes": 1124,
+      "sha256": "f4b3facc199d5b1c78db6e603ffa29ec1b93a77ff7d291e1a92b42e6bf582bed"
+    },
+    {
+      "path": "terminal-2.1/tasks/kv-store-grpc/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/kv-store-grpc/task.toml",
+      "bytes": 987,
+      "sha256": "6ff0f30a526bfff86a67b0b53439b9965229c0f368167dc1a5d05f34d82299a3"
+    },
+    {
+      "path": "terminal-2.1/tasks/large-scale-text-editing/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/large-scale-text-editing/instruction.md",
+      "bytes": 1193,
+      "sha256": "2746a16369b28b2e368ca168bc85222811cbe570f3b315f1b1c432afad07ddc8"
+    },
+    {
+      "path": "terminal-2.1/tasks/large-scale-text-editing/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/large-scale-text-editing/task.toml",
+      "bytes": 1008,
+      "sha256": "5c9488e80c1186f72efb8193e6be13c74eadf334b3846db2e794d24513a88f5f"
+    },
+    {
+      "path": "terminal-2.1/tasks/largest-eigenval/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/largest-eigenval/instruction.md",
+      "bytes": 716,
+      "sha256": "6fa938389f99648508e5a9772e0d5e95d1102738c68d1ff61bd65469d76c52ab"
+    },
+    {
+      "path": "terminal-2.1/tasks/largest-eigenval/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/largest-eigenval/task.toml",
+      "bytes": 1032,
+      "sha256": "f7b9b7dda446f969a3ce88f61039d216f4d58b5fc5c10ff9faa24e2403bbd830"
+    },
+    {
+      "path": "terminal-2.1/tasks/llm-inference-batching-scheduler/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/llm-inference-batching-scheduler/instruction.md",
+      "bytes": 4365,
+      "sha256": "0817374767533fbf51bb93345ee1bba266263c216c6cc55c096e71b4a1d37dfc"
+    },
+    {
+      "path": "terminal-2.1/tasks/llm-inference-batching-scheduler/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/llm-inference-batching-scheduler/task.toml",
+      "bytes": 1072,
+      "sha256": "52aaac942f917e6a91ff658e0272195bd1cd842d41d71e302414c52603cc588b"
+    },
+    {
+      "path": "terminal-2.1/tasks/log-summary-date-ranges/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/log-summary-date-ranges/instruction.md",
+      "bytes": 1391,
+      "sha256": "c1d4516ad4ec2238209740eaf01291df9ab48b0028a3fc5df383c6f831453484"
+    },
+    {
+      "path": "terminal-2.1/tasks/log-summary-date-ranges/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/log-summary-date-ranges/task.toml",
+      "bytes": 988,
+      "sha256": "9a9593673d6805ef3a301ea734e9c4dbaf80da1b37c0fe9d1f2ceea2a8c57e18"
+    },
+    {
+      "path": "terminal-2.1/tasks/mailman/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mailman/instruction.md",
+      "bytes": 983,
+      "sha256": "240d03a73e38087d40c55460d48a098c70143e911a279cffe2468f642322cdee"
+    },
+    {
+      "path": "terminal-2.1/tasks/mailman/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mailman/task.toml",
+      "bytes": 938,
+      "sha256": "a04f4d0e9be25056d2cd79d6a018bc875b6e6fb51d429a9241f282272cc660d1"
+    },
+    {
+      "path": "terminal-2.1/tasks/make-doom-for-mips/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/make-doom-for-mips/instruction.md",
+      "bytes": 501,
+      "sha256": "1903b660e4c64966ff257f828c932adff2b289de589bd6aee22b933bb4fef429"
+    },
+    {
+      "path": "terminal-2.1/tasks/make-doom-for-mips/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/make-doom-for-mips/task.toml",
+      "bytes": 898,
+      "sha256": "a7d7a498f0d3a992b384e5086ba2b411767c1c1a013d1b41f6a25cdaf6d05acc"
+    },
+    {
+      "path": "terminal-2.1/tasks/make-mips-interpreter/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/make-mips-interpreter/instruction.md",
+      "bytes": 499,
+      "sha256": "d25c0ed6d4697c2b2e6fe047b6cd7317f640dc84d7457ccc9d3d1b4cf8021ffd"
+    },
+    {
+      "path": "terminal-2.1/tasks/make-mips-interpreter/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/make-mips-interpreter/task.toml",
+      "bytes": 912,
+      "sha256": "3fda43066642fd38516d07b2679f9813bdb3f1a42bc80b0c06151f60b9210e82"
+    },
+    {
+      "path": "terminal-2.1/tasks/mcmc-sampling-stan/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mcmc-sampling-stan/instruction.md",
+      "bytes": 1428,
+      "sha256": "5554ddc6d7b069e965eda4936cd02fce45ed54f51cf38045e6c51aeb39bed943"
+    },
+    {
+      "path": "terminal-2.1/tasks/mcmc-sampling-stan/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mcmc-sampling-stan/task.toml",
+      "bytes": 1078,
+      "sha256": "c1c0351670499e15b3818f7394894e2789f74fc2a61ea76eccab826c1a951a94"
+    },
+    {
+      "path": "terminal-2.1/tasks/merge-diff-arc-agi-task/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/merge-diff-arc-agi-task/instruction.md",
+      "bytes": 1629,
+      "sha256": "2d826479873e5ac1c94c1f802763bf85c22bb04624384685ebdf6b153fe0278e"
+    },
+    {
+      "path": "terminal-2.1/tasks/merge-diff-arc-agi-task/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/merge-diff-arc-agi-task/task.toml",
+      "bytes": 956,
+      "sha256": "6ced40e06b43b169857509765eb7f07791db558f9437cc7367d2536771c2ca5b"
+    },
+    {
+      "path": "terminal-2.1/tasks/model-extraction-relu-logits/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/model-extraction-relu-logits/instruction.md",
+      "bytes": 576,
+      "sha256": "c9e179dd099065a34c362a865b0eb9fab5f7d96be582cf117e7519580c036ebe"
+    },
+    {
+      "path": "terminal-2.1/tasks/model-extraction-relu-logits/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/model-extraction-relu-logits/task.toml",
+      "bytes": 897,
+      "sha256": "eb64dfaf8ae88868911ae28855cdc4f767de464001e2704919015b595be6dc29"
+    },
+    {
+      "path": "terminal-2.1/tasks/modernize-scientific-stack/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/modernize-scientific-stack/instruction.md",
+      "bytes": 1189,
+      "sha256": "666b8ac370ae81b0e3780a36e722c91b0f986fccbdc6ed36ab3bd17e6943da0f"
+    },
+    {
+      "path": "terminal-2.1/tasks/modernize-scientific-stack/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/modernize-scientific-stack/task.toml",
+      "bytes": 1098,
+      "sha256": "a3029f3d4caaa1f08bd1b45488247bf8cb586bf1ce69717acf1114d20f51eb48"
+    },
+    {
+      "path": "terminal-2.1/tasks/mteb-leaderboard/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mteb-leaderboard/instruction.md",
+      "bytes": 388,
+      "sha256": "06ea44106eca0405c25bab00f5b3cfeb611c872093f6c0f82ed057839d1d13de"
+    },
+    {
+      "path": "terminal-2.1/tasks/mteb-leaderboard/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mteb-leaderboard/task.toml",
+      "bytes": 921,
+      "sha256": "86574bd1c6c4fefd2e64eee9c2caa53d87c4bcf2e51547912440a0ddbd0badb8"
+    },
+    {
+      "path": "terminal-2.1/tasks/mteb-retrieve/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mteb-retrieve/instruction.md",
+      "bytes": 398,
+      "sha256": "071305482e6989fe84634227be9a19386a31b3c2d1fc9fb0d3e604490b3f1dca"
+    },
+    {
+      "path": "terminal-2.1/tasks/mteb-retrieve/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/mteb-retrieve/task.toml",
+      "bytes": 980,
+      "sha256": "a2a4ded9824d296ce99bfba6aa2c9341dcc58f10e66de2e8f95dc8e07379c3aa"
+    },
+    {
+      "path": "terminal-2.1/tasks/multi-source-data-merger/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/multi-source-data-merger/instruction.md",
+      "bytes": 1912,
+      "sha256": "d1d28bb6e37f7a255a1b7f78aae8591f35c0494f33e4913392424ad954aab944"
+    },
+    {
+      "path": "terminal-2.1/tasks/multi-source-data-merger/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/multi-source-data-merger/task.toml",
+      "bytes": 1107,
+      "sha256": "ee3964c0ee040f0a0cb121cefefbc15443d127684acb003fa5b61dd42f31c694"
+    },
+    {
+      "path": "terminal-2.1/tasks/nginx-request-logging/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/nginx-request-logging/instruction.md",
+      "bytes": 1882,
+      "sha256": "26a7ac98aced6107f147206790ada77bbf8ed3c25fb360cf323d5fc6889edf99"
+    },
+    {
+      "path": "terminal-2.1/tasks/nginx-request-logging/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/nginx-request-logging/task.toml",
+      "bytes": 885,
+      "sha256": "b7a78d00be13656f75069197100b7b8c4fd268decf6f78929c853b3222a2729d"
+    },
+    {
+      "path": "terminal-2.1/tasks/openssl-selfsigned-cert/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/openssl-selfsigned-cert/instruction.md",
+      "bytes": 1381,
+      "sha256": "38054a3371f7c2c853478a2f9af0bff858437d5b28a9a07483238f06e566921f"
+    },
+    {
+      "path": "terminal-2.1/tasks/openssl-selfsigned-cert/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/openssl-selfsigned-cert/task.toml",
+      "bytes": 939,
+      "sha256": "75c8913f0fa15890786c11999cde920b8bfc10d4ce8a14edf1e76985a2ac5800"
+    },
+    {
+      "path": "terminal-2.1/tasks/overfull-hbox/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/overfull-hbox/instruction.md",
+      "bytes": 366,
+      "sha256": "91381d7490afbbf11255e22471d3ed76317353d8e1da372fbc91887e65c57f47"
+    },
+    {
+      "path": "terminal-2.1/tasks/overfull-hbox/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/overfull-hbox/task.toml",
+      "bytes": 970,
+      "sha256": "64680925bd47043216bffb2c44eb3620f1730e111a89ffbcc5550e5ffc89e72b"
+    },
+    {
+      "path": "terminal-2.1/tasks/password-recovery/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/password-recovery/instruction.md",
+      "bytes": 644,
+      "sha256": "bc4f501148805bbccdb94a5c5b745f1ce9564f04ef0fe36bc37c3ca20b7810a5"
+    },
+    {
+      "path": "terminal-2.1/tasks/password-recovery/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/password-recovery/task.toml",
+      "bytes": 949,
+      "sha256": "cfd0362d201b957796f9bf1c02cc75646250cb2bd107ec88c768bfcfd091b24b"
+    },
+    {
+      "path": "terminal-2.1/tasks/path-tracing/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/path-tracing/instruction.md",
+      "bytes": 808,
+      "sha256": "9f36e02d636f5dc0946619bc518f2e51c24fa75251da9d1f0ca9eca612cb9572"
+    },
+    {
+      "path": "terminal-2.1/tasks/path-tracing/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/path-tracing/task.toml",
+      "bytes": 889,
+      "sha256": "cf47013f69bf1b43242da984f231d4daf364fdf44d3845f2eea2ca2cb9308c46"
+    },
+    {
+      "path": "terminal-2.1/tasks/path-tracing-reverse/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/path-tracing-reverse/instruction.md",
+      "bytes": 531,
+      "sha256": "03e4ef347c1b6bde7ad020b297571cf22c74cfb0434b399b267f3d87462e1176"
+    },
+    {
+      "path": "terminal-2.1/tasks/path-tracing-reverse/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/path-tracing-reverse/task.toml",
+      "bytes": 903,
+      "sha256": "f609310c99bd5f379eea2711f4af8eca79b5bcd1178a034b2285b1171c031b5b"
+    },
+    {
+      "path": "terminal-2.1/tasks/polyglot-c-py/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/polyglot-c-py/instruction.md",
+      "bytes": 339,
+      "sha256": "a57c0c0e1232113113cd29a154ea7e0ac9ea45e4aedc16958fbc6bc753a4ef96"
+    },
+    {
+      "path": "terminal-2.1/tasks/polyglot-c-py/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/polyglot-c-py/task.toml",
+      "bytes": 850,
+      "sha256": "d31b9f60c47eed0d79e10d3be8fd56a23e50b3986606e3f2546863d44ac9a9ea"
+    },
+    {
+      "path": "terminal-2.1/tasks/polyglot-rust-c/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/polyglot-rust-c/instruction.md",
+      "bytes": 369,
+      "sha256": "b0fbcd99a97fc886e4e198b6189b977409dada47cae0a87ac7dc185b440b2355"
+    },
+    {
+      "path": "terminal-2.1/tasks/polyglot-rust-c/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/polyglot-rust-c/task.toml",
+      "bytes": 928,
+      "sha256": "3c41e83437068c62a3fdff74641899146e34907aefd9e47346213f47caeb82de"
+    },
+    {
+      "path": "terminal-2.1/tasks/portfolio-optimization/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/portfolio-optimization/instruction.md",
+      "bytes": 909,
+      "sha256": "ffaadcbf9f576b5d5e087d2a06a4b525dd52c6b84d43eb9d85107f0a9aebcb5d"
+    },
+    {
+      "path": "terminal-2.1/tasks/portfolio-optimization/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/portfolio-optimization/task.toml",
+      "bytes": 1022,
+      "sha256": "4918687e4e261a9852e39e5a554156733c071c17dc89c5f544f15f2ef744ce0a"
+    },
+    {
+      "path": "terminal-2.1/tasks/protein-assembly/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/protein-assembly/instruction.md",
+      "bytes": 2655,
+      "sha256": "1bb2af1d85e9a823a8ae7273a87df8a3f67e2c93b06cddf34f0051a8b003f7c5"
+    },
+    {
+      "path": "terminal-2.1/tasks/protein-assembly/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/protein-assembly/task.toml",
+      "bytes": 973,
+      "sha256": "9b91f32925035fba7b5a1db16c7d4ed650a117af145d3d3f8e514cb4b1e970ab"
+    },
+    {
+      "path": "terminal-2.1/tasks/prove-plus-comm/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/prove-plus-comm/instruction.md",
+      "bytes": 571,
+      "sha256": "7618ac930d942f27376189fe6535d0e69150fa3eba2db24759ae86b2675d21fe"
+    },
+    {
+      "path": "terminal-2.1/tasks/prove-plus-comm/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/prove-plus-comm/task.toml",
+      "bytes": 880,
+      "sha256": "240f3ac0076e3362685c8598c4e56658e3882eb25a14ae6cc7e9ab3a4f6b09ea"
+    },
+    {
+      "path": "terminal-2.1/tasks/pypi-server/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/pypi-server/instruction.md",
+      "bytes": 847,
+      "sha256": "1c537e4a311a8e71155e121f57bfc03f742fbfb99d05314cd03e433996a28a31"
+    },
+    {
+      "path": "terminal-2.1/tasks/pypi-server/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/pypi-server/task.toml",
+      "bytes": 888,
+      "sha256": "07c39d7a733c89adadf74bb63a3e906c3694feb6c490d5fc85ac187c003fd447"
+    },
+    {
+      "path": "terminal-2.1/tasks/pytorch-model-cli/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/pytorch-model-cli/instruction.md",
+      "bytes": 532,
+      "sha256": "ce36ee1f6c589f81ee6a6be4967e25c76a2ed697006928023f42dfb9f28a6750"
+    },
+    {
+      "path": "terminal-2.1/tasks/pytorch-model-cli/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/pytorch-model-cli/task.toml",
+      "bytes": 920,
+      "sha256": "fc1c018efbd5d0537ac0741d53d1ebad3886faa51d14cbde8ec953856411bc0d"
+    },
+    {
+      "path": "terminal-2.1/tasks/pytorch-model-recovery/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/pytorch-model-recovery/instruction.md",
+      "bytes": 1379,
+      "sha256": "2bef07dc28be3ab2c35ae389584034c2e4dde92c2c31b3eb6bd829628c8c3f4a"
+    },
+    {
+      "path": "terminal-2.1/tasks/pytorch-model-recovery/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/pytorch-model-recovery/task.toml",
+      "bytes": 1020,
+      "sha256": "851a51204f53482a31f47cdf8833128cf421113b0331011286940fc857c37dfd"
+    },
+    {
+      "path": "terminal-2.1/tasks/qemu-alpine-ssh/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/qemu-alpine-ssh/instruction.md",
+      "bytes": 299,
+      "sha256": "8348c60490cb90bc690cba259dfe98996da4c3294c6d42bba1119b00c64de4de"
+    },
+    {
+      "path": "terminal-2.1/tasks/qemu-alpine-ssh/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/qemu-alpine-ssh/task.toml",
+      "bytes": 883,
+      "sha256": "10a43ec6ee732eeba852c377f12e23178f7fa5a4868143f3699a15565ffb64c7"
+    },
+    {
+      "path": "terminal-2.1/tasks/qemu-startup/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/qemu-startup/instruction.md",
+      "bytes": 296,
+      "sha256": "7917cf2746328057b85d399c794bbf8bf328b2bd90502eaa3287170e25e6267b"
+    },
+    {
+      "path": "terminal-2.1/tasks/qemu-startup/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/qemu-startup/task.toml",
+      "bytes": 967,
+      "sha256": "dc46292fff83fba50192f4c30606a5f9c092a9fb82139686df7dabf6580937d4"
+    },
+    {
+      "path": "terminal-2.1/tasks/query-optimize/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/query-optimize/instruction.md",
+      "bytes": 584,
+      "sha256": "473e12d320d2732f679fb631c2a4dab4a01deea6775686718ae0c417b8a39447"
+    },
+    {
+      "path": "terminal-2.1/tasks/query-optimize/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/query-optimize/task.toml",
+      "bytes": 946,
+      "sha256": "6e88f2a86df699594bcb1bf81df4ed694505f79c9420f671335b02524bbe3868"
+    },
+    {
+      "path": "terminal-2.1/tasks/raman-fitting/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/raman-fitting/instruction.md",
+      "bytes": 549,
+      "sha256": "1fa59a89d88daf6a4b2d422955f53779b461880b527f40d79c71b16e0ee52433"
+    },
+    {
+      "path": "terminal-2.1/tasks/raman-fitting/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/raman-fitting/task.toml",
+      "bytes": 945,
+      "sha256": "0f3f6b580d7435954b3a114e77cdfb6cd0a856f15cc0ad83cd1b69c48492dfed"
+    },
+    {
+      "path": "terminal-2.1/tasks/regex-chess/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/regex-chess/instruction.md",
+      "bytes": 1632,
+      "sha256": "a6ed3fcc54fc92d71a84af921942422d299ca89b410dcd92cd05a53d0d06436c"
+    },
+    {
+      "path": "terminal-2.1/tasks/regex-chess/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/regex-chess/task.toml",
+      "bytes": 871,
+      "sha256": "07fe52636fcc4bc9fff25d5630af145b97a5331219d719cc8decb4ca67ea21d4"
+    },
+    {
+      "path": "terminal-2.1/tasks/regex-log/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/regex-log/instruction.md",
+      "bytes": 1021,
+      "sha256": "4f7ac05e70cf9220ea0f1e5a052c5f908cd0fa884e847d80b0bd51bae2e96f9c"
+    },
+    {
+      "path": "terminal-2.1/tasks/regex-log/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/regex-log/task.toml",
+      "bytes": 989,
+      "sha256": "6bc98525852755caf1fe34c174c2f10f4328adb4ce6c1968dcafe1c877e4e160"
+    },
+    {
+      "path": "terminal-2.1/tasks/reshard-c4-data/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/reshard-c4-data/instruction.md",
+      "bytes": 1292,
+      "sha256": "1810abbf666e51e410950b4f495d3dae88d392ad056afa392e4c687ff31e3992"
+    },
+    {
+      "path": "terminal-2.1/tasks/reshard-c4-data/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/reshard-c4-data/task.toml",
+      "bytes": 944,
+      "sha256": "c2f146a1e00f798f7486ff60686ad52749bb73c7b71e984d52716d859e0f7dd8"
+    },
+    {
+      "path": "terminal-2.1/tasks/rstan-to-pystan/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/rstan-to-pystan/instruction.md",
+      "bytes": 1788,
+      "sha256": "7b6dd84eb47579469556915a5eab6d303217bba438424eaee4db52375d5add2a"
+    },
+    {
+      "path": "terminal-2.1/tasks/rstan-to-pystan/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/rstan-to-pystan/task.toml",
+      "bytes": 1067,
+      "sha256": "ed0cd4382cb353e73cb575aa7a20b624e35f09ddd8769c332f40f8986980e13f"
+    },
+    {
+      "path": "terminal-2.1/tasks/sam-cell-seg/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sam-cell-seg/instruction.md",
+      "bytes": 2542,
+      "sha256": "370629c8a1b22896e5bb85d13411a860c496d294e70d0ec7ab98c2911c922150"
+    },
+    {
+      "path": "terminal-2.1/tasks/sam-cell-seg/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sam-cell-seg/task.toml",
+      "bytes": 974,
+      "sha256": "f0eb6af2acb87cb6fee67d77e8fdd55e3b331baf48999260bc5b6c4ac466c128"
+    },
+    {
+      "path": "terminal-2.1/tasks/sanitize-git-repo/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sanitize-git-repo/instruction.md",
+      "bytes": 827,
+      "sha256": "d9e10a56e94e51592c6016efb02adef852d4fd08f9ba23dc304d2673d1478e8a"
+    },
+    {
+      "path": "terminal-2.1/tasks/sanitize-git-repo/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sanitize-git-repo/task.toml",
+      "bytes": 905,
+      "sha256": "ff209feb7d07c68b8bd0d2e9abee96a1431c332095a1bbe0a532c44a833a264d"
+    },
+    {
+      "path": "terminal-2.1/tasks/schemelike-metacircular-eval/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/schemelike-metacircular-eval/instruction.md",
+      "bytes": 1127,
+      "sha256": "3af5f9567b62f93683db7518ec6fcb609f83796258aa02166b5a7091c5b69031"
+    },
+    {
+      "path": "terminal-2.1/tasks/schemelike-metacircular-eval/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/schemelike-metacircular-eval/task.toml",
+      "bytes": 918,
+      "sha256": "8dae8eb226183b0ca92331c1106152a7abc93b03b4e5a95291b86a4ddc9b44e0"
+    },
+    {
+      "path": "terminal-2.1/tasks/sparql-university/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sparql-university/instruction.md",
+      "bytes": 1268,
+      "sha256": "22eeab47d3b27b06df2627b3c21cfbd579ed7dcc85ebcb7c4b3a241c3c35f449"
+    },
+    {
+      "path": "terminal-2.1/tasks/sparql-university/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sparql-university/task.toml",
+      "bytes": 1007,
+      "sha256": "47a6f6dd9ce0fc7631ef607e900fcd039b2d064ea90545645b49c678cddc9585"
+    },
+    {
+      "path": "terminal-2.1/tasks/sqlite-db-truncate/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sqlite-db-truncate/instruction.md",
+      "bytes": 285,
+      "sha256": "465c135cd80be49023ea3ecf8f1d840c679b3a960efe425d510894e417b9d802"
+    },
+    {
+      "path": "terminal-2.1/tasks/sqlite-db-truncate/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sqlite-db-truncate/task.toml",
+      "bytes": 872,
+      "sha256": "56061acd75d9933aa554aeb249b85d7d081227fca1b71a3da7e3dc97a675723e"
+    },
+    {
+      "path": "terminal-2.1/tasks/sqlite-with-gcov/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sqlite-with-gcov/instruction.md",
+      "bytes": 232,
+      "sha256": "b6ba9acf62292bc2a0bab40d4805b3abceededbb0ccd4477a1ce9ccc42c14dd9"
+    },
+    {
+      "path": "terminal-2.1/tasks/sqlite-with-gcov/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/sqlite-with-gcov/task.toml",
+      "bytes": 910,
+      "sha256": "9a0da96990ee2ecbf4d92682a4c5301a53db45fc6e2d46ac7d45d3b8ee7fe523"
+    },
+    {
+      "path": "terminal-2.1/tasks/torch-pipeline-parallelism/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/torch-pipeline-parallelism/instruction.md",
+      "bytes": 1885,
+      "sha256": "989bfcf0c54baf6c8cdc391743dbb2f9e858c5779dd85112536875d4d1b2dcd2"
+    },
+    {
+      "path": "terminal-2.1/tasks/torch-pipeline-parallelism/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/torch-pipeline-parallelism/task.toml",
+      "bytes": 899,
+      "sha256": "8b4f9f525c08afbbc4eca9168e46238a61ccb903486773e9ca4da64bb7ffe857"
+    },
+    {
+      "path": "terminal-2.1/tasks/torch-tensor-parallelism/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/torch-tensor-parallelism/instruction.md",
+      "bytes": 1495,
+      "sha256": "13bde2ab165d72a311e2bf066d5d6c3c8761bf9d3dd39d1b23eda23bc546b910"
+    },
+    {
+      "path": "terminal-2.1/tasks/torch-tensor-parallelism/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/torch-tensor-parallelism/task.toml",
+      "bytes": 943,
+      "sha256": "72fd2a5500d1fe8795dcae76cccb1a29fb25894881a7475f2fa519c87d425a8d"
+    },
+    {
+      "path": "terminal-2.1/tasks/train-fasttext/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/train-fasttext/instruction.md",
+      "bytes": 267,
+      "sha256": "b701c31f4c5eb6f7e9a6b74d62a52eb696dcae9548a8252c78c0fa850714f998"
+    },
+    {
+      "path": "terminal-2.1/tasks/train-fasttext/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/train-fasttext/task.toml",
+      "bytes": 864,
+      "sha256": "994fda7c3081bbdd9f6d05d6279ef64faefa94c214d1e08fbcea656540e4fe91"
+    },
+    {
+      "path": "terminal-2.1/tasks/tune-mjcf/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/tune-mjcf/instruction.md",
+      "bytes": 635,
+      "sha256": "c7fb299b6c6d6c9a2dcd95c5938e6f902ddad1cb02aee875d369cb7eae584b1f"
+    },
+    {
+      "path": "terminal-2.1/tasks/tune-mjcf/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/tune-mjcf/task.toml",
+      "bytes": 1010,
+      "sha256": "27b6d4e5a23761cc1a24a695125d891be74a2930fb83a02a66221db0244b08b3"
+    },
+    {
+      "path": "terminal-2.1/tasks/video-processing/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/video-processing/instruction.md",
+      "bytes": 1432,
+      "sha256": "15936f5e61823ae4794994d6e1b7e4e776b40968ea382405b868c501dfe032db"
+    },
+    {
+      "path": "terminal-2.1/tasks/video-processing/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/video-processing/task.toml",
+      "bytes": 880,
+      "sha256": "be4fb42fccc5faa4862789cedd2c560eaa5758a2971989649a6dafeaeccc17aa"
+    },
+    {
+      "path": "terminal-2.1/tasks/vulnerable-secret/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/vulnerable-secret/instruction.md",
+      "bytes": 432,
+      "sha256": "d43c72e6c39cdeb1141a9c8eae8357df1b0901383ee2beedacf828bf017d7a2f"
+    },
+    {
+      "path": "terminal-2.1/tasks/vulnerable-secret/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/vulnerable-secret/task.toml",
+      "bytes": 925,
+      "sha256": "51079626e4c76445e616eff8723efc53af7f1cf8d9c64d15aab2f4f0ecd6df3c"
+    },
+    {
+      "path": "terminal-2.1/tasks/winning-avg-corewars/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/winning-avg-corewars/instruction.md",
+      "bytes": 1043,
+      "sha256": "f8198a1644547b116b4b67384f6bb6b3a78e85076f8cda20079a77f2f3499242"
+    },
+    {
+      "path": "terminal-2.1/tasks/winning-avg-corewars/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/winning-avg-corewars/task.toml",
+      "bytes": 947,
+      "sha256": "a9b48765d03a66d966f6a162be203bc31e1d9d6e4abe616a2f4b42bac5dc246f"
+    },
+    {
+      "path": "terminal-2.1/tasks/write-compressor/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/write-compressor/instruction.md",
+      "bytes": 373,
+      "sha256": "c4fc3e73e44deeac95f1cd4a34a2d87e853b22ceec2b2824767f5f087b470bb2"
+    },
+    {
+      "path": "terminal-2.1/tasks/write-compressor/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench-2-1/c5ee500c185224c97cd6caff7866a990a0057f41/tasks/write-compressor/task.toml",
+      "bytes": 866,
+      "sha256": "6066a509066433c97c417fea68c4e3e73996f698dcdcbabe07718835eea355a6"
+    },
+    {
+      "path": "terminal-4.0/LICENSE",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "terminal-4.0/README.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/README.md",
+      "bytes": 15799,
+      "sha256": "ad4ce9211c6edb2277bdbe547cb3c180511dce44c7a20329cb6b3d359770e42a"
+    },
+    {
+      "path": "terminal-4.0/tasks/atrx-vep-crispr/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/atrx-vep-crispr/instruction.md",
+      "bytes": 3965,
+      "sha256": "189f0bba9ce7068fe0bef168c2e61d9ac6b5c6e88c2900e8fa01d122708c93d6"
+    },
+    {
+      "path": "terminal-4.0/tasks/atrx-vep-crispr/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/atrx-vep-crispr/task.toml",
+      "bytes": 624,
+      "sha256": "ed3e00af1de2d133cfd4fc5011115bbcaf15631ca3c040ac8820c1094a2ee17d"
+    },
+    {
+      "path": "terminal-4.0/tasks/batched-eval-parity/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/batched-eval-parity/instruction.md",
+      "bytes": 3747,
+      "sha256": "5da93cdf030a3d4a10bcb463fe313c8b317d99568dae74c52ebb493ab63308dc"
+    },
+    {
+      "path": "terminal-4.0/tasks/batched-eval-parity/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/batched-eval-parity/task.toml",
+      "bytes": 2396,
+      "sha256": "f9b7572461c0263731973adc9c03caaa8541144bbd32bd0f3f5f1fa24fa64b81"
+    },
+    {
+      "path": "terminal-4.0/tasks/biped-contact-dynamics/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/biped-contact-dynamics/instruction.md",
+      "bytes": 5436,
+      "sha256": "f7449495a333fe05f01809b3d3b044f3a93fb8f32fc7fe2408b38061debd83ef"
+    },
+    {
+      "path": "terminal-4.0/tasks/biped-contact-dynamics/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/biped-contact-dynamics/task.toml",
+      "bytes": 817,
+      "sha256": "5a1c6a9ea6a01699b8fcb60bee4f617fc3b430b47c5df5a440b40163fa728008"
+    },
+    {
+      "path": "terminal-4.0/tasks/bun-sourcemap-leak/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/bun-sourcemap-leak/instruction.md",
+      "bytes": 2643,
+      "sha256": "665d8100ad29dd7fbf42e3ec5f00fbde8c04141183319deb30bd6722caf0f7a2"
+    },
+    {
+      "path": "terminal-4.0/tasks/bun-sourcemap-leak/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/bun-sourcemap-leak/task.toml",
+      "bytes": 778,
+      "sha256": "d33774eabad9d50fab9d4c6872dc3fe5687bfc87da6b8b23d91a1253939825c7"
+    },
+    {
+      "path": "terminal-4.0/tasks/cad-model/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/cad-model/instruction.md",
+      "bytes": 319,
+      "sha256": "0e55907f7c75272b78231715f6a1ef551d3b0c24206813b6ec1ce7f55f08ea60"
+    },
+    {
+      "path": "terminal-4.0/tasks/cad-model/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/cad-model/task.toml",
+      "bytes": 782,
+      "sha256": "cf84c2efade23c0884b95737e13994173f2c1c28808480fd95deddd66aa0e3ad"
+    },
+    {
+      "path": "terminal-4.0/tasks/cargo-flight-dispatch/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/cargo-flight-dispatch/instruction.md",
+      "bytes": 2373,
+      "sha256": "a7b0333a36ba08895d4858a6f216de7802b4e584566149acbb2ccb4420be165d"
+    },
+    {
+      "path": "terminal-4.0/tasks/cargo-flight-dispatch/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/cargo-flight-dispatch/task.toml",
+      "bytes": 790,
+      "sha256": "30d8d613c086cb5ab40d11955d78cde5eaa29fc9f36eed8da2e4a555512ff354"
+    },
+    {
+      "path": "terminal-4.0/tasks/coq-block-bound/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/coq-block-bound/instruction.md",
+      "bytes": 922,
+      "sha256": "9e86df1ddf96f1d6ee037b9cfa3aa69bab88b477c83d7c46e8167ff806915a16"
+    },
+    {
+      "path": "terminal-4.0/tasks/coq-block-bound/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/coq-block-bound/task.toml",
+      "bytes": 979,
+      "sha256": "3d3887dcf8e54a863e3dd47dc15af8a721d31be069622cacde895077399bf8f2"
+    },
+    {
+      "path": "terminal-4.0/tasks/ctr-optimization/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/ctr-optimization/instruction.md",
+      "bytes": 1324,
+      "sha256": "66d92f6e5693981cd48598c2031dc8f3ce103b02d42fee32418bea99b1ec3f1e"
+    },
+    {
+      "path": "terminal-4.0/tasks/ctr-optimization/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/ctr-optimization/task.toml",
+      "bytes": 989,
+      "sha256": "234c8e1eddbab963ff31ada4f1c710993d0ae57759d267d35db16da3bba002f2"
+    },
+    {
+      "path": "terminal-4.0/tasks/cumulative-layout-shift/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/cumulative-layout-shift/instruction.md",
+      "bytes": 508,
+      "sha256": "c0c3c8ef00cbd7399e9b4a401c6eeace2445043da641b5a2042dd6605cdd3644"
+    },
+    {
+      "path": "terminal-4.0/tasks/cumulative-layout-shift/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/cumulative-layout-shift/task.toml",
+      "bytes": 1611,
+      "sha256": "44495cee1eae9f3409ddd9e209aea7a69d2380b10c94b3ffd66f47c0a3195d9b"
+    },
+    {
+      "path": "terminal-4.0/tasks/data-anonymization/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/data-anonymization/instruction.md",
+      "bytes": 1060,
+      "sha256": "2b1c2f0be6beb3ac6aea1a3c59325fc3e5d5c20ffcdb1ea4347afb8f004709c1"
+    },
+    {
+      "path": "terminal-4.0/tasks/data-anonymization/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/data-anonymization/task.toml",
+      "bytes": 789,
+      "sha256": "18886a592f71f491661a00016c25598c6393035fdf3b37ddbf89fb0ac6be9e84"
+    },
+    {
+      "path": "terminal-4.0/tasks/distributed-dedup/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/distributed-dedup/instruction.md",
+      "bytes": 2371,
+      "sha256": "c466abed3f57377f1ee5aec6c7777f847cc9ae073364935470c83a4964a985d8"
+    },
+    {
+      "path": "terminal-4.0/tasks/distributed-dedup/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/distributed-dedup/task.toml",
+      "bytes": 1131,
+      "sha256": "93a52d72ac1a08e43877cea2d091507d06b70ef2fedf2d382c7a988cf3a10d92"
+    },
+    {
+      "path": "terminal-4.0/tasks/embedding-drift-monitor/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/embedding-drift-monitor/instruction.md",
+      "bytes": 810,
+      "sha256": "948fec73b3457300d42d258c2c17ece57052bde4d343063604dff3cb5bf5c5a9"
+    },
+    {
+      "path": "terminal-4.0/tasks/embedding-drift-monitor/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/embedding-drift-monitor/task.toml",
+      "bytes": 887,
+      "sha256": "ac799e963328258b3301d52e5c58f2dfb10cf575850dd997ceef89cce463da3d"
+    },
+    {
+      "path": "terminal-4.0/tasks/fin-saccr-rwa/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/fin-saccr-rwa/instruction.md",
+      "bytes": 3546,
+      "sha256": "7b49f7e95dc8f991ef80ef18fb6f1431cb27cea7506f2e0327edacbf30d5b4ef"
+    },
+    {
+      "path": "terminal-4.0/tasks/fin-saccr-rwa/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/fin-saccr-rwa/task.toml",
+      "bytes": 707,
+      "sha256": "8c65d87bfc462bebccd5df55cbc0efb40c9bbd27dfb2ad9359d700640bd8b9e1"
+    },
+    {
+      "path": "terminal-4.0/tasks/foodstuff-beta-activity/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/foodstuff-beta-activity/instruction.md",
+      "bytes": 1403,
+      "sha256": "6e3b2a3e05a93ed5ba06bc691f786e6597ba914d5ca0131dfca860d3db45e965"
+    },
+    {
+      "path": "terminal-4.0/tasks/foodstuff-beta-activity/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/foodstuff-beta-activity/task.toml",
+      "bytes": 636,
+      "sha256": "91d54d22dde55748957c08022907eb2d1058c73da8c5ab74d04eedfbb96ea07d"
+    },
+    {
+      "path": "terminal-4.0/tasks/formal-crypto/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/formal-crypto/instruction.md",
+      "bytes": 1538,
+      "sha256": "812ccd6590c01ad6a375df4d3aa7050642ae1379a00fd08407fc7e00fdeb6981"
+    },
+    {
+      "path": "terminal-4.0/tasks/formal-crypto/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/formal-crypto/task.toml",
+      "bytes": 786,
+      "sha256": "60c228984b0519420e6b75a9fe772849ec94b77bf67193725b4ebd6064f7b67c"
+    },
+    {
+      "path": "terminal-4.0/tasks/fp8-rmsnorm-gemm/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/fp8-rmsnorm-gemm/instruction.md",
+      "bytes": 2331,
+      "sha256": "41d6997a421816e9b4c4bb394abae06215b5d06035e114b557acdadf344c3914"
+    },
+    {
+      "path": "terminal-4.0/tasks/fp8-rmsnorm-gemm/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/fp8-rmsnorm-gemm/task.toml",
+      "bytes": 751,
+      "sha256": "8fe279ee789af693b0790f888895a74a789af7a6e5ae9db85351ba8d5d337be5"
+    },
+    {
+      "path": "terminal-4.0/tasks/freecad-impeller/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freecad-impeller/instruction.md",
+      "bytes": 1341,
+      "sha256": "3a887462e0134d9a5de50f72ce178b2aa135d516ce03c3abc1c9af55d06d06b7"
+    },
+    {
+      "path": "terminal-4.0/tasks/freecad-impeller/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freecad-impeller/task.toml",
+      "bytes": 942,
+      "sha256": "5b329015ca0a23824975280132ddf498bf5f11ce982c3c6e2ea1a3843c8c6575"
+    },
+    {
+      "path": "terminal-4.0/tasks/freecad-platform-drawing/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freecad-platform-drawing/instruction.md",
+      "bytes": 758,
+      "sha256": "28e26ec2d6821ad758711e581cc5194c5c095428f04913039621168b038aeb5b"
+    },
+    {
+      "path": "terminal-4.0/tasks/freecad-platform-drawing/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freecad-platform-drawing/task.toml",
+      "bytes": 1058,
+      "sha256": "7eebb9b936297bb76aff891806f22a09da9cae7e26dba5123773cb22f83c6aa8"
+    },
+    {
+      "path": "terminal-4.0/tasks/freecad-spring-clip/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freecad-spring-clip/instruction.md",
+      "bytes": 2672,
+      "sha256": "28596ebe9683dbd0aa1067bc6b97d136b58c44d2578f7d7f674daefe6a264a07"
+    },
+    {
+      "path": "terminal-4.0/tasks/freecad-spring-clip/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freecad-spring-clip/task.toml",
+      "bytes": 1018,
+      "sha256": "2f9a2c4cf78f161ba9ecb4f1c6c300106fa1298abf567de53473eaadb570359a"
+    },
+    {
+      "path": "terminal-4.0/tasks/freight-dispatch-shift/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freight-dispatch-shift/instruction.md",
+      "bytes": 1634,
+      "sha256": "45cd70448d788cd5191f13e890f49f0c63e126309800b817f3bd8f44dd41f19e"
+    },
+    {
+      "path": "terminal-4.0/tasks/freight-dispatch-shift/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/freight-dispatch-shift/task.toml",
+      "bytes": 5018,
+      "sha256": "86135de889075359544ad500df45798ec7814d5c8b8ebd72cfcdd6552d81b40e"
+    },
+    {
+      "path": "terminal-4.0/tasks/glycan-ms2-elucidation/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/glycan-ms2-elucidation/instruction.md",
+      "bytes": 2119,
+      "sha256": "e4680aee92757d1b901171fc50599e5fd4a23ea7e650704c20654fb010fe205f"
+    },
+    {
+      "path": "terminal-4.0/tasks/glycan-ms2-elucidation/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/glycan-ms2-elucidation/task.toml",
+      "bytes": 729,
+      "sha256": "14735188209e03464a5890d81cb398d93cea7bd51a15031ad789168b13ab9db7"
+    },
+    {
+      "path": "terminal-4.0/tasks/gsea-proteomics/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/gsea-proteomics/instruction.md",
+      "bytes": 2792,
+      "sha256": "df6d4abd314213ba5c3298b7c652571a3b4335f09de239e0973bd2a14a57dc86"
+    },
+    {
+      "path": "terminal-4.0/tasks/gsea-proteomics/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/gsea-proteomics/task.toml",
+      "bytes": 771,
+      "sha256": "9d89f7da48340337d9eacb983b18f3eba8c1705c8d3f5821e68dbff34e5e004c"
+    },
+    {
+      "path": "terminal-4.0/tasks/heat-pump-warranty/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/heat-pump-warranty/instruction.md",
+      "bytes": 574,
+      "sha256": "70e707bc7ee459a25ab7f1d34d21abd64a7952894a96cefd365dafe13e4dbbaf"
+    },
+    {
+      "path": "terminal-4.0/tasks/heat-pump-warranty/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/heat-pump-warranty/task.toml",
+      "bytes": 4396,
+      "sha256": "84c0a71315304b17f73549ff324b631046f97d674c64f27e9360c3d0d5a6732f"
+    },
+    {
+      "path": "terminal-4.0/tasks/hof-topology-interpenetration/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/hof-topology-interpenetration/instruction.md",
+      "bytes": 3390,
+      "sha256": "1c16c9b3806341a28ff986e0ab32883a08efad07d553d455737320640e91ff87"
+    },
+    {
+      "path": "terminal-4.0/tasks/hof-topology-interpenetration/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/hof-topology-interpenetration/task.toml",
+      "bytes": 745,
+      "sha256": "5085d983ff17576a76f7b167d50f005d0edf6ece1929fffbad827a3e06c83e3e"
+    },
+    {
+      "path": "terminal-4.0/tasks/html-js-filter/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/html-js-filter/instruction.md",
+      "bytes": 915,
+      "sha256": "bb76e0fdffe2b3ebf4f458729ab3b3e5a2360f593d24cd06f9235a111dce8a82"
+    },
+    {
+      "path": "terminal-4.0/tasks/html-js-filter/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/html-js-filter/task.toml",
+      "bytes": 1219,
+      "sha256": "7827b16c102b8d48d09061ce4251b3f1f6ecb4f4e9e4879a3f06b0db095df985"
+    },
+    {
+      "path": "terminal-4.0/tasks/interleaved-vigenere/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/interleaved-vigenere/instruction.md",
+      "bytes": 2220,
+      "sha256": "d9a28686a9f18d5f76ef876f7b035d90bdede6d0625056e581fc65fba0e2f3cd"
+    },
+    {
+      "path": "terminal-4.0/tasks/interleaved-vigenere/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/interleaved-vigenere/task.toml",
+      "bytes": 780,
+      "sha256": "9a496a0d7dca68866e8f0a1c2431652a433b61fdcca9244fb1f1093854356842"
+    },
+    {
+      "path": "terminal-4.0/tasks/intrastat-meldung/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/intrastat-meldung/instruction.md",
+      "bytes": 1710,
+      "sha256": "4a7fe80e9378902748fff17fe6ccf75768acb8d47c3cdb2e1ab22549662a9fd0"
+    },
+    {
+      "path": "terminal-4.0/tasks/intrastat-meldung/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/intrastat-meldung/task.toml",
+      "bytes": 1260,
+      "sha256": "8cfff8952ea456af12a740e0e299a97a652ec054f783b1cd25d6e6c628c4b8f5"
+    },
+    {
+      "path": "terminal-4.0/tasks/jax-speedrun-gpu/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/jax-speedrun-gpu/instruction.md",
+      "bytes": 1565,
+      "sha256": "8d9880d5337c855d0a8cd7bd62cad4931e579a33bbd7718c86cc0e007e60377d"
+    },
+    {
+      "path": "terminal-4.0/tasks/jax-speedrun-gpu/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/jax-speedrun-gpu/task.toml",
+      "bytes": 2101,
+      "sha256": "946570cdc94267f1d2b1a02cd9ec64835cb933287a8e36558bf4a1fbf6e69111"
+    },
+    {
+      "path": "terminal-4.0/tasks/ks-solver-cpp/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/ks-solver-cpp/instruction.md",
+      "bytes": 3156,
+      "sha256": "5725992168af454e73174efb4b5f60eb99124f036ed2bd60eab70555869e0b75"
+    },
+    {
+      "path": "terminal-4.0/tasks/ks-solver-cpp/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/ks-solver-cpp/task.toml",
+      "bytes": 811,
+      "sha256": "1bb5ed9446377fa7bc0b5705ee88d5c59fee09496680f2e80f7a20d1d51a6790"
+    },
+    {
+      "path": "terminal-4.0/tasks/kv-live-surgery/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/kv-live-surgery/instruction.md",
+      "bytes": 1183,
+      "sha256": "78c31d0b82a368b1d464375990c2a8f059f0744ee4ad27ef7eab2548d87bd0ba"
+    },
+    {
+      "path": "terminal-4.0/tasks/kv-live-surgery/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/kv-live-surgery/task.toml",
+      "bytes": 2016,
+      "sha256": "31a4f7b9116c15967e3d40f07cf9b18a1c2052664690f76c08221a792d0f97e3"
+    },
+    {
+      "path": "terminal-4.0/tasks/lake-temp-glm/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/lake-temp-glm/instruction.md",
+      "bytes": 1385,
+      "sha256": "72cb74a1af4009968f7a35b37e78f7e00e71dc1c2f1c3b12e3879c7a681ca2f5"
+    },
+    {
+      "path": "terminal-4.0/tasks/lake-temp-glm/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/lake-temp-glm/task.toml",
+      "bytes": 967,
+      "sha256": "565268868b0aa9e8457315eaa757e6bd2b9e7f062645bfa99c78786ebb48884d"
+    },
+    {
+      "path": "terminal-4.0/tasks/layout-config-recreation/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/layout-config-recreation/instruction.md",
+      "bytes": 2153,
+      "sha256": "bfbfce4d449bc0ed93f6dcbbcc26a06471dd961fa03be6d3071ed946f97e0933"
+    },
+    {
+      "path": "terminal-4.0/tasks/layout-config-recreation/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/layout-config-recreation/task.toml",
+      "bytes": 798,
+      "sha256": "98f358766a83e90078719dc3d90e3acf844d2b16c7e2b734b9f3c70fc4b0557c"
+    },
+    {
+      "path": "terminal-4.0/tasks/layout-config-recreation2/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/layout-config-recreation2/instruction.md",
+      "bytes": 2289,
+      "sha256": "809d187271aafca2f018fca8d7ade560c580f6aa3174db62ea6170dff257fb07"
+    },
+    {
+      "path": "terminal-4.0/tasks/layout-config-recreation2/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/layout-config-recreation2/task.toml",
+      "bytes": 817,
+      "sha256": "b62395ba267ed679223d71669df6e57cac114f1a85011bab536bc0e8f1850f07"
+    },
+    {
+      "path": "terminal-4.0/tasks/legacy-utility-triage/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/legacy-utility-triage/instruction.md",
+      "bytes": 566,
+      "sha256": "0e15ae9335f8c4ca2d214ce37215be4dc70c5bd889902b170731cb3360e5c9ac"
+    },
+    {
+      "path": "terminal-4.0/tasks/legacy-utility-triage/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/legacy-utility-triage/task.toml",
+      "bytes": 4051,
+      "sha256": "e59d4163b2c37f7b556ff315e37ee5c23640d1ef346e9ff1b344b56c907458b8"
+    },
+    {
+      "path": "terminal-4.0/tasks/live-database-cutover/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/live-database-cutover/instruction.md",
+      "bytes": 1017,
+      "sha256": "7c466c3b181bdda2751d8af68af5d030802bce94d3e9ece62d755af4aa9ec27e"
+    },
+    {
+      "path": "terminal-4.0/tasks/live-database-cutover/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/live-database-cutover/task.toml",
+      "bytes": 4647,
+      "sha256": "3d92be60d134825cdc7c0dc70603938c912200f96cb9c4ffb9d8a297192b5941"
+    },
+    {
+      "path": "terminal-4.0/tasks/math-eval-grader/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/math-eval-grader/instruction.md",
+      "bytes": 1675,
+      "sha256": "21492ba62ebdc2014efd1b2ce04502638e20ae6473796036ed8de114b1f274b4"
+    },
+    {
+      "path": "terminal-4.0/tasks/math-eval-grader/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/math-eval-grader/task.toml",
+      "bytes": 1940,
+      "sha256": "27fa4323927fa8ab0d006d0f86223aaf9f0132536760f626289ca9b4daee7f39"
+    },
+    {
+      "path": "terminal-4.0/tasks/medical-claims-processing/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/medical-claims-processing/instruction.md",
+      "bytes": 1015,
+      "sha256": "b5a17b6b71fd64657ce3baaeddab8c59aae171bc209ee644783afea44f416e53"
+    },
+    {
+      "path": "terminal-4.0/tasks/medical-claims-processing/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/medical-claims-processing/task.toml",
+      "bytes": 3600,
+      "sha256": "4e708cabde1c5bd73be280e558ee286ae69349551e5ce438b56e9b4371a28ff0"
+    },
+    {
+      "path": "terminal-4.0/tasks/mp-checkpoint-consolidation/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/mp-checkpoint-consolidation/instruction.md",
+      "bytes": 1369,
+      "sha256": "df8f13f7faa837f07427d1b60cd32b5417a335099095e4ba55c0de8b2f22befe"
+    },
+    {
+      "path": "terminal-4.0/tasks/mp-checkpoint-consolidation/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/mp-checkpoint-consolidation/task.toml",
+      "bytes": 1065,
+      "sha256": "45b8bfb754577fef5bfdbafaa4e202c5554bcfddc90f0abc2ceac4a53fc30276"
+    },
+    {
+      "path": "terminal-4.0/tasks/music-harmony/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/music-harmony/instruction.md",
+      "bytes": 827,
+      "sha256": "b553e6bff2f67e9e537e836b9a8146e7aa2ac87b17d5da45e1f04b83067c9122"
+    },
+    {
+      "path": "terminal-4.0/tasks/music-harmony/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/music-harmony/task.toml",
+      "bytes": 724,
+      "sha256": "178e02eb0ed798f6e968668c9745b4bfaa72f91db5e65d99caff1c82806eccee"
+    },
+    {
+      "path": "terminal-4.0/tasks/mvcc-lsm-compaction/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/mvcc-lsm-compaction/instruction.md",
+      "bytes": 846,
+      "sha256": "76c595ed358032ab3c5af64292564e0f58346e629318c7d791b9b91f5ae1ca08"
+    },
+    {
+      "path": "terminal-4.0/tasks/mvcc-lsm-compaction/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/mvcc-lsm-compaction/task.toml",
+      "bytes": 1406,
+      "sha256": "a183fa449530a316735635cdb40dd60322b8de7dbeaa058ef83f6472ce8d014a"
+    },
+    {
+      "path": "terminal-4.0/tasks/nextjs-performance/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/nextjs-performance/instruction.md",
+      "bytes": 1068,
+      "sha256": "ba7bb4dddcd86fa36380226d7bc66c02dfc7fddf49649cf6e584a60e5b6df11e"
+    },
+    {
+      "path": "terminal-4.0/tasks/nextjs-performance/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/nextjs-performance/task.toml",
+      "bytes": 879,
+      "sha256": "a8dae8d4fa6b270fd19e75fd19285ad18af7436f9b493d9358c536bb75f2dcd8"
+    },
+    {
+      "path": "terminal-4.0/tasks/ontology-kg-querying/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/ontology-kg-querying/instruction.md",
+      "bytes": 4015,
+      "sha256": "e20d406a83fdfb97a829e71ec1674d2bf2c662257b86c2f3be8755c77a142fab"
+    },
+    {
+      "path": "terminal-4.0/tasks/ontology-kg-querying/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/ontology-kg-querying/task.toml",
+      "bytes": 1521,
+      "sha256": "be1af4fc21bd32f5bdea331b2d8742787c9564f0ff724bb81608a0ebc5eaaa1b"
+    },
+    {
+      "path": "terminal-4.0/tasks/payments-pipeline-fix/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/payments-pipeline-fix/instruction.md",
+      "bytes": 483,
+      "sha256": "791a0b832032970263283374703c6fd7c4c6ba275d7d285c0bd362c0724a45c3"
+    },
+    {
+      "path": "terminal-4.0/tasks/payments-pipeline-fix/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/payments-pipeline-fix/task.toml",
+      "bytes": 2150,
+      "sha256": "7434c9d7142d08ccf8ec31a4fddaeef79ab9d47fc24bfa577db16ebf73ec9e65"
+    },
+    {
+      "path": "terminal-4.0/tasks/photonic-waveguide-routing/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/photonic-waveguide-routing/instruction.md",
+      "bytes": 2037,
+      "sha256": "4e980c5b49b1ce91f92d59e73d1b1b71b526a471c35e0fa0ecfe95b839388cb9"
+    },
+    {
+      "path": "terminal-4.0/tasks/photonic-waveguide-routing/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/photonic-waveguide-routing/task.toml",
+      "bytes": 745,
+      "sha256": "b9e17fb3072bb5cf02b98acb2980e891b7a51615ac4dce386771a868d6be3f33"
+    },
+    {
+      "path": "terminal-4.0/tasks/pretrain-shard-corruption/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/pretrain-shard-corruption/instruction.md",
+      "bytes": 1810,
+      "sha256": "a9c0f8112fcad8afbaf5106062f390c528c61d536618e71e57fbad2651524fd5"
+    },
+    {
+      "path": "terminal-4.0/tasks/pretrain-shard-corruption/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/pretrain-shard-corruption/task.toml",
+      "bytes": 1974,
+      "sha256": "7d11d8b38e603b26b536bae1e077bace502370eec95531f2aa3136c589c7a1f6"
+    },
+    {
+      "path": "terminal-4.0/tasks/production-planning/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/production-planning/instruction.md",
+      "bytes": 2909,
+      "sha256": "6e91894f336151c0bfd37dac384e45da6d80915e08c4f9e9ef90d1d172035d8e"
+    },
+    {
+      "path": "terminal-4.0/tasks/production-planning/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/production-planning/task.toml",
+      "bytes": 744,
+      "sha256": "a962b61e413c3b1d17c90699018725a618f3050229e136087792c97cde2243cd"
+    },
+    {
+      "path": "terminal-4.0/tasks/protein-autointerp-disulfide/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/protein-autointerp-disulfide/instruction.md",
+      "bytes": 1065,
+      "sha256": "afeb868c8dcab7c793337a890f7ecd1d5dad7beeff618d062bcee688c4108301"
+    },
+    {
+      "path": "terminal-4.0/tasks/protein-autointerp-disulfide/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/protein-autointerp-disulfide/task.toml",
+      "bytes": 736,
+      "sha256": "1b1471456c01ec6b46684b5d0d9cc529f1bff1596cc1bcdf3cf13b8a65717d90"
+    },
+    {
+      "path": "terminal-4.0/tasks/react-lead-form/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/react-lead-form/instruction.md",
+      "bytes": 3470,
+      "sha256": "e1cc9571c8c9e69a2c12ace760ecad6ff2330bbc246b8ad025edd03a7eea9f9d"
+    },
+    {
+      "path": "terminal-4.0/tasks/react-lead-form/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/react-lead-form/task.toml",
+      "bytes": 803,
+      "sha256": "34e881a1984ad63a1ccd26a14752d05314423dca80df97691c01d1a27b4a98fc"
+    },
+    {
+      "path": "terminal-4.0/tasks/retro-console-soc/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/retro-console-soc/instruction.md",
+      "bytes": 2111,
+      "sha256": "8a5e2393ae8b53b015ab27761016ea6475dcde5231a43570cfce6f7953892e5d"
+    },
+    {
+      "path": "terminal-4.0/tasks/retro-console-soc/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/retro-console-soc/task.toml",
+      "bytes": 727,
+      "sha256": "73def52f650ac70782ad6e3a817723e48b12a201eaebac75b3b099d58161b22a"
+    },
+    {
+      "path": "terminal-4.0/tasks/risk-scorer-replay/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/risk-scorer-replay/instruction.md",
+      "bytes": 2263,
+      "sha256": "78cfe68f132a464ccfbec5097314e607487f5d90a418580b8066b18868bf3c6e"
+    },
+    {
+      "path": "terminal-4.0/tasks/risk-scorer-replay/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/risk-scorer-replay/task.toml",
+      "bytes": 784,
+      "sha256": "8baefd659c792031962dadfc95355a9d3145dc7fe6a33038d5588693c03f2a52"
+    },
+    {
+      "path": "terminal-4.0/tasks/roy-polymorph-cn/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/roy-polymorph-cn/instruction.md",
+      "bytes": 1660,
+      "sha256": "da944cb2cafd1183cc2b9c6356e8872214af45111f1bbc800d9304e6c4d180e1"
+    },
+    {
+      "path": "terminal-4.0/tasks/roy-polymorph-cn/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/roy-polymorph-cn/task.toml",
+      "bytes": 694,
+      "sha256": "105883d44d8daced9beebbeff89eadadc6f2ec03069428aa844981683073715a"
+    },
+    {
+      "path": "terminal-4.0/tasks/rs-archive-clone/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/rs-archive-clone/instruction.md",
+      "bytes": 2309,
+      "sha256": "16c7eebb3143af99bebec5eddee12dd0e72f154879f3e46293930490d997084e"
+    },
+    {
+      "path": "terminal-4.0/tasks/rs-archive-clone/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/rs-archive-clone/task.toml",
+      "bytes": 726,
+      "sha256": "69fa8da3adb67acd66547107ed8b616e889882e1eb70f66db2cd3414fb645d32"
+    },
+    {
+      "path": "terminal-4.0/tasks/satb-audio-transcription/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/satb-audio-transcription/instruction.md",
+      "bytes": 2180,
+      "sha256": "b26d0b48d20f1263e2956b3f95e85ec2cbc5daaea04626292344d315047a3755"
+    },
+    {
+      "path": "terminal-4.0/tasks/satb-audio-transcription/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/satb-audio-transcription/task.toml",
+      "bytes": 970,
+      "sha256": "cc0a2112c98594a71791233fe9850ffcb13c1f4d51c83c946725ff725f07142e"
+    },
+    {
+      "path": "terminal-4.0/tasks/session-window-debug/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/session-window-debug/instruction.md",
+      "bytes": 1003,
+      "sha256": "65b05c866323a7b7195a5ab72ac9c4844d1d4e5f179ff24c15baf86a5a50e193"
+    },
+    {
+      "path": "terminal-4.0/tasks/session-window-debug/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/session-window-debug/task.toml",
+      "bytes": 706,
+      "sha256": "6906eb9b22f63e59346ba720dd7ff46ae7937e9485ffa63ca832ac16c023ad82"
+    },
+    {
+      "path": "terminal-4.0/tasks/sglang-qwen-burst/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/sglang-qwen-burst/instruction.md",
+      "bytes": 827,
+      "sha256": "36108a78dee57649577a348d8637a7d25b09b2bd2f023581707e6463aa00d2cc"
+    },
+    {
+      "path": "terminal-4.0/tasks/sglang-qwen-burst/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/sglang-qwen-burst/task.toml",
+      "bytes": 865,
+      "sha256": "645519c0aab64109946c740afa17ab539eea03f0333ee1dace62a631fd900279"
+    },
+    {
+      "path": "terminal-4.0/tasks/shadow-relay/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/shadow-relay/instruction.md",
+      "bytes": 760,
+      "sha256": "b701db8e27351a16c9c8eadc21a710e07f36321aa48b4aedfc31efeb41a40bb3"
+    },
+    {
+      "path": "terminal-4.0/tasks/shadow-relay/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/shadow-relay/task.toml",
+      "bytes": 1650,
+      "sha256": "d726fe0585e7890ffaad5f5028175e5d116d6613a9b481c294bb92d88ab25498"
+    },
+    {
+      "path": "terminal-4.0/tasks/sound-change-cascade/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/sound-change-cascade/instruction.md",
+      "bytes": 1790,
+      "sha256": "3f4f415d6057a4b802ffdf2fdbb106b7865dd7a50aaf7ff2b6150a14bfc70b34"
+    },
+    {
+      "path": "terminal-4.0/tasks/sound-change-cascade/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/sound-change-cascade/task.toml",
+      "bytes": 983,
+      "sha256": "68676db0911b9ca6613ba601da5a2150fbbb1b48e4f7a1c727b7132e0e6aa8c5"
+    },
+    {
+      "path": "terminal-4.0/tasks/takens-embedding-lean/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/takens-embedding-lean/instruction.md",
+      "bytes": 1144,
+      "sha256": "ccf6d9214c94da7135c51e43b5bcff5a71db6b3a4c23b915d102aaca9afdd6d9"
+    },
+    {
+      "path": "terminal-4.0/tasks/takens-embedding-lean/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/takens-embedding-lean/task.toml",
+      "bytes": 739,
+      "sha256": "1a91bb7febcb8e256ec59397f34fad5c5172785ee1542a72cb3e0b1bd17c2e76"
+    },
+    {
+      "path": "terminal-4.0/tasks/telecom-entity-resolution/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/telecom-entity-resolution/instruction.md",
+      "bytes": 1725,
+      "sha256": "cf9f15fac86f6699ccabbf3d3a1b09d11c463f5baf40e7280f271c36ab6591e8"
+    },
+    {
+      "path": "terminal-4.0/tasks/telecom-entity-resolution/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/telecom-entity-resolution/task.toml",
+      "bytes": 733,
+      "sha256": "e17352a4924288cd698438762ffcc869576159228958a87ec69beeaefe1aed67"
+    },
+    {
+      "path": "terminal-4.0/tasks/uefi-bootkit/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/uefi-bootkit/instruction.md",
+      "bytes": 1292,
+      "sha256": "7d16c962b5f58fe0edd301cac698ed5986666f0b8e988313a0b544d3056a3c96"
+    },
+    {
+      "path": "terminal-4.0/tasks/uefi-bootkit/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/uefi-bootkit/task.toml",
+      "bytes": 803,
+      "sha256": "a188dd807c9157b150b8f1a12a3ae4944f591db3df8a77150438c2601ac66537"
+    },
+    {
+      "path": "terminal-4.0/tasks/vba-userform-port/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vba-userform-port/instruction.md",
+      "bytes": 1057,
+      "sha256": "33d576e87bef222748bbf86da9ad1eb9ceb7913b104deb517d15176e28bce01d"
+    },
+    {
+      "path": "terminal-4.0/tasks/vba-userform-port/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vba-userform-port/task.toml",
+      "bytes": 1437,
+      "sha256": "c0e6af253d72850095286ae63b380a0f70afed9135c3675019e92c340beb2198"
+    },
+    {
+      "path": "terminal-4.0/tasks/vf2-speedup-networkx/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vf2-speedup-networkx/instruction.md",
+      "bytes": 2264,
+      "sha256": "18c06496a69be455bf3fc738e3cbfcdc4fd023fea7064a1279182248b1b9a6ae"
+    },
+    {
+      "path": "terminal-4.0/tasks/vf2-speedup-networkx/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vf2-speedup-networkx/task.toml",
+      "bytes": 780,
+      "sha256": "56beb527be8643b3562500999113fff01e07513654b5f1efc3a49e3c71a39dd0"
+    },
+    {
+      "path": "terminal-4.0/tasks/vllm-deepseek-streaming/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vllm-deepseek-streaming/instruction.md",
+      "bytes": 475,
+      "sha256": "90d13b042394c28a4e543d1257659a7218749089779112663d4638c90f9215ce"
+    },
+    {
+      "path": "terminal-4.0/tasks/vllm-deepseek-streaming/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vllm-deepseek-streaming/task.toml",
+      "bytes": 790,
+      "sha256": "34410d4b263105ad2eecb525af66935c1c996b9df2a2f69e125585ccbc2b16dd"
+    },
+    {
+      "path": "terminal-4.0/tasks/vpp-loss-divergence/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vpp-loss-divergence/instruction.md",
+      "bytes": 939,
+      "sha256": "ae695a9099b4469994167b4aff2ee471c210f91d9681d981ec5d2b1e7322ee48"
+    },
+    {
+      "path": "terminal-4.0/tasks/vpp-loss-divergence/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/vpp-loss-divergence/task.toml",
+      "bytes": 1109,
+      "sha256": "51616337079bac4102362f37fb9d0231341e0ddcdc0db07f63b877cb22e09b73"
+    },
+    {
+      "path": "terminal-4.0/tasks/wal-recovery-ordering/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/wal-recovery-ordering/instruction.md",
+      "bytes": 3345,
+      "sha256": "f8e44418b9cb1329b1ac226d88a03c8c9654c496e1a32950ce31d768139a4ad3"
+    },
+    {
+      "path": "terminal-4.0/tasks/wal-recovery-ordering/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/wal-recovery-ordering/task.toml",
+      "bytes": 695,
+      "sha256": "147d7d1f314a9a0240335984d8ecb025baed41cb4e80f352e82dfba37b174fe0"
+    },
+    {
+      "path": "terminal-4.0/tasks/wdm-design/instruction.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/wdm-design/instruction.md",
+      "bytes": 6463,
+      "sha256": "3c5f62913fbd41affb92afcc0d25a673cc8c0d95f0b477cbf6d185800082595b"
+    },
+    {
+      "path": "terminal-4.0/tasks/wdm-design/task.toml",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/wdm-design/task.toml",
+      "bytes": 772,
+      "sha256": "9df2a2015331e4e619b93eaef69b6ee968143c4641e0e5682cbdef43f5d48f90"
+    },
+    {
+      "path": "terminal-4.0/tasks/atrx-vep-crispr/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/atrx-vep-crispr/LICENSE.md",
+      "bytes": 789,
+      "sha256": "85a80e94a5fe7cd4e7c1fc39bdaf7abf5d229b5d4f459a72e60816f6d0aeaa39"
+    },
+    {
+      "path": "terminal-4.0/tasks/fin-saccr-rwa/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/fin-saccr-rwa/LICENSE.md",
+      "bytes": 786,
+      "sha256": "2e9c38a07f8dfa1a43080a6eaf905dcf53665b0776a8d7e07a2931fb3f9f07f7"
+    },
+    {
+      "path": "terminal-4.0/tasks/foodstuff-beta-activity/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/foodstuff-beta-activity/LICENSE.md",
+      "bytes": 789,
+      "sha256": "79dcb7a87de1fc1d6711e1014891296a231e650ede3b1c3807c9f93aee87f012"
+    },
+    {
+      "path": "terminal-4.0/tasks/glycan-ms2-elucidation/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/glycan-ms2-elucidation/LICENSE.md",
+      "bytes": 857,
+      "sha256": "ea661a9e962921a0a44c7a8eb3baa9949f2e205df432a7d2d4a8eac9d816d560"
+    },
+    {
+      "path": "terminal-4.0/tasks/gsea-proteomics/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/gsea-proteomics/LICENSE.md",
+      "bytes": 788,
+      "sha256": "7daaa4e9a15e798a3ddd2e30ce456e75e9e9dbbced7693620cd4c9c76f930f1d"
+    },
+    {
+      "path": "terminal-4.0/tasks/hof-topology-interpenetration/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/hof-topology-interpenetration/LICENSE.md",
+      "bytes": 710,
+      "sha256": "2ea5367cb24f2454470dd907fbab33766c8ffde151e6917f92f5d51a30df67a9"
+    },
+    {
+      "path": "terminal-4.0/tasks/roy-polymorph-cn/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/roy-polymorph-cn/LICENSE.md",
+      "bytes": 789,
+      "sha256": "79dcb7a87de1fc1d6711e1014891296a231e650ede3b1c3807c9f93aee87f012"
+    },
+    {
+      "path": "terminal-4.0/tasks/telecom-entity-resolution/LICENSE.md",
+      "url": "https://raw.githubusercontent.com/harbor-framework/terminal-bench/452bf305c6daa62fc59061d22133a7cbc7c1572e/tasks/telecom-entity-resolution/LICENSE.md",
+      "bytes": 788,
+      "sha256": "0da9d005d9f4985a09eb5c4e03a25199d673949c59b06360cc746a5f69317680"
+    },
+    {
+      "path": "mmlu/ar.parquet",
+      "url": "https://huggingface.co/datasets/CohereLabs/Global-MMLU-Lite/resolve/36c2fd756f19ccf13a9a96c8e53ccecc02192b8b/ar/test-00000-of-00001.parquet",
+      "bytes": 155582,
+      "sha256": "9ac2cc4d3a4a58372d95c13b160c721a0dc787a1efe988545f99cba62675ed55"
+    },
+    {
+      "path": "mmlu/bn.parquet",
+      "url": "https://huggingface.co/datasets/CohereLabs/Global-MMLU-Lite/resolve/36c2fd756f19ccf13a9a96c8e53ccecc02192b8b/bn/test-00000-of-00001.parquet",
+      "bytes": 189489,
+      "sha256": "fe5e348c5f405f0f4a3b714ed114ff0f4d320629a5c5b3076ef31a61723d845b"
+    },
+    {
+      "path": "mmlu/hi.parquet",
+      "url": "https://huggingface.co/datasets/CohereLabs/Global-MMLU-Lite/resolve/36c2fd756f19ccf13a9a96c8e53ccecc02192b8b/hi/test-00000-of-00001.parquet",
+      "bytes": 185784,
+      "sha256": "3d9a7f59b40d7cfb57dc36eaf221518530b38efed8eb9a43b498573f55aac321"
+    },
+    {
+      "path": "mmlu/ja.parquet",
+      "url": "https://huggingface.co/datasets/CohereLabs/Global-MMLU-Lite/resolve/36c2fd756f19ccf13a9a96c8e53ccecc02192b8b/ja/test-00000-of-00001.parquet",
+      "bytes": 146325,
+      "sha256": "c0ee81f1be54c64c780796f6aba428b8ce4edd70a711d62647bf3a506c52c627"
+    },
+    {
+      "path": "mmlu/ko.parquet",
+      "url": "https://huggingface.co/datasets/CohereLabs/Global-MMLU-Lite/resolve/36c2fd756f19ccf13a9a96c8e53ccecc02192b8b/ko/test-00000-of-00001.parquet",
+      "bytes": 141904,
+      "sha256": "4b8ee37baee8e7fb18cdecc7f39e766d5894948dabc33b54e7f99907e5ea05f3"
+    },
+    {
+      "path": "mmlu/zh.parquet",
+      "url": "https://huggingface.co/datasets/CohereLabs/Global-MMLU-Lite/resolve/36c2fd756f19ccf13a9a96c8e53ccecc02192b8b/zh/test-00000-of-00001.parquet",
+      "bytes": 125222,
+      "sha256": "87e148156e95948db761c5759e33ca5e1a81ffa8c9163edf58a4c42c86c28299"
+    },
+    {
+      "path": "mmlu/README.md",
+      "url": "https://huggingface.co/datasets/CohereLabs/Global-MMLU-Lite/raw/36c2fd756f19ccf13a9a96c8e53ccecc02192b8b/README.md",
+      "bytes": 34979,
+      "sha256": "83c1eab7894c0c812e0ede8ba3a0f9199a242c2dfa7ebb9b42a18cc9989d3ec7"
+    },
+    {
+      "path": "math.parquet",
+      "url": "https://huggingface.co/datasets/nvidia/OpenMathReasoning/resolve/d3d08664755704f422af97d43a7ff0ded4bd95df/data/additional_problems-00000-of-00001.parquet",
+      "bytes": 26105718,
+      "sha256": "5c5bd7f69efe5d4718f76cd3d5a5e1e6a9f5398c48cfddb0ad64663b2bc428e5"
+    },
+    {
+      "path": "math/README.md",
+      "url": "https://huggingface.co/datasets/nvidia/OpenMathReasoning/raw/d3d08664755704f422af97d43a7ff0ded4bd95df/README.md",
+      "bytes": 10992,
+      "sha256": "976666d0a4848732990c96e3b1111ec4938f215b212b3ee8231ad10052d905e6"
+    },
+    {
+      "path": "licenses/CC-BY-4.0.txt",
+      "url": "https://creativecommons.org/licenses/by/4.0/legalcode.txt",
+      "bytes": 18657,
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+    },
+    {
+      "path": "python/LICENSE",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/LICENSE",
+      "bytes": 13804,
+      "sha256": "b0e25a78cffb43f4d92de8b61ccfa1f1f98ecbc22330b54b5251e7b6ba010231"
+    },
+    {
+      "path": "python/Doc/c-api/typeobj.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/c-api/typeobj.rst",
+      "bytes": 146875,
+      "sha256": "22b380a6df3fde1ae9d8eceb3f143781783b0507b681e3cbefdcbe602d3acbcd"
+    },
+    {
+      "path": "python/Doc/howto/logging-cookbook.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/howto/logging-cookbook.rst",
+      "bytes": 167167,
+      "sha256": "27f35e99ae528a6bf328a10dbbab757cfefefd19fd19377563643e600606d884"
+    },
+    {
+      "path": "python/Doc/library/os.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/library/os.rst",
+      "bytes": 206006,
+      "sha256": "7bab91c6d5dcc0f88e476567d190388e94ddb3940768e0713c70f0280130e964"
+    },
+    {
+      "path": "python/Doc/library/stdtypes.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/library/stdtypes.rst",
+      "bytes": 237003,
+      "sha256": "98bf9fe448aed657067f78387e1248da6e503761e260ab38d737e14cccb2d1fe"
+    },
+    {
+      "path": "python/Doc/library/typing.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/library/typing.rst",
+      "bytes": 140617,
+      "sha256": "7fe89b15e1ab83d95fa4d2ef88e3f622fb15264262565c7548fe639c4e7758ba"
+    },
+    {
+      "path": "python/Doc/reference/datamodel.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/reference/datamodel.rst",
+      "bytes": 154048,
+      "sha256": "36658fdf1148828c0def4b04baa920ed4bdbd4eb4349dc9a575e96578be41df9"
+    },
+    {
+      "path": "python/Doc/whatsnew/3.14.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/whatsnew/3.14.rst",
+      "bytes": 130236,
+      "sha256": "a6e9fd0417f5400d7c41c549ec235ab025306e7a985d09847e6060bce124402b"
+    },
+    {
+      "path": "python/Doc/library/sqlite3.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/library/sqlite3.rst",
+      "bytes": 93506,
+      "sha256": "d16dc0094b557effa0ae52618da0f61f0cb50bf05ce21942f3a9b2e70af40163"
+    },
+    {
+      "path": "python/Doc/library/unittest.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/library/unittest.rst",
+      "bytes": 107270,
+      "sha256": "a519ece70c6a9028b83560b8b1b05802e1f1cddb5dfe86232ce0b691f81a91d0"
+    },
+    {
+      "path": "python/Doc/library/argparse.rst",
+      "url": "https://raw.githubusercontent.com/python/cpython/ebf955df7a89ed0c7968f79faec1de49f61ed7cb/Doc/library/argparse.rst",
+      "bytes": 88540,
+      "sha256": "46c9dc41aa479d4f068b644149ca4cb12c4076ef25ddd2e547e50becb611c40a"
+    },
+    {
+      "path": "books/1342.txt",
+      "url": "https://www.gutenberg.org/cache/epub/1342/pg1342.txt",
+      "bytes": 772386,
+      "sha256": "3f6bb9d6f78e0293b56acd4714dd68cb7d6d1d293402031ce9d5a216bcaf9d75"
+    },
+    {
+      "path": "books/84.txt",
+      "url": "https://www.gutenberg.org/cache/epub/84/pg84.txt",
+      "bytes": 448885,
+      "sha256": "2b97b7f8aad508649481d8dd4f6b54f9b965ddb3ba634e9151c815f537b49e42"
+    },
+    {
+      "path": "books/2701.txt",
+      "url": "https://www.gutenberg.org/cache/epub/2701/pg2701.txt",
+      "bytes": 1276315,
+      "sha256": "b5e88b71a1cda068e9ab1d94344c9d932338ba6da1a66def97a1aecd9cfcc87d"
+    },
+    {
+      "path": "books/98.txt",
+      "url": "https://www.gutenberg.org/cache/epub/98/pg98.txt",
+      "bytes": 807197,
+      "sha256": "d54c2b80d40a40b982cd88852c6180bb944d95acdb028af3d0e01a1750681784"
+    },
+    {
+      "path": "books/1661.txt",
+      "url": "https://www.gutenberg.org/cache/epub/1661/pg1661.txt",
+      "bytes": 607606,
+      "sha256": "922e2a12ccb43a4c9544c260b2166c6ad2097aeb5957faeee113f173bb857cd0"
+    },
+    {
+      "path": "books/345.txt",
+      "url": "https://www.gutenberg.org/cache/epub/345/pg345.txt",
+      "bytes": 890348,
+      "sha256": "96cd16eacdbfebae8fdda5591f66e0cc8ee76be18e0cd1aca02bc00615782d28"
+    },
+    {
+      "path": "books/1232.txt",
+      "url": "https://www.gutenberg.org/cache/epub/1232/pg1232.txt",
+      "bytes": 308019,
+      "sha256": "33496a305f7a4b933784fb5aec95f920fbc3d4687794817e4cc444aa6578d2e4"
+    },
+    {
+      "path": "books/1497.txt",
+      "url": "https://www.gutenberg.org/cache/epub/1497/pg1497.txt",
+      "bytes": 1244165,
+      "sha256": "3d2e397122881d7737a48fb80e71cddf4c78cda54ceac7e0905fe945dfab48fd"
+    },
+    {
+      "path": "books/7370.txt",
+      "url": "https://www.gutenberg.org/cache/epub/7370/pg7370.txt",
+      "bytes": 338996,
+      "sha256": "720196308ba75205761d1a763f6e42d3fb4bec8f8457a77c181f9df3bcf75eb8"
+    },
+    {
+      "path": "books/3300.txt",
+      "url": "https://www.gutenberg.org/cache/epub/3300/pg3300.txt",
+      "bytes": 2468951,
+      "sha256": "e91d52dca43fd0fd69baf7776b00a5d8e74b69675b6b608ca8a0378aaf3ae58d"
+    }
+  ],
+  "note": "Pins freeze Git/HF sources; Gutenberg snapshots require checksum cache for exact rebuild."
+}

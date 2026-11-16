@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "profile": "public-multidomain-v2",
+  "count": 240,
+  "seed": 31,
+  "dataset_sha256": "b668e18c1d9004d44f1d14159d2a71879016a5e9b8508432f3fa1cc769078683",
+  "tasks": 200,
+  "domain_counts": {
+    "long_document": 60,
+    "math": 60,
+    "non_latin": 60,
+    "terminal_bench": 60
+  },
+  "split_counts": {
+    "development": 192,
+    "holdout": 48
+  },
+  "terminal_version": "4.0",
+  "source_pins": {
+    "terminal_bench": {
+      "2.1": [
+        "harbor-framework/terminal-bench-2-1",
+        "c5ee500c185224c97cd6caff7866a990a0057f41"
+      ],
+      "4.0": [
+        "harbor-framework/terminal-bench",
+        "452bf305c6daa62fc59061d22133a7cbc7c1572e"
+      ]
+    },
+    "openmathreasoning": "d3d08664755704f422af97d43a7ff0ded4bd95df",
+    "global_mmlu_lite": "36c2fd756f19ccf13a9a96c8e53ccecc02192b8b",
+    "cpython": "ebf955df7a89ed0c7968f79faec1de49f61ed7cb"
+  },
+  "suggested_max_prompt_tokens": 65536,
+  "calibration_disjoint": "unverified",
+  "selection": "fixed quota, strata and seed; does not use baseline/candidate model outcomes",
+  "math_note": "OpenMathReasoning (2025) substitutes for NC-licensed MathArena; not MathArena scores",
+  "harbor_note": "Framework/source registry; not an independent dataset",
+  "long_note": "Character bands are not token counts; audit actual rendered tokens before evaluation"
+}
