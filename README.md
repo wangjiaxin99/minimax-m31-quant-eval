@@ -6,6 +6,10 @@ Compare a reference model and quantized candidates through OpenAI-compatible mod
 
 The evaluator is model-independent when the reference and candidate share compatible tokenizers and chat templates. It has been used with MiniMax and Qwen models. Evaluation uses Python's standard library; a model server is the only runtime requirement beyond Python.
 
+## Dataset restored to 300 prompts — 2026-11-18
+
+The default fidelity dataset again includes the original 60 DeepSWE prompts: five categories, 60 prompts each. Only the standalone DeepSWE task benchmark was removed. The November 16–18 reruns remain 240-prompt results; restoring inputs does not turn them into 300-prompt measurements.
+
 ## MiniMax LH and RT: public 240-prompt rerun
 
 Fresh MXFP8 reference captured in the same environment; 240 public prompts, all 32 positions, three rounds per candidate (2026-11-16). Zero evaluation errors.
@@ -19,7 +23,7 @@ Fresh MXFP8 reference captured in the same environment; 240 public prompts, all 
 
 ## Historical MiniMax M3.1 results
 
-Historical **300-prompt** evaluation, three rounds per model, with 32 generated tokens and all 32 positions requested. These are the original overall numbers; they are not measurements on the current public 240-prompt dataset. Only numerical aggregates from that historical prompt set are published here.
+Historical **300-prompt** evaluation, three rounds per model, with 32 generated tokens and all 32 positions requested. These are historical measurements with their original reference and environment. The original 300-prompt inputs have now been restored; the separate 240-prompt reruns use a different reference and scope.
 
 | Model | Mean bucketed KL (nat) ↓ | Shared-prefix Top-1 ↑ | Exact 32-token ↑ |
 |---|---:|---:|---:|
@@ -47,7 +51,7 @@ m31-eval doctor --base-url http://localhost:8001/v1 --probe \
 
 # Capture the reference using every position in a 32-token continuation.
 m31-eval reference \
-  --dataset data/mixed/quick240.jsonl \
+  --dataset data/mixed/quick300.jsonl \
   --base-url http://localhost:8000/v1 \
   --reference-kind mxfp8 \
   --metric coarse --tokens 32 --positions {0..31} \
@@ -90,20 +94,21 @@ The native summary includes task-cluster aggregation for Top-1 and KL. For direc
 
 These metrics measure fidelity to a chosen reference. They do not directly measure benchmark accuracy, task success, or the quality of an answer. An improvement is a useful screening signal that should be checked against independent task evaluation.
 
-## Fixed public dataset
+## Fixed fidelity dataset
 
-The bundled dataset contains **240 prompts across four categories**, with 60 prompts per category.
+The default `data/mixed/quick300.jsonl` contains **300 prompts across five categories**, with 60 prompts per category. `quick240.jsonl` remains available to reproduce the four-category reruns.
 
 | Category | Prompts | Source |
 |---|---:|---|
+| DeepSWE | 60 | Frozen historical task and agent-context inputs |
 | Terminal tasks | 60 | Terminal-Bench 4.0 instructions |
 | Mathematics | 60 | NVIDIA OpenMathReasoning problems |
 | Non-Latin languages | 60 | Global-MMLU-Lite: Arabic, Bengali, Hindi, Japanese, Korean, and Chinese |
 | Long documents | 60 | CPython documentation and Project Gutenberg texts |
 
-There are 200 original tasks/documents: the long-document category uses three windows from each of 20 documents. The development/holdout split contains 192/48 prompts and keeps all windows of a document in one split. These splits do not establish separation from a model's actual calibration or training data.
+There are 260 original tasks/documents: the long-document category uses three windows from each of 20 documents. The development/holdout split contains 240/60 prompts and keeps all windows of a document in one split. These splits do not establish separation from a model's actual calibration or training data.
 
-Inputs, source revisions, transformations, and licenses are retained in [data/mixed](data/mixed) and documented in [dataset details](docs/dataset.md). The public dataset has a distinct hash: capture a new reference for it rather than reusing a cache built from a different prompt list.
+Inputs, source revisions, transformations, and licenses are retained in [data/mixed](data/mixed) and documented in [dataset details](docs/dataset.md). The restored 300-prompt set and retained 240-prompt set have different hashes. A 240-prompt reference cannot evaluate the additional 60 prompts; capture and freeze a 300-prompt reference before comparing new 300-prompt runs.
 
 Use your own JSONL with `--dataset` to evaluate a different number of prompts or domain mix. See [custom datasets and rebuilding](docs/dataset.md).
 

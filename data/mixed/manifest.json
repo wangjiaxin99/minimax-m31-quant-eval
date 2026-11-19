@@ -1,19 +1,20 @@
 {
   "schema": 1,
-  "profile": "public-multidomain-v2",
-  "count": 240,
+  "profile": "multidomain-v1",
+  "count": 300,
   "seed": 31,
-  "dataset_sha256": "b668e18c1d9004d44f1d14159d2a71879016a5e9b8508432f3fa1cc769078683",
-  "tasks": 200,
+  "dataset_sha256": "4e62f773b1797576af0d2e5805c6b9604092d0dada826ff4759480131d8c900e",
+  "tasks": 260,
   "domain_counts": {
+    "deepswe": 60,
     "long_document": 60,
     "math": 60,
     "non_latin": 60,
     "terminal_bench": 60
   },
   "split_counts": {
-    "development": 192,
-    "holdout": 48
+    "development": 240,
+    "holdout": 60
   },
   "terminal_version": "4.0",
   "source_pins": {
@@ -35,6 +36,6 @@
   "calibration_disjoint": "unverified",
   "selection": "fixed quota, strata and seed; does not use baseline/candidate model outcomes",
   "math_note": "OpenMathReasoning (2025) substitutes for NC-licensed MathArena; not MathArena scores",
-  "harbor_note": "Framework/source registry; not an independent dataset",
+  "harbor_note": "Framework/source registry; not a sixth independent dataset",
   "long_note": "Character bands are not token counts; audit actual rendered tokens before evaluation"
 }

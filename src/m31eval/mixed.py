@@ -189,7 +189,7 @@ def set_splits(rows, excluded_tasks, seed):
     return rows
 
 
-def validate_inputs(rows, expected=240):
+def validate_inputs(rows, expected=300):
     if len(rows) != expected or len({r["id"] for r in rows}) != len(rows):
         raise ValueError("Mixed dataset size/ID mismatch")
     hashes = [digest({k: r[k] for k in ["messages", "tools"] if k in r}) for r in rows]
@@ -303,11 +303,21 @@ def build(args):
                 source_commit=PYTHON_PIN if kind == "python_3.14_docs" else None))
 
     set_splits(rows, set(), seed)
-    validate_inputs(rows)
+    public_only = getattr(args, "public_only", False)
+    if not public_only:
+        deepswe_path = Path(getattr(args, "deepswe_prompts", None) or
+            Path(__file__).resolve().parents[2] / "data/mixed/deepswe60.jsonl")
+        deepswe = read_jsonl(deepswe_path)
+        if len(deepswe) != 60 or any(r.get("domain") != "deepswe" for r in deepswe):
+            raise ValueError("DeepSWE snapshot must contain exactly 60 deepswe prompts")
+        rows.extend(deepswe)
+    validate_inputs(rows, expected=240 if public_only else 300)
     rows.sort(key=lambda r: (r["domain"], r["id"]))
-    write_jsonl(out / "quick240.jsonl", rows)
+    write_jsonl(out / ("quick240.jsonl" if public_only else "quick300.jsonl"), rows)
+    if not public_only:
+        write_jsonl(out / "deepswe60.jsonl", deepswe)
     write_jsonl(out / "holdout.jsonl", [r for r in rows if r["split"] == "holdout"])
-    manifest = {"schema": 1, "profile": "public-multidomain-v2", "count": len(rows),
+    manifest = {"schema": 1, "profile": "public-multidomain-v2" if public_only else "multidomain-v1-restored", "count": len(rows),
         "seed": seed, "dataset_sha256": digest(rows), "tasks": len({r["task"] for r in rows}),
         "domain_counts": dict(collections.Counter(r["domain"] for r in rows)),
         "split_counts": dict(collections.Counter(r["split"] for r in rows)),
@@ -315,7 +325,7 @@ def build(args):
         "source_pins": {"terminal_bench": TERMINAL_PINS, "openmathreasoning": MATH_PIN,
                         "global_mmlu_lite": MMLU_PIN, "cpython": PYTHON_PIN},
         "suggested_max_prompt_tokens": 65536, "calibration_disjoint": "unverified",
-        "selection": "fixed quota, strata and seed; does not use baseline/candidate model outcomes",
+        "selection": "Four public categories use fixed quota, strata and seed; DeepSWE uses the frozen historical trace-input snapshot" if not public_only else "fixed quota, strata and seed; does not use baseline/candidate model outcomes",
         "math_note": "OpenMathReasoning (2025) substitutes for NC-licensed MathArena; not MathArena scores",
         "harbor_note": "Framework/source registry; not an independent dataset",
         "long_note": "Character bands are not token counts; audit actual rendered tokens before evaluation"}

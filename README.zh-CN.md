@@ -6,6 +6,10 @@
 
 参考模型与候选模型需要使用兼容的 tokenizer 和 chat template。工具已用于 MiniMax 和 Qwen，评估核心只依赖 Python 标准库；模型加载、量化 kernel、补丁和 GPU 分配由模型 server 管理。
 
+## 2026-11-18：恢复 300 条保真度输入
+
+默认测试集已加回原来的 60 条 DeepSWE prompt，恢复为五类各 60 条，共 300 条。移除的仅是独立 DeepSWE 解题 benchmark。11 月 16–18 日已完成的复测仍属于 240 条范围，加回输入不会自动改变这些历史结果。
+
 ## MiniMax LH 与 RT：公开 240 条复测
 
 2026-11-16 重新采集同环境 MXFP8 基线，公开 240 条 prompt、全部 32 个位置、每候选 3 轮，评测错误为 0。
@@ -19,7 +23,7 @@
 
 ## MiniMax M3.1 历史测试结果
 
-以下是此前 **300 条 prompt、每模型 3 轮**测试的原始总体结果。每条生成 32 个 token，请求全部 32 个位置的概率。当前公开版提供的是 240 条 prompt；**下表不是在公开版 240 条数据集上重新跑出的结果**，这里只发布历史数值汇总。
+以下是此前 **300 条 prompt、每模型 3 轮**测试的原始总体结果。每条生成 32 个 token，请求全部 32 个位置的概率。原始 300 条输入现已恢复；下表仍是当时参考与环境下的历史结果，与另行捕获参考的 240 条复测分别解读。
 
 | 模型 | 平均分桶 KL（nat）↓ | 同前缀 Top-1↑ | 完整 32-token↑ |
 |---|---:|---:|---:|
@@ -47,7 +51,7 @@ m31-eval doctor --base-url http://localhost:8001/v1 --probe \
 
 # 缓存参考模型，明确评分全部 32 个位置。
 m31-eval reference \
-  --dataset data/mixed/quick240.jsonl \
+  --dataset data/mixed/quick300.jsonl \
   --base-url http://localhost:8000/v1 \
   --reference-kind mxfp8 \
   --metric coarse --tokens 32 --positions {0..31} \
@@ -90,20 +94,21 @@ vLLM 使用 `--logprobs-mode raw_logprobs`，并确认当前版本支持指定 t
 
 ## 固定公开数据集
 
-当前提供 **240 条 prompt，4 类各 60 条**：
+默认 `data/mixed/quick300.jsonl` 提供 **300 条 prompt，5 类各 60 条**；保留 `quick240.jsonl` 用于复现四类历史复测：
 
 | 类别 | 数量 | 来源 |
 |---|---:|---|
+| DeepSWE | 60 | 原始任务及 agent 上下文输入快照 |
 | 终端任务 | 60 | Terminal-Bench 4.0 原始任务 instruction |
 | 数学 | 60 | NVIDIA OpenMathReasoning problem |
 | 非拉丁语 | 60 | Global-MMLU-Lite：阿拉伯语、孟加拉语、印地语、日语、韩语、中文各 10 条 |
 | 长文档 | 60 | CPython 文档和 Project Gutenberg 文本 |
 
-共有 200 个原始 task/document。长文档部分从 20 份文档各取 3 个窗口；这些窗口不是 60 份独立文档。development/holdout 为 192/48 条，同一文档的窗口放在同一 split。该划分没有证明与模型实际校准集或训练集不重叠。
+共有 260 个原始 task/document。长文档部分从 20 份文档各取 3 个窗口；这些窗口不是 60 份独立文档。development/holdout 为 240/60 条，同一文档的窗口放在同一 split。该划分没有证明与模型实际校准集或训练集不重叠。
 
 长文档窗口的 32K/64K/128K 指**字符数**，不是 token 数；正式评估前应使用当前模型的 tokenizer 做长度审计。原始来源、固定版本、转换方式和许可见[data/mixed](data/mixed)与[数据集说明](docs/dataset.md)。
 
-公开版拥有独立数据 hash，不能直接复用其他 prompt 清单生成的 reference cache。也可以通过 `--dataset` 接入自己的 JSONL，数量和领域配额不限于当前公开版。
+恢复的 300 条与保留的 240 条数据 hash 不同，240 条参考缓存无法评估额外 60 条；新一批 300 条比较需要重新捕获并冻结 300 条参考。也可以通过 `--dataset` 接入自己的 JSONL，数量和领域配额不限于当前公开版。
 
 ## 多轮测试与候选对比
 
@@ -134,7 +139,7 @@ m31-eval compare --old logs/candidate-r1 --new logs/improved-r1 \
 
 本项目参考 [Unsloth Dynamic 3.0](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs#divergence-300-32) 的多领域输入、短续写和参考模型比较策略。具体输入、固定分桶 KL 和报告口径由本项目定义，不是对 Unsloth 未公开的 300 条清单及 Divergence-300@32 完整计分公式的精确复现。
 
-Harbor 是评估框架与 registry，Terminal-Bench 是可以在其中运行的 benchmark。当前只取 Terminal-Bench 4.0 的输入，通过 server API 测保真度，不运行完整任务容器和 verifier。
+Harbor 是评估框架与 registry，Terminal-Bench 是可以在其中运行的 benchmark。终端类别采用 Terminal-Bench 4.0 输入，DeepSWE 类别采用恢复的任务及 agent 上下文输入；它们都通过 server API 测保真度，不运行完整任务容器和 verifier。
 
 ## 开发验证
 

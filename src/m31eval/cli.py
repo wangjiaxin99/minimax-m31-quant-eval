@@ -20,7 +20,7 @@ def _quick_options(p):
 def parser():
     p = argparse.ArgumentParser(prog="m31-eval")
     commands = p.add_subparsers(dest="command", required=True)
-    mixed = commands.add_parser("mixed", help="Fetch/build/audit a stratified public multi-domain dataset")
+    mixed = commands.add_parser("mixed", help="Fetch/build/audit a stratified multi-domain fidelity dataset")
     mixsub = mixed.add_subparsers(dest="action", required=True)
     mixfetch = mixsub.add_parser("fetch")
     mixfetch.add_argument("--assets", required=True)
@@ -28,6 +28,8 @@ def parser():
     mixbuild.add_argument("--assets", required=True)
     mixbuild.add_argument("--terminal-version", choices=["2.1", "4.0"], default="4.0")
     mixbuild.add_argument("--seed", type=int, default=31)
+    mixbuild.add_argument("--deepswe-prompts", help="Frozen 60-prompt JSONL; defaults to bundled data/mixed/deepswe60.jsonl")
+    mixbuild.add_argument("--public-only", action="store_true", help="Build the four-category 240-prompt variant without shared DeepSWE trace inputs")
     mixbuild.add_argument("--output", default="data/mixed")
     mixaudit = mixsub.add_parser("audit")
     _server_options(mixaudit)
