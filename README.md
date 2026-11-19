@@ -10,7 +10,7 @@ The evaluator is model-independent when the reference and candidate share compat
 
 The evaluator scores the complete vocabulary at every one of the 32 continuation positions. MiniMax has 200,064 vocabulary entries. Start vLLM with `--max-logprobs -1 --logprobs-mode raw_logprobs`, then use `--metric full`. Full-vocabulary KL is the only supported KL mode and is the CLI default. Historical tables below retain their original bucketed-KL labels; they are archived measurements, not current full-vocabulary results.
 
-The reference cache retains complete raw log probabilities for every scored position in compressed per-prompt files. Candidates are scored with complete distributions in memory; output keeps per-position KL, Top-1, reference-token probability evidence, vocabulary size and a full-distribution digest, alongside generated token IDs/text. Candidate full distributions are not persisted.
+Reference capture obtains all 32 full-vocabulary distributions in one greedy generation request. The cache retains complete raw log probabilities as uncompressed little-endian float64 arrays, with small per-prompt JSON metadata compressed at gzip level 1. Token IDs 0 through vocabulary-size minus one are implicit; other ID maps are stored explicitly. For MiniMax, 300 × 32 × 200,064 × 8 bytes requires 15.37 GB (14.31 GiB) of probability storage, plus small metadata. Candidates are scored with complete distributions in memory; output keeps per-position KL, Top-1, reference-token probability evidence, vocabulary size and a full-distribution digest, alongside generated token IDs/text. Candidate full distributions are not persisted.
 
 ## Dataset restored to 300 prompts — 2026-11-18
 
@@ -149,7 +149,7 @@ Use repeated reference-model runs to establish an A/A noise floor. Keep engine v
 
 ## Outputs and historical measurements
 
-Every completed evaluation saves `run.json`, `summary.json`, and `samples.jsonl`. The samples retain generated token IDs/text, per-position probability evidence, KL, Top-1 agreement, and source identifiers. Local caches and run outputs are ignored by Git.
+Every completed evaluation saves `run.json`, `summary.json`, and `samples.jsonl`. The samples retain generated token IDs/text, per-position probability evidence, KL, Top-1 agreement, and source identifiers. New reference arrays are under `distributions/*.logprobs.f64`; matching `samples/*.json.gz` files describe shape, dtype and paths. Candidate generation starts from the original prompt for Exact-32; candidate KL/Top-1 is separately scored under each reference continuation prefix. Local caches and run outputs are ignored by Git.
 
 [Historical public-category results](docs/results.md) contain aggregate measurements only. They were recomputed from the four retained categories of earlier experiments, rather than rerun on a newly captured reference. Their dataset and reference scope are stated explicitly.
 

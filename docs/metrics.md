@@ -10,7 +10,7 @@ Let `P` denote reference probabilities and `Q` candidate probabilities over the 
 KL(P || Q) = sum(P(v) * (log P(v) - log Q(v)) for v in V)
 ```
 
-Natural logarithms give units of nats. Token contributions are summed, not averaged. Full-vocabulary KL is the only supported KL calculation. MiniMax M3.1 has 200,064 vocabulary entries. Reference capture requests `logprobs=-1` at each selected reference-prefix position; candidate scoring requests the same complete vocabulary.
+Natural logarithms give units of nats. Token contributions are summed, not averaged. Full-vocabulary KL is the only supported KL calculation. MiniMax M3.1 has 200,064 vocabulary entries. Reference capture requests `logprobs=-1` once while greedily generating the continuation, then selects the requested positions from that response. Candidate scoring requests the same complete vocabulary under each reference prefix.
 
 Both distributions must have matching token-ID sets and normalized probability mass (tolerance 0.00002). Missing IDs, malformed probabilities, or zero candidate probability at positive reference mass fail the position and mark its prompt incomplete. Near-deterministic reference positions remain included. No probability mass is renormalized or replaced with arbitrary values.
 
@@ -30,7 +30,7 @@ Exact 32-token agreement compares independently generated token-ID sequences. On
 
 ## Saved evidence
 
-Reference caches contain rendered prompt IDs, reference continuation IDs/text, complete per-position raw log probabilities, source metadata, and a reference signature. Candidate distributions are scored in memory. Samples retain independent generation, per-position metrics, reference-top-token probability evidence, vocabulary size and a digest of the complete candidate distribution; complete candidate distributions are not persisted. Cache signatures prevent mixing incompatible settings.
+Reference caches contain rendered prompt IDs, reference continuation IDs/text, complete per-position raw log probabilities, source metadata, and a reference signature. New probability files use uncompressed little-endian float64 arrays in `distributions/`. Small gzip-level-1 JSON metadata gives array shape, file paths and vocabulary-ID mapping. This preserves returned Python float values exactly, including negative infinity; it does not downcast to float32. Contiguous IDs starting at zero are implicit. MiniMax probability storage is 300 × 32 × 200,064 × 8 = 15,364,915,200 bytes (15.37 GB / 14.31 GiB), excluding small metadata. The loader can still read old full-distribution JSON caches. Capture strategy and storage format are part of the new reference signature; a changed format must not silently resume a previous capture. Candidate distributions are scored in memory. Samples retain independent generation, per-position metrics, reference-top-token probability evidence, vocabulary size and a digest of the complete candidate distribution; complete candidate distributions are not persisted. Cache signatures prevent mixing incompatible settings.
 
 The CLI defaults to full-vocabulary KL and all 32 continuation positions. It also exposes token agreement and chat/Responses message agreement. Old probability-partition reference caches must be recaptured; they cannot be upgraded to full-vocabulary data. Full-vocabulary scoring can be much more expensive. A finite time budget can leave an incomplete run; always check `status`, `completed`, and `errors` before publishing metrics.
 
@@ -39,3 +39,7 @@ The CLI defaults to full-vocabulary KL and all 32 continuation positions. It als
 Use `--resume-from` with a new output directory to reuse successful samples from an identical candidate/reference configuration and retry missing or failed samples. Existing outputs are not overwritten. Reference capture supports `--resume` for its own cache directory.
 
 For comparisons, `--aggregation domain_macro` gives each domain equal weight with task/document resampling. Its paired confidence interval is distinct from a mean across repeated runs. Three repeated runs are useful for screening variability but provide limited evidence about long-term reproducibility or benchmark performance.
+
+## Independent generation versus reference-prefix scoring
+
+Both models start independent generation from the original prompt. Exact-32 compares those two free-running sequences. For KL and Top-1, the candidate is separately queried on `prompt + reference_tokens[:t]` at each position `t`. This is the same conditioning policy used by historical measurements. It isolates next-token probability changes from the consequences of an earlier generation divergence; it does not force the candidate's independent generation to follow the reference.

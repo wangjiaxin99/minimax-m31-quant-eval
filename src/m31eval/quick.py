@@ -1,3 +1,5 @@
+import array
+import sys
 import concurrent.futures
 import gzip
 import json
@@ -32,17 +34,77 @@ def _cache_path(directory, sample_id):
     return Path(directory) / "samples" / (digest(sample_id) + ".json.gz")
 
 
+def _write_array(path, values, typecode):
+    data = array.array(typecode, values)
+    if data.itemsize != 8:
+        raise ValueError("Reference cache requires 8-byte array elements")
+    if sys.byteorder != "little":
+        data.byteswap()
+    temp = Path(str(path) + ".part")
+    with temp.open("wb") as stream:
+        data.tofile(stream)
+    temp.replace(path)
+
+
+def _read_array(path, typecode, count):
+    if path.stat().st_size != count * 8:
+        raise ValueError("Incomplete reference probability array")
+    data = array.array(typecode)
+    with path.open("rb") as stream:
+        data.fromfile(stream, count)
+    if sys.byteorder != "little":
+        data.byteswap()
+    return data
+
+
 def _store_sample(directory, row):
     path = _cache_path(directory, row["id"])
     path.parent.mkdir(exist_ok=True)
-    with gzip.open(str(path) + ".part", "wt", encoding="utf-8") as f:
-        json.dump(json_compatible(row), f, ensure_ascii=False, allow_nan=False)
+    stored = dict(row)
+    scores = row.get("scores", [])
+    if scores:
+        token_ids = sorted(scores[0]["logprobs"])
+        keys = scores[0]["logprobs"].keys()
+        if any(score["logprobs"].keys() != keys for score in scores):
+            raise ValueError("Reference positions have inconsistent vocabulary IDs")
+        arrays = Path(directory) / "distributions"
+        arrays.mkdir(exist_ok=True)
+        prefix = digest(row["id"])
+        ids_path = arrays / (prefix + ".token_ids.u64")
+        probs_path = arrays / (prefix + ".logprobs.f64")
+        contiguous_ids = all(token == i for i, token in enumerate(token_ids))
+        if not contiguous_ids:
+            _write_array(ids_path, token_ids, "Q")
+        _write_array(probs_path,
+                     (score["logprobs"][token] for score in scores for token in token_ids), "d")
+        stored["scores"] = [{k: v for k, v in score.items() if k != "logprobs"} for score in scores]
+        stored["probability_arrays"] = {"format": "little-endian-float64-v1",
+            "shape": [len(scores), len(token_ids)],
+            "token_ids": None if contiguous_ids else str(ids_path.relative_to(directory)),
+            "logprobs": str(probs_path.relative_to(directory))}
+    with gzip.open(str(path) + ".part", "wt", encoding="utf-8", compresslevel=1) as f:
+        json.dump(json_compatible(stored), f, ensure_ascii=False, allow_nan=False)
     Path(str(path) + ".part").replace(path)
 
 
 def _load_sample(directory, sample_id):
     with gzip.open(_cache_path(directory, sample_id), "rt", encoding="utf-8") as f:
-        return json.load(f)
+        row = json.load(f)
+    layout = row.get("probability_arrays")
+    if layout:
+        if layout["format"] != "little-endian-float64-v1":
+            raise ValueError("Unknown reference probability format")
+        positions, vocab = layout["shape"]
+        if len(row["scores"]) != positions:
+            raise ValueError("Reference array shape does not match scoring positions")
+        ids = (_read_array(Path(directory) / layout["token_ids"], "Q", vocab)
+               if layout["token_ids"] is not None else range(vocab))
+        if len(set(ids)) != vocab:
+            raise ValueError("Duplicate reference vocabulary IDs")
+        data = _read_array(Path(directory) / layout["logprobs"], "d", positions * vocab)
+        for i, score in enumerate(row["scores"]):
+            score["logprobs"] = dict(zip(ids, data[i*vocab:(i+1)*vocab]))
+    return row
 
 
 def _normalize_chat(response):
@@ -73,11 +135,14 @@ def capture(args):
     positions = sorted(set(args.positions))
     if not positions or positions[0] < 0 or positions[-1] >= args.tokens:
         raise ValueError("Scored positions must lie inside --tokens")
-    metadata = {"schema": 2, "dataset": rows, "dataset_sha256": digest(rows),
+    metadata = {"schema": 3, "dataset": rows, "dataset_sha256": digest(rows),
         "reference_kind": args.reference_kind, "reference_model": server.model,
         "reference_url": public_url(server.base), "metric": args.metric, "tokens": args.tokens,
         "positions": positions, "max_prompt_tokens": args.max_prompt_tokens,
         "calibration_disjoint": "unverified", "logprobs_semantics": "raw, temperature-1 next-token distribution"}
+    if args.metric == "full":
+        metadata["capture_strategy"] = "single_greedy_generation_full_logprobs"
+        metadata["probability_storage"] = "little-endian-float64-v1"
     if args.calibration_manifest:
         cal = read_jsonl(args.calibration_manifest)
         cal_ids = {r.get("task") for r in cal if r.get("task")}
@@ -110,7 +175,7 @@ def capture(args):
             tokens = server.tokenize(row)
             if len(tokens) > args.max_prompt_tokens:
                 raise ValueError(f"Prompt has {len(tokens)} tokens, exceeds budget {args.max_prompt_tokens}; not truncated")
-            generation = server.generate(tokens, args.tokens)
+            generation = server.generate(tokens, args.tokens, -1 if args.metric == "full" else None)
             result.update(prompt_tokens=tokens, generation={k: v for k, v in generation.items() if k != "distributions"})
             result["continuation_text"] = server.detokenize(generation["token_ids"])
             result["scores"] = []
@@ -118,8 +183,9 @@ def capture(args):
                 if position >= len(generation["token_ids"]):
                     continue
                 if args.metric == "full":
-                    scored = server.generate(tokens + generation["token_ids"][:position], 1, -1, score=True)
-                    lp = _distribution(scored["distributions"][0])
+                    if position >= len(generation["distributions"]):
+                        raise CapabilityError("Missing full-vocabulary reference generation logprobs")
+                    lp = _distribution(generation["distributions"][position])
                     kl(lp, lp)
                 else:
                     continue
@@ -165,7 +231,7 @@ def evaluate(args):
         "candidate_url": public_url(server.base), "metric": metric, "tokens": metadata["tokens"],
         "positions": metadata["positions"], "prompt_policy": "reference_raw_ids" if args.use_reference_prompt else "matching_rendered_tokens"}
     if metric == "full":
-        run_metadata["probability_storage"] = "reference: full raw logprobs; candidate: full distribution scored in memory, digest and top-token evidence retained"
+        run_metadata["probability_storage"] = "reference: complete raw logprobs (binary arrays for new caches); candidate: full distribution scored in memory, digest and top-token evidence retained"
     reused = {}
     prior_elapsed = 0.0
     if args.resume_from:

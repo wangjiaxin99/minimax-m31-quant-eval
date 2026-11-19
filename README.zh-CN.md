@@ -10,7 +10,7 @@
 
 默认在全部 32 个续写位置逐一计算完整词表 KL；MiniMax词表为200,064项。vLLM启动加入 `--max-logprobs -1 --logprobs-mode raw_logprobs`，参考捕获使用 `--metric full`，完整词表是唯一支持的 KL 模式，也是 CLI 默认值。下方历史表格保留原始分桶 KL 标签，仅供查阅，不能作为完整词表结果。
 
-参考缓存按prompt压缩保存每个位置的完整原始log-probabilities。候选使用完整分布在内存中计算，保存逐位置KL、Top-1、参考Top-1的概率证据、词表项数及完整分布hash，同时保存生成token ID/text；候选完整分布计算后释放，不写入大型JSON。
+参考捕获通过一次 greedy 生成请求返回全部 32 个位置的完整词表概率。完整原始 logprobs 保存为未压缩的小端 float64 二进制数组；少量逐 prompt JSON 元数据用 gzip 级别 1 压缩。词表 ID 为 0 至词表大小减 1 时隐含按 ID 排列，其他 ID 映射单独保存。MiniMax 的 300 × 32 × 200,064 × 8 字节约为 **15.37 GB（14.31 GiB）**，另加少量元数据。候选使用完整分布在内存中计算，保存逐位置KL、Top-1、参考Top-1的概率证据、词表项数及完整分布hash，同时保存生成token ID/text；候选完整分布计算后释放，不写入大型JSON。
 
 ## 2026-11-18：恢复 300 条保真度输入
 
@@ -137,7 +137,7 @@ m31-eval compare --old logs/candidate-r1 --new logs/improved-r1 \
 
 ## 保存的数据与历史结果
 
-评估保存 `run.json`、`summary.json` 和逐条 `samples.jsonl`，包含生成 token ID/text、逐位置概率证据、KL、Top-1 和来源标识。本地缓存与运行输出默认不提交到 Git。
+评估保存 `run.json`、`summary.json` 和逐条 `samples.jsonl`，包含生成 token ID/text、逐位置概率证据、KL、Top-1 和来源标识。新参考数组位于 `distributions/*.logprobs.f64`，对应的 `samples/*.json.gz` 记录 shape、dtype 和文件路径。候选独立生成从原始 prompt 开始，用于完整序列一致率；KL/Top-1 另外沿参考续写前缀逐位置评分。本地缓存与运行输出默认不提交到 Git。
 
 [历史公开类别结果](docs/results.md)仅保留数值汇总，由旧实验中保留的 4 个公开类别重新计算，不是使用新参考缓存重新测试。它与 README 中的原始 300 条总体结果采用不同数据范围，应分别解读。
 

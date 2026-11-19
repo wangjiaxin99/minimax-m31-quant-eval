@@ -10,7 +10,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from m31eval.cli import parser
-from m31eval.quick import capture, compare, evaluate
+from m31eval.quick import capture, compare, evaluate, _store_sample, _load_sample
 from m31eval.api import Server
 
 
@@ -83,6 +83,29 @@ class WorkflowTests(unittest.TestCase):
                      "--model", name, "--output", str(root / name)])
                 status = evaluate(ev)
         return root, status
+
+    def test_reference_uses_one_full_probability_generation_per_prompt(self):
+        with patch.object(Server, "generate", autospec=True, side_effect=Server.generate) as generate:
+            self.pipeline()
+        calls = [call for call in generate.call_args_list if call.args[0].model == "reference"]
+        self.assertEqual(len(calls), 2)  # Two prompts, no per-position replay.
+        self.assertTrue(all(call.args[2:] == (4, -1) for call in calls))
+
+    def test_binary_reference_preserves_float64_and_explicit_zero_mass(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            logprobs = {2: -math.inf, 0: 0.0, 1: -123.45678901234567}
+            sample = {"id": "binary", "scores": [{"position": 0, "logprobs": logprobs, "top1": 0}]}
+            _store_sample(root, sample)
+            restored = _load_sample(root, "binary")
+            self.assertEqual(restored["scores"], sample["scores"])
+            arrays = restored["probability_arrays"]
+            self.assertEqual(arrays["shape"], [1, 3])
+            data = root / arrays["logprobs"]
+            self.assertEqual(data.stat().st_size, 3 * 8)
+            data.write_bytes(data.read_bytes()[:-1])
+            with self.assertRaisesRegex(ValueError, "Incomplete reference probability array"):
+                _load_sample(root, "binary")
 
     def test_defaults_use_full_vocabulary_and_all_32_positions(self):
         args = parser().parse_args(["reference", "--dataset", "data.jsonl", "--base-url", self.url,
