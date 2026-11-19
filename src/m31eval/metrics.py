@@ -9,30 +9,8 @@ def _validate_logprobs(lp):
         raise ValueError("Invalid log probabilities")
 
 
-def coarse_partition(logprobs, min_tail_mass=1e-5):
-    """Freeze a coarsening using P alone, away from float32 tail cancellation.
-
-    Remove the smallest returned reference probabilities until the other mass
-    is resolvable. An almost deterministic P can leave no informative partition;
-    retain its argmax check, but do not invent tail probabilities or a KL score.
-    """
-    _validate_logprobs(logprobs)
-    selected = dict(logprobs)
-    if math.fsum(math.exp(v) for v in selected.values()) > 1.00002:
-        raise ValueError("Reference probability mass exceeds one")
-    for token in sorted(selected, key=selected.get):
-        if math.fsum(math.exp(v) for v in selected.values()) <= 1 - min_tail_mass:
-            break
-        del selected[token]
-    return selected
-
-
-def kl(p, q, full=False, mass_tolerance=0.00002):
-    """Full KL, or exact KL on the fixed partition {each p key, other}.
-
-    Coarse KL is a lower bound on full KL, not a renormalized top-k KL.
-    q MUST contain all reference keys, including their actual probabilities.
-    """
+def kl(p, q, mass_tolerance=0.00002):
+    """KL over the same complete vocabulary using normalized raw logprobs."""
     _validate_logprobs(p)
     _validate_logprobs(q)
     missing = p.keys() - q.keys()
@@ -42,7 +20,7 @@ def kl(p, q, full=False, mass_tolerance=0.00002):
     qm = math.fsum(math.exp(q[k]) for k in p)
     if pm > 1 + mass_tolerance or qm > 1 + mass_tolerance:
         raise ValueError("Probability mass exceeds one; logprobs may be processed/malformed")
-    if full and (p.keys() != q.keys() or abs(pm - 1) > mass_tolerance or abs(qm - 1) > mass_tolerance):
+    if (p.keys() != q.keys() or abs(pm - 1) > mass_tolerance or abs(qm - 1) > mass_tolerance):
         raise ValueError("Full KL requires the same complete vocabulary and normalized mass")
     value = 0.0
     for k, lp in p.items():
@@ -51,12 +29,6 @@ def kl(p, q, full=False, mass_tolerance=0.00002):
             if not math.isfinite(q[k]):
                 raise ValueError("Candidate assigns zero probability to positive reference mass")
             value += pv * (lp - q[k])
-    if not full:
-        pt, qt = max(0.0, 1 - pm), max(0.0, 1 - qm)
-        if pt:
-            if not qt:
-                raise ValueError("Candidate other bucket has zero probability")
-            value += pt * math.log(pt / qt)
     if value < -mass_tolerance:
         raise ValueError("Negative KL indicates inconsistent probability data")
     return {"kl": max(0.0, value), "reference_coverage": min(1.0, pm),

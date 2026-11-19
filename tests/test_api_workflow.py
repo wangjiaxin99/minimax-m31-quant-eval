@@ -44,7 +44,7 @@ class Handler(BaseHTTPRequestHandler):
                 probabilities = [.8, .2, 0]
             requested = body.get("logprob_token_ids")
             keep = list(range(1, 4)) if requested is None else requested
-            if model == "omits-ids" and requested:
+            if model == "omits-ids":
                 keep = keep[:1]
             distributions = [{f"token_id:{i}": math.log(probabilities[i-1]) if probabilities[i-1] else -math.inf
                               for i in keep} for _ in ids]
@@ -67,7 +67,7 @@ class WorkflowTests(unittest.TestCase):
         cls.server.shutdown()
         cls.server.server_close()
 
-    def pipeline(self, metric="coarse", candidate="quant"):
+    def pipeline(self, metric="full", candidate="quant"):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         root = Path(tmp.name)
@@ -83,6 +83,23 @@ class WorkflowTests(unittest.TestCase):
                      "--model", name, "--output", str(root / name)])
                 status = evaluate(ev)
         return root, status
+
+    def test_defaults_use_full_vocabulary_and_all_32_positions(self):
+        args = parser().parse_args(["reference", "--dataset", "data.jsonl", "--base-url", self.url,
+                                   "--reference-kind", "mxfp8", "--output", "ref"])
+        self.assertEqual(args.metric, "full")
+        self.assertEqual(args.positions, list(range(32)))
+
+    def test_old_reference_metric_is_rejected(self):
+        root, _ = self.pipeline()
+        path = root / "ref/run.json"
+        metadata = json.loads(path.read_text())
+        metadata["metric"] = "legacy_partition"
+        path.write_text(json.dumps(metadata))
+        args = parser().parse_args(["evaluate", "--reference", str(root / "ref"),
+                                   "--base-url", self.url, "--model", "quant", "--output", str(root / "new")])
+        with self.assertRaisesRegex(ValueError, "recapture a full-vocabulary reference"):
+            evaluate(args)
 
     def test_native_full_kl_and_paired_comparison(self):
         root, status = self.pipeline("full")
@@ -104,28 +121,11 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(json.loads((root / "noise_comparison.json").read_text())["conclusion"], "inconclusive")
 
     def test_missing_requested_ids_is_not_silently_approximated(self):
-        root, status = self.pipeline("coarse", "omits-ids")
+        root, status = self.pipeline("full", "omits-ids")
         self.assertEqual(status, 2)
         summary = json.loads((root / "omits-ids/summary.json").read_text())
         self.assertEqual(summary["status"], "incomplete")
         self.assertIsNone(summary["prompt_mean_kl"])
-
-    def test_zero_candidate_tail_retains_argmax_and_raw_probabilities(self):
-        root, status = self.pipeline("coarse", "zero-tail")
-        self.assertEqual(status, 0)
-        summary = json.loads((root / "zero-tail/summary.json").read_text())
-        self.assertEqual(summary["kl_scored_positions"], 0)
-        self.assertEqual(summary["kl_unavailable_positions"], 8)
-        self.assertIsNone(summary["prompt_mean_kl"])
-        self.assertEqual(summary["same_context_top1_agreement"]["mean"], 1)
-        for row in map(json.loads, (root / "zero-tail/samples.jsonl").read_text().splitlines()):
-            self.assertNotIn("error", row)
-            self.assertTrue(row["sequence_exact"])
-            for position in row["scored_positions"]:
-                self.assertIsNone(position["kl"])
-                self.assertTrue(position["top1_agreement"])
-                self.assertIn("candidate_zero_other_mass", position["kl_unavailable_reason"])
-                self.assertEqual(position["candidate_logprobs"], {"1": math.log(.8), "2": math.log(.2)})
 
     def test_zero_candidate_probability_still_fails_full_kl(self):
         root, status = self.pipeline("full", "zero-tail")

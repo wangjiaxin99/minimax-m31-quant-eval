@@ -8,7 +8,7 @@ The evaluator is model-independent when the reference and candidate share compat
 
 ## Full-vocabulary KL on all 300 prompts
 
-The default example now scores the complete vocabulary at every one of the 32 continuation positions. MiniMax has 200,064 vocabulary entries. Start vLLM with `--max-logprobs -1 --logprobs-mode raw_logprobs`, then use `--metric full`. This evaluates the full raw distribution under the reference prefix; it does not form a Top-20/tail partition. Historical tables below remain bucketed-KL measurements.
+The evaluator scores the complete vocabulary at every one of the 32 continuation positions. MiniMax has 200,064 vocabulary entries. Start vLLM with `--max-logprobs -1 --logprobs-mode raw_logprobs`, then use `--metric full`. Full-vocabulary KL is the only supported KL mode and is the CLI default. Historical tables below retain their original bucketed-KL labels; they are archived measurements, not current full-vocabulary results.
 
 The reference cache retains complete raw log probabilities for every scored position in compressed per-prompt files. Candidates are scored with complete distributions in memory; output keeps per-position KL, Top-1, reference-token probability evidence, vocabulary size and a full-distribution digest, alongside generated token IDs/text. Candidate full distributions are not persisted.
 
@@ -72,7 +72,7 @@ m31-eval evaluate \
   --output logs/candidate-r1
 ```
 
-The commands above assume Bash. For another shell, supply the integer positions `0` through `31` explicitly. The CLI otherwise defaults to eight scored positions. Set `--model` when an endpoint serves multiple models. Authentication reads `OPENAI_API_KEY`, or the environment variable selected with `--api-key-env`.
+The commands above assume Bash. For another shell, supply the integer positions `0` through `31` explicitly. The CLI defaults to all 32 scored positions. Set `--model` when an endpoint serves multiple models. Authentication reads `OPENAI_API_KEY`, or the environment variable selected with `--api-key-env`.
 
 For example, run an MXFP8 model on port 8000 and an MXFP4 model on port 8001, capture MXFP8 as the reference, then evaluate MXFP4. The same workflow applies to BF16 references and algorithm-enhanced candidates; set `--reference-kind` accordingly.
 
@@ -87,9 +87,9 @@ Use the model config vocabulary size for other models. Every token ID must be re
 
 ## Server requirements
 
-Token-level fidelity requires native `/tokenize`, `/detokenize`, and `/v1/completions` endpoints, including token IDs and raw next-token log probabilities. Coarse KL additionally needs the probabilities of specified reference token IDs, even when they are absent from the candidate's own Top-K list.
+Token-level fidelity requires native `/tokenize`, `/detokenize`, and `/v1/completions` endpoints, including token IDs and raw next-token log probabilities. Every scored position must return the complete vocabulary.
 
-For vLLM, use `--logprobs-mode raw_logprobs` and an engine build that supports the requested-token scoring API. Check `tokenize` and `requested_token_logprobs` in the doctor output before evaluation. A chat-only proxy cannot provide token-level KL; the `chat` and `responses` modes measure message agreement instead.
+For vLLM, use `--max-logprobs -1 --logprobs-mode raw_logprobs`. Check `tokenize` and `full_vocabulary_logprobs` with `doctor --probe-full --expected-vocab-size` before evaluation. A chat-only proxy cannot provide token-level KL; the `chat` and `responses` modes measure message agreement instead.
 
 The evaluator connects to an existing server. Model loading, quantization kernels, engine patches, GPU allocation, and server startup are managed separately.
 
@@ -98,13 +98,12 @@ The evaluator connects to an existing server. Model loading, quantization kernel
 | Metric | Meaning | Direction |
 |---|---|---|
 | Mean full-vocabulary KL (nat) | KL summed across the complete vocabulary under the same reference prefix, averaged across positions and prompts | Lower |
-| Mean bucketed KL (nat), optional | KL on reference Top-K plus a tail partition; historical measurements use this mode | Lower |
 | Shared-prefix Top-1 agreement | Fraction of scored positions with the same highest-probability token under the same reference prefix | Higher |
 | Exact 32-token agreement | Fraction of independently generated continuations whose 32 token IDs all match | Higher |
 
-For coarse KL, the reference defines up to 20 individual token buckets plus one bucket for all remaining vocabulary probability mass. The same partition is used for the candidate. At each position, bucket contributions are **summed**, then valid positions are averaged within each prompt and prompts are averaged for the overall result. This is a lower bound on full-vocabulary KL.
+At each reference-prefix position, compute `sum(P(v) * (log P(v) - log Q(v)))` across the complete vocabulary. Sum token contributions, average scored positions within each prompt, then average prompts for `prompt_mean_kl`. For 300 prompts and 32 positions, require 9,600 successful position scores.
 
-Generation uses greedy decoding (`temperature=0`); probability scoring uses raw log probabilities. Near-deterministic reference distributions or zero candidate tail mass can prevent a finite KL calculation at some positions. Report finite-position coverage alongside KL. Top-1 and sequence agreement remain separate metrics.
+Generation uses greedy decoding (`temperature=0`); probability scoring uses raw log probabilities. Missing token IDs, invalid probability mass, or zero candidate probability at positive reference mass are errors, not reasons to silently drop a position. Near-deterministic reference positions are retained. An incomplete run must not be reported as a complete result.
 
 The native summary includes task-cluster aggregation for Top-1 and KL. For direct-position Top-1, count `top1_agreement` in `samples.jsonl`; do not substitute the task-cluster mean. See [metric details](docs/metrics.md).
 
@@ -156,7 +155,7 @@ Every completed evaluation saves `run.json`, `summary.json`, and `samples.jsonl`
 
 ## Method background
 
-This project follows the broad short-continuation, multi-domain fidelity strategy described in [Unsloth Dynamic 3.0](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs#divergence-300-32). Its dataset, fixed-partition KL implementation, and reporting are defined here; they are not an exact reproduction of Unsloth's unpublished prompt list or Divergence-300@32 scoring formula.
+This project follows the broad short-continuation, multi-domain fidelity strategy described in [Unsloth Dynamic 3.0](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs#divergence-300-32). Its dataset, full-vocabulary KL implementation, and reporting are defined here; they are not an exact reproduction of Unsloth's unpublished prompt list or Divergence-300@32 scoring formula.
 
 Harbor is an evaluation framework and registry; Terminal-Bench is a benchmark that can run within it. The bundled terminal prompts come from Terminal-Bench 4.0. No full task containers or benchmark verifiers are executed by this evaluator.
 

@@ -1,6 +1,6 @@
-m31-eval reference --dataset data/mixed/quick240.jsonl \
+m31-eval reference --dataset data/mixed/quick300.jsonl \
   --base-url http://localhost:8000/v1 --reference-kind mxfp8 \
-  --metric coarse --tokens 32 --positions {0..31} \
+  --metric full --tokens 32 --positions {0..31} \
   --max-prompt-tokens 65536 --concurrency 2 \
   --time-budget 1800 --output cache/mxfp8
 

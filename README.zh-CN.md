@@ -8,7 +8,7 @@
 
 ## 完整词表 KL：全部 300 条输入
 
-默认示例改为在32个续写位置逐一计算完整词表KL；MiniMax词表为200,064项。vLLM启动加入 `--max-logprobs -1 --logprobs-mode raw_logprobs`，参考捕获使用 `--metric full`，不再分成Top-20加尾桶。下方历史表格仍是分桶KL结果，不混入新口径。
+默认在全部 32 个续写位置逐一计算完整词表 KL；MiniMax词表为200,064项。vLLM启动加入 `--max-logprobs -1 --logprobs-mode raw_logprobs`，参考捕获使用 `--metric full`，完整词表是唯一支持的 KL 模式，也是 CLI 默认值。下方历史表格保留原始分桶 KL 标签，仅供查阅，不能作为完整词表结果。
 
 参考缓存按prompt压缩保存每个位置的完整原始log-probabilities。候选使用完整分布在内存中计算，保存逐位置KL、Top-1、参考Top-1的概率证据、词表项数及完整分布hash，同时保存生成token ID/text；候选完整分布计算后释放，不写入大型JSON。
 
@@ -74,13 +74,13 @@ m31-eval evaluate \
 
 例如：在 8000 端口启动 MXFP8、在 8001 端口启动 MXFP4，先缓存 MXFP8，再评估 MXFP4。BF16 和应用算法后的模型使用相同接入方法，并按实际参考设置 `--reference-kind`。
 
-以上命令使用 Bash 的 `{0..31}` 展开；其他 shell 请显式列出 0 到 31。CLI 默认只评分 8 个位置，因此评估全部 32 个位置时需要保留该参数。一个接口提供多个模型时，用 `--model` 指定模型名。认证默认读取 `OPENAI_API_KEY`，也可通过 `--api-key-env` 指定其他环境变量。
+以上命令使用 Bash 的 `{0..31}` 展开；其他 shell 请显式列出 0 到 31。CLI 默认评分全部 32 个位置；该参数也可显式设置评分位置。一个接口提供多个模型时，用 `--model` 指定模型名。认证默认读取 `OPENAI_API_KEY`，也可通过 `--api-key-env` 指定其他环境变量。
 
 ## Server 接口要求
 
-token 级保真度需要原生 `/tokenize`、`/detokenize`、`/v1/completions` 接口，返回 token ID 和原始下一 token logprobs。分桶 KL 还需要查询指定参考 token ID 的概率，即使它不在候选模型自己的 Top-K 中。
+token 级保真度需要原生 `/tokenize`、`/detokenize`、`/v1/completions` 接口，返回 token ID 和原始下一 token logprobs。每个评分位置必须返回完整词表概率。
 
-vLLM 使用 `--logprobs-mode raw_logprobs`，并确认当前版本支持指定 token 的概率查询。正式评估前，检查 doctor 输出中的 `tokenize` 和 `requested_token_logprobs`。只有 Chat 接口的代理无法计算 token KL；`chat`、`responses` 模式计算的是消息一致性。
+vLLM 使用 `--max-logprobs -1 --logprobs-mode raw_logprobs`。正式评估前，用 `doctor --probe-full --expected-vocab-size 200064` 检查 `tokenize` 和 `full_vocabulary_logprobs`；其他模型按 config 设置词表大小。只有 Chat 接口的代理无法计算 token KL；`chat`、`responses` 模式计算的是消息一致性。
 
 工具只连接已有 server，不负责启动服务、安装模型补丁或配置量化 kernel。
 
@@ -88,13 +88,13 @@ vLLM 使用 `--logprobs-mode raw_logprobs`，并确认当前版本支持指定 t
 
 | 指标 | 含义 | 方向 |
 |---|---|---|
-| 平均分桶 KL（nat） | 在相同参考前缀下，比较两个模型的下一 token 概率分布 | 越低越好 |
+| 平均完整词表 KL（nat） | 在相同参考前缀下，对全部词表求和计算 KL，再按位置与 prompt 平均 | 越低越好 |
 | 同前缀 Top-1 一致率 | 使用同一输入和参考续写前缀时，最高概率 token 相同的位置比例 | 越高越好 |
 | 完整 32-token 一致率 | 两个模型分别独立生成，32 个 token ID 全部相同的输入比例 | 越高越好 |
 
-分桶 KL 使用参考模型确定的最多 20 个 token，各占一个桶；其余词表概率合并为一个尾桶。候选模型使用同一分桶。每个位置先将各桶的 KL 贡献**求和**，再平均每条 prompt 的有效位置，最后平均 prompt；不对 21 个桶取平均。这是完整词表 KL 的下界。
+每个位置按完整词表计算 `sum(P(v) * (log P(v) - log Q(v)))`。先对词表 token 的贡献求和，再对每条 prompt 的评分位置平均，最后对 prompt 平均，得到 `prompt_mean_kl`。300 条输入、每条 32 个位置，完整结果应包含 9,600 个成功评分位置。
 
-生成使用 greedy decoding（`temperature=0`），概率评分使用 raw logprobs。参考分布近乎确定、候选尾桶为零等情况可能导致部分位置没有有限 KL，需要同时查看有效位置覆盖数。Top-1 和完整序列一致性分别计算。
+生成使用 greedy decoding（`temperature=0`），概率评分使用 raw logprobs。参考分布接近确定的位置也参与 KL。缺少 token ID、概率总质量异常或候选对参考正概率 token 给出零概率会记为错误，不静默跳过；不完整运行不能作为完整结果发布。
 
 原生 summary 中的部分指标采用原始 task/document 等权汇总。展示直接按位置计数的 Top-1 时，应统计 `samples.jsonl` 中的 `top1_agreement`，不能用 task 等权均值替代。详细公式和输出字段见[指标说明](docs/metrics.md)。
 
@@ -143,7 +143,7 @@ m31-eval compare --old logs/candidate-r1 --new logs/improved-r1 \
 
 ## 方法背景
 
-本项目参考 [Unsloth Dynamic 3.0](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs#divergence-300-32) 的多领域输入、短续写和参考模型比较策略。具体输入、固定分桶 KL 和报告口径由本项目定义，不是对 Unsloth 未公开的 300 条清单及 Divergence-300@32 完整计分公式的精确复现。
+本项目参考 [Unsloth Dynamic 3.0](https://unsloth.ai/docs/basics/dynamic-3.0-ggufs#divergence-300-32) 的多领域输入、短续写和参考模型比较策略。具体输入、完整词表 KL 和报告口径由本项目定义，不是对 Unsloth 未公开的 300 条清单及 Divergence-300@32 完整计分公式的精确复现。
 
 Harbor 是评估框架与 registry，Terminal-Bench 是可以在其中运行的 benchmark。终端类别采用 Terminal-Bench 4.0 输入，DeepSWE 类别采用恢复的任务及 agent 上下文输入；它们都通过 server API 测保真度，不运行完整任务容器和 verifier。
 
