@@ -10,6 +10,12 @@ def lp(values):
 
 
 class MetricsTests(unittest.TestCase):
+    def test_full_kl_keeps_near_deterministic_reference_positions(self):
+        p = {0: math.log(1 - 2e-12), 1: math.log(1e-12), 2: math.log(1e-12)}
+        q = {0: math.log(.9), 1: math.log(.05), 2: math.log(.05)}
+        self.assertEqual(coarse_partition(p), {})
+        self.assertAlmostEqual(kl(p, q, full=True)["kl"], -math.log(.9), places=9)
+
     def test_known_kl_values(self):
         p = lp([.7, .2, .1])
         self.assertAlmostEqual(kl(p, lp([.65, .25, .1]), full=True)["kl"], .007246869, places=8)

@@ -89,6 +89,12 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(status, 0)
         summary = json.loads((root / "quant/summary.json").read_text())
         self.assertAlmostEqual(summary["prompt_mean_kl"], .007246869, places=8)
+        rows = [json.loads(line) for line in (root / "quant/samples.jsonl").read_text().splitlines()]
+        for row in rows:
+            for position in row["scored_positions"]:
+                self.assertEqual(position["candidate_vocab_size"], 3)
+                self.assertNotIn("candidate_logprobs", position)
+                self.assertEqual(len(position["candidate_distribution_sha256"]), 64)
         with contextlib.redirect_stdout(io.StringIO()):
             compare(root / "same", root / "quant", root / "comparison.json")
         report = json.loads((root / "comparison.json").read_text())

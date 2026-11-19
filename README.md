@@ -6,6 +6,12 @@ Compare a reference model and quantized candidates through OpenAI-compatible mod
 
 The evaluator is model-independent when the reference and candidate share compatible tokenizers and chat templates. It has been used with MiniMax and Qwen models. Evaluation uses Python's standard library; a model server is the only runtime requirement beyond Python.
 
+## Full-vocabulary KL on all 300 prompts
+
+The default example now scores the complete vocabulary at every one of the 32 continuation positions. MiniMax has 200,064 vocabulary entries. Start vLLM with `--max-logprobs -1 --logprobs-mode raw_logprobs`, then use `--metric full`. This evaluates the full raw distribution under the reference prefix; it does not form a Top-20/tail partition. Historical tables below remain bucketed-KL measurements.
+
+The reference cache retains complete raw log probabilities for every scored position in compressed per-prompt files. Candidates are scored with complete distributions in memory; output keeps per-position KL, Top-1, reference-token probability evidence, vocabulary size and a full-distribution digest, alongside generated token IDs/text. Candidate full distributions are not persisted.
+
 ## Dataset restored to 300 prompts — 2026-11-18
 
 The default fidelity dataset again includes the original 60 DeepSWE prompts: five categories, 60 prompts each. Only the standalone DeepSWE task benchmark was removed. The November 16–18 reruns remain 240-prompt results; restoring inputs does not turn them into 300-prompt measurements.
@@ -54,7 +60,7 @@ m31-eval reference \
   --dataset data/mixed/quick300.jsonl \
   --base-url http://localhost:8000/v1 \
   --reference-kind mxfp8 \
-  --metric coarse --tokens 32 --positions {0..31} \
+  --metric full --tokens 32 --positions {0..31} \
   --max-prompt-tokens 65536 --concurrency 2 \
   --time-budget 1800 --output cache/reference
 
@@ -70,6 +76,15 @@ The commands above assume Bash. For another shell, supply the integer positions 
 
 For example, run an MXFP8 model on port 8000 and an MXFP4 model on port 8001, capture MXFP8 as the reference, then evaluate MXFP4. The same workflow applies to BF16 references and algorithm-enhanced candidates; set `--reference-kind` accordingly.
 
+To verify complete vocabulary support for MiniMax:
+
+```bash
+m31-eval doctor --base-url http://localhost:8000/v1 --probe --probe-full \
+  --expected-vocab-size 200064 --output cache/full-doctor.json
+```
+
+Use the model config vocabulary size for other models. Every token ID must be returned, and probability mass must normalize.
+
 ## Server requirements
 
 Token-level fidelity requires native `/tokenize`, `/detokenize`, and `/v1/completions` endpoints, including token IDs and raw next-token log probabilities. Coarse KL additionally needs the probabilities of specified reference token IDs, even when they are absent from the candidate's own Top-K list.
@@ -82,7 +97,8 @@ The evaluator connects to an existing server. Model loading, quantization kernel
 
 | Metric | Meaning | Direction |
 |---|---|---|
-| Mean bucketed KL (nat) | Difference between next-token probability distributions under the same reference prefix | Lower |
+| Mean full-vocabulary KL (nat) | KL summed across the complete vocabulary under the same reference prefix, averaged across positions and prompts | Lower |
+| Mean bucketed KL (nat), optional | KL on reference Top-K plus a tail partition; historical measurements use this mode | Lower |
 | Shared-prefix Top-1 agreement | Fraction of scored positions with the same highest-probability token under the same reference prefix | Higher |
 | Exact 32-token agreement | Fraction of independently generated continuations whose 32 token IDs all match | Higher |
 

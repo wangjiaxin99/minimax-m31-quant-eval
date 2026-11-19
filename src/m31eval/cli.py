@@ -40,6 +40,8 @@ def parser():
     _server_options(doc)
     doc.add_argument("--output", required=True)
     doc.add_argument("--probe", action="store_true", help="Generate the fixed 100-token smoke question and test logprob support")
+    doc.add_argument("--probe-full", action="store_true", help="Check full-vocabulary raw logprobs with logprobs=-1")
+    doc.add_argument("--expected-vocab-size", type=int, help="Require every token ID in the configured model vocabulary")
     ref = commands.add_parser("reference", help="Cache greedy generation and reference probability data once")
     _quick_options(ref)
     ref.add_argument("--dataset", required=True)

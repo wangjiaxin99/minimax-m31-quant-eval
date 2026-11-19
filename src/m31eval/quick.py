@@ -1,6 +1,7 @@
 import concurrent.futures
 import gzip
 import json
+import math
 import statistics
 import time
 from pathlib import Path
@@ -168,6 +169,8 @@ def evaluate(args):
         "dataset_sha256": metadata["dataset_sha256"], "candidate_model": server.model,
         "candidate_url": public_url(server.base), "metric": metric, "tokens": metadata["tokens"],
         "positions": metadata["positions"], "prompt_policy": "reference_raw_ids" if args.use_reference_prompt else "matching_rendered_tokens"}
+    if metric == "full":
+        run_metadata["probability_storage"] = "reference: full raw logprobs; candidate: full distribution scored in memory, digest and top-token evidence retained"
     reused = {}
     prior_elapsed = 0.0
     if args.resume_from:
@@ -246,9 +249,16 @@ def evaluate(args):
                 continue
             # Greedy sampled ID is the global argmax even when only reference IDs
             # were requested. raw_logprobs must still be temperature-1 probabilities.
+            evidence = ({"candidate_distribution_sha256": digest(q),
+                         "candidate_vocab_size": len(q),
+                         "reference_top1": scored["top1"],
+                         "candidate_top1": generated_score["token_ids"][0],
+                         "reference_top1_logprob": p[scored["top1"]],
+                         "candidate_reference_top1_logprob": q[scored["top1"]]}
+                        if full else {"candidate_logprobs": q})
             result["scored_positions"].append({"position": position, **measured,
                                                "top1_agreement": generated_score["token_ids"][0] == scored["top1"],
-                                               "candidate_logprobs": q})
+                                               **evidence})
         informative = [r for r in result["scored_positions"] if r["kl"] is not None]
         result["mean_kl"] = statistics.mean(r["kl"] for r in informative) if informative else None
         result["kl_positions"] = len(informative)
@@ -355,6 +365,16 @@ def doctor(args):
                 ids = list(generated["distributions"][0])
                 measured = server.generate(tokens, 1, 2, requested=ids, score=True)
                 report["requested_token_logprobs"] = set(ids) <= measured["distributions"][0].keys()
+        if getattr(args, "probe_full", False):
+            measured = server.generate(tokens, 1, -1)
+            distribution = _distribution(measured["distributions"][0])
+            kl(distribution, distribution, full=True)
+            expected = getattr(args, "expected_vocab_size", None)
+            if expected is not None and set(distribution) != set(range(expected)):
+                raise CapabilityError(f"Full vocabulary mismatch: returned {len(distribution)}, expected all {expected} IDs")
+            report["full_vocabulary_logprobs"] = True
+            report["full_vocab_size"] = len(distribution)
+            report["full_probability_mass"] = math.fsum(math.exp(v) for v in distribution.values())
     except Exception as exc:
         report["native_error"] = str(exc)
         if args.probe:

@@ -6,6 +6,12 @@
 
 参考模型与候选模型需要使用兼容的 tokenizer 和 chat template。工具已用于 MiniMax 和 Qwen，评估核心只依赖 Python 标准库；模型加载、量化 kernel、补丁和 GPU 分配由模型 server 管理。
 
+## 完整词表 KL：全部 300 条输入
+
+默认示例改为在32个续写位置逐一计算完整词表KL；MiniMax词表为200,064项。vLLM启动加入 `--max-logprobs -1 --logprobs-mode raw_logprobs`，参考捕获使用 `--metric full`，不再分成Top-20加尾桶。下方历史表格仍是分桶KL结果，不混入新口径。
+
+参考缓存按prompt压缩保存每个位置的完整原始log-probabilities。候选使用完整分布在内存中计算，保存逐位置KL、Top-1、参考Top-1的概率证据、词表项数及完整分布hash，同时保存生成token ID/text；候选完整分布计算后释放，不写入大型JSON。
+
 ## 2026-11-18：恢复 300 条保真度输入
 
 默认测试集已加回原来的 60 条 DeepSWE prompt，恢复为五类各 60 条，共 300 条。移除的仅是独立 DeepSWE 解题 benchmark。11 月 16–18 日已完成的复测仍属于 240 条范围，加回输入不会自动改变这些历史结果。
@@ -54,7 +60,7 @@ m31-eval reference \
   --dataset data/mixed/quick300.jsonl \
   --base-url http://localhost:8000/v1 \
   --reference-kind mxfp8 \
-  --metric coarse --tokens 32 --positions {0..31} \
+  --metric full --tokens 32 --positions {0..31} \
   --max-prompt-tokens 65536 --concurrency 2 \
   --time-budget 1800 --output cache/reference
 
