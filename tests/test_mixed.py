@@ -48,12 +48,12 @@ class MixedTests(unittest.TestCase):
             strip_gutenberg("unrecognized wrapper")
 
     def test_frozen_mixed_dataset_has_real_sources_and_balanced_coverage(self):
-        path = Path(__file__).resolve().parents[1] / "data/mixed/quick240.jsonl"
+        path = Path(__file__).resolve().parents[1] / "data/mixed/quick300.jsonl"
         rows = read_jsonl(path)
         validate_inputs(rows)
         self.assertEqual(collections.Counter(r["domain"] for r in rows),
-            {"terminal_bench": 60, "math": 60, "non_latin": 60, "long_document": 60})
-        self.assertEqual(len({r["task"] for r in rows}), 200)
+            {"deepswe": 60, "terminal_bench": 60, "math": 60, "non_latin": 60, "long_document": 60})
+        self.assertEqual(len({r["task"] for r in rows}), 260)
         multilingual = [r for r in rows if r["domain"] == "non_latin"]
         self.assertEqual(collections.Counter(r["language"] for r in multilingual),
             {lang: 10 for lang in ["ar", "bn", "hi", "ja", "ko", "zh"]})

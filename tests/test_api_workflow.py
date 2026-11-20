@@ -10,7 +10,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from m31eval.cli import parser
-from m31eval.quick import capture, compare, evaluate
+from m31eval.quick import capture, compare, evaluate, _store_sample, _load_sample
 from m31eval.api import Server
 
 
@@ -44,7 +44,7 @@ class Handler(BaseHTTPRequestHandler):
                 probabilities = [.8, .2, 0]
             requested = body.get("logprob_token_ids")
             keep = list(range(1, 4)) if requested is None else requested
-            if model == "omits-ids" and requested:
+            if model == "omits-ids":
                 keep = keep[:1]
             distributions = [{f"token_id:{i}": math.log(probabilities[i-1]) if probabilities[i-1] else -math.inf
                               for i in keep} for _ in ids]
@@ -67,7 +67,7 @@ class WorkflowTests(unittest.TestCase):
         cls.server.shutdown()
         cls.server.server_close()
 
-    def pipeline(self, metric="coarse", candidate="quant"):
+    def pipeline(self, metric="full", candidate="quant"):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         root = Path(tmp.name)
@@ -84,11 +84,57 @@ class WorkflowTests(unittest.TestCase):
                 status = evaluate(ev)
         return root, status
 
+    def test_reference_uses_one_full_probability_generation_per_prompt(self):
+        with patch.object(Server, "generate", autospec=True, side_effect=Server.generate) as generate:
+            self.pipeline()
+        calls = [call for call in generate.call_args_list if call.args[0].model == "reference"]
+        self.assertEqual(len(calls), 2)  # Two prompts, no per-position replay.
+        self.assertTrue(all(call.args[2:] == (4, -1) for call in calls))
+
+    def test_binary_reference_preserves_float64_and_explicit_zero_mass(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            logprobs = {2: -math.inf, 0: 0.0, 1: -123.45678901234567}
+            sample = {"id": "binary", "scores": [{"position": 0, "logprobs": logprobs, "top1": 0}]}
+            _store_sample(root, sample)
+            restored = _load_sample(root, "binary")
+            self.assertEqual(restored["scores"], sample["scores"])
+            arrays = restored["probability_arrays"]
+            self.assertEqual(arrays["shape"], [1, 3])
+            data = root / arrays["logprobs"]
+            self.assertEqual(data.stat().st_size, 3 * 8)
+            data.write_bytes(data.read_bytes()[:-1])
+            with self.assertRaisesRegex(ValueError, "Incomplete reference probability array"):
+                _load_sample(root, "binary")
+
+    def test_defaults_use_full_vocabulary_and_all_32_positions(self):
+        args = parser().parse_args(["reference", "--dataset", "data.jsonl", "--base-url", self.url,
+                                   "--reference-kind", "mxfp8", "--output", "ref"])
+        self.assertEqual(args.metric, "full")
+        self.assertEqual(args.positions, list(range(32)))
+
+    def test_old_reference_metric_is_rejected(self):
+        root, _ = self.pipeline()
+        path = root / "ref/run.json"
+        metadata = json.loads(path.read_text())
+        metadata["metric"] = "legacy_partition"
+        path.write_text(json.dumps(metadata))
+        args = parser().parse_args(["evaluate", "--reference", str(root / "ref"),
+                                   "--base-url", self.url, "--model", "quant", "--output", str(root / "new")])
+        with self.assertRaisesRegex(ValueError, "recapture a full-vocabulary reference"):
+            evaluate(args)
+
     def test_native_full_kl_and_paired_comparison(self):
         root, status = self.pipeline("full")
         self.assertEqual(status, 0)
         summary = json.loads((root / "quant/summary.json").read_text())
         self.assertAlmostEqual(summary["prompt_mean_kl"], .007246869, places=8)
+        rows = [json.loads(line) for line in (root / "quant/samples.jsonl").read_text().splitlines()]
+        for row in rows:
+            for position in row["scored_positions"]:
+                self.assertEqual(position["candidate_vocab_size"], 3)
+                self.assertNotIn("candidate_logprobs", position)
+                self.assertEqual(len(position["candidate_distribution_sha256"]), 64)
         with contextlib.redirect_stdout(io.StringIO()):
             compare(root / "same", root / "quant", root / "comparison.json")
         report = json.loads((root / "comparison.json").read_text())
@@ -98,28 +144,11 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(json.loads((root / "noise_comparison.json").read_text())["conclusion"], "inconclusive")
 
     def test_missing_requested_ids_is_not_silently_approximated(self):
-        root, status = self.pipeline("coarse", "omits-ids")
+        root, status = self.pipeline("full", "omits-ids")
         self.assertEqual(status, 2)
         summary = json.loads((root / "omits-ids/summary.json").read_text())
         self.assertEqual(summary["status"], "incomplete")
         self.assertIsNone(summary["prompt_mean_kl"])
-
-    def test_zero_candidate_tail_retains_argmax_and_raw_probabilities(self):
-        root, status = self.pipeline("coarse", "zero-tail")
-        self.assertEqual(status, 0)
-        summary = json.loads((root / "zero-tail/summary.json").read_text())
-        self.assertEqual(summary["kl_scored_positions"], 0)
-        self.assertEqual(summary["kl_unavailable_positions"], 8)
-        self.assertIsNone(summary["prompt_mean_kl"])
-        self.assertEqual(summary["same_context_top1_agreement"]["mean"], 1)
-        for row in map(json.loads, (root / "zero-tail/samples.jsonl").read_text().splitlines()):
-            self.assertNotIn("error", row)
-            self.assertTrue(row["sequence_exact"])
-            for position in row["scored_positions"]:
-                self.assertIsNone(position["kl"])
-                self.assertTrue(position["top1_agreement"])
-                self.assertIn("candidate_zero_other_mass", position["kl_unavailable_reason"])
-                self.assertEqual(position["candidate_logprobs"], {"1": math.log(.8), "2": math.log(.2)})
 
     def test_zero_candidate_probability_still_fails_full_kl(self):
         root, status = self.pipeline("full", "zero-tail")

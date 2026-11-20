@@ -1,13 +1,16 @@
+import array
+import sys
 import concurrent.futures
 import gzip
 import json
+import math
 import statistics
 import time
 from pathlib import Path
 
 from .api import CapabilityError, Server
 from .common import digest, json_compatible, new_output, public_url, read_jsonl, write_json, write_jsonl
-from .metrics import agreement, cluster_bootstrap, coarse_partition, domain_bootstrap, kl, summarize
+from .metrics import agreement, cluster_bootstrap, domain_bootstrap, kl, summarize
 
 
 def selected_rows(path, limit=None, split=None):
@@ -31,17 +34,77 @@ def _cache_path(directory, sample_id):
     return Path(directory) / "samples" / (digest(sample_id) + ".json.gz")
 
 
+def _write_array(path, values, typecode):
+    data = array.array(typecode, values)
+    if data.itemsize != 8:
+        raise ValueError("Reference cache requires 8-byte array elements")
+    if sys.byteorder != "little":
+        data.byteswap()
+    temp = Path(str(path) + ".part")
+    with temp.open("wb") as stream:
+        data.tofile(stream)
+    temp.replace(path)
+
+
+def _read_array(path, typecode, count):
+    if path.stat().st_size != count * 8:
+        raise ValueError("Incomplete reference probability array")
+    data = array.array(typecode)
+    with path.open("rb") as stream:
+        data.fromfile(stream, count)
+    if sys.byteorder != "little":
+        data.byteswap()
+    return data
+
+
 def _store_sample(directory, row):
     path = _cache_path(directory, row["id"])
     path.parent.mkdir(exist_ok=True)
-    with gzip.open(str(path) + ".part", "wt", encoding="utf-8") as f:
-        json.dump(json_compatible(row), f, ensure_ascii=False, allow_nan=False)
+    stored = dict(row)
+    scores = row.get("scores", [])
+    if scores:
+        token_ids = sorted(scores[0]["logprobs"])
+        keys = scores[0]["logprobs"].keys()
+        if any(score["logprobs"].keys() != keys for score in scores):
+            raise ValueError("Reference positions have inconsistent vocabulary IDs")
+        arrays = Path(directory) / "distributions"
+        arrays.mkdir(exist_ok=True)
+        prefix = digest(row["id"])
+        ids_path = arrays / (prefix + ".token_ids.u64")
+        probs_path = arrays / (prefix + ".logprobs.f64")
+        contiguous_ids = all(token == i for i, token in enumerate(token_ids))
+        if not contiguous_ids:
+            _write_array(ids_path, token_ids, "Q")
+        _write_array(probs_path,
+                     (score["logprobs"][token] for score in scores for token in token_ids), "d")
+        stored["scores"] = [{k: v for k, v in score.items() if k != "logprobs"} for score in scores]
+        stored["probability_arrays"] = {"format": "little-endian-float64-v1",
+            "shape": [len(scores), len(token_ids)],
+            "token_ids": None if contiguous_ids else str(ids_path.relative_to(directory)),
+            "logprobs": str(probs_path.relative_to(directory))}
+    with gzip.open(str(path) + ".part", "wt", encoding="utf-8", compresslevel=1) as f:
+        json.dump(json_compatible(stored), f, ensure_ascii=False, allow_nan=False)
     Path(str(path) + ".part").replace(path)
 
 
 def _load_sample(directory, sample_id):
     with gzip.open(_cache_path(directory, sample_id), "rt", encoding="utf-8") as f:
-        return json.load(f)
+        row = json.load(f)
+    layout = row.get("probability_arrays")
+    if layout:
+        if layout["format"] != "little-endian-float64-v1":
+            raise ValueError("Unknown reference probability format")
+        positions, vocab = layout["shape"]
+        if len(row["scores"]) != positions:
+            raise ValueError("Reference array shape does not match scoring positions")
+        ids = (_read_array(Path(directory) / layout["token_ids"], "Q", vocab)
+               if layout["token_ids"] is not None else range(vocab))
+        if len(set(ids)) != vocab:
+            raise ValueError("Duplicate reference vocabulary IDs")
+        data = _read_array(Path(directory) / layout["logprobs"], "d", positions * vocab)
+        for i, score in enumerate(row["scores"]):
+            score["logprobs"] = dict(zip(ids, data[i*vocab:(i+1)*vocab]))
+    return row
 
 
 def _normalize_chat(response):
@@ -72,12 +135,14 @@ def capture(args):
     positions = sorted(set(args.positions))
     if not positions or positions[0] < 0 or positions[-1] >= args.tokens:
         raise ValueError("Scored positions must lie inside --tokens")
-    metadata = {"schema": 2, "dataset": rows, "dataset_sha256": digest(rows),
+    metadata = {"schema": 3, "dataset": rows, "dataset_sha256": digest(rows),
         "reference_kind": args.reference_kind, "reference_model": server.model,
         "reference_url": public_url(server.base), "metric": args.metric, "tokens": args.tokens,
-        "positions": positions, "top_k": args.top_k, "max_prompt_tokens": args.max_prompt_tokens,
-        "calibration_disjoint": "unverified", "logprobs_semantics": "raw, temperature-1 next-token distribution",
-        "coarse_partition_min_tail_mass": 1e-5}
+        "positions": positions, "max_prompt_tokens": args.max_prompt_tokens,
+        "calibration_disjoint": "unverified", "logprobs_semantics": "raw, temperature-1 next-token distribution"}
+    if args.metric == "full":
+        metadata["capture_strategy"] = "single_greedy_generation_full_logprobs"
+        metadata["probability_storage"] = "little-endian-float64-v1"
     if args.calibration_manifest:
         cal = read_jsonl(args.calibration_manifest)
         cal_ids = {r.get("task") for r in cal if r.get("task")}
@@ -110,29 +175,24 @@ def capture(args):
             tokens = server.tokenize(row)
             if len(tokens) > args.max_prompt_tokens:
                 raise ValueError(f"Prompt has {len(tokens)} tokens, exceeds budget {args.max_prompt_tokens}; not truncated")
-            generation = server.generate(tokens, args.tokens, args.top_k if args.metric == "coarse" else None)
+            generation = server.generate(tokens, args.tokens, -1 if args.metric == "full" else None)
             result.update(prompt_tokens=tokens, generation={k: v for k, v in generation.items() if k != "distributions"})
             result["continuation_text"] = server.detokenize(generation["token_ids"])
             result["scores"] = []
             for position in positions:
                 if position >= len(generation["token_ids"]):
                     continue
-                if args.metric == "coarse":
-                    try:
-                        lp = _distribution(generation["distributions"][position])
-                    except IndexError as exc:
-                        raise CapabilityError("Missing reference generation logprobs") from exc
-                elif args.metric == "full":
-                    scored = server.generate(tokens + generation["token_ids"][:position], 1, -1, score=True)
-                    lp = _distribution(scored["distributions"][0])
-                    kl(lp, lp, full=True)
+                if args.metric == "full":
+                    if position >= len(generation["distributions"]):
+                        raise CapabilityError("Missing full-vocabulary reference generation logprobs")
+                    lp = _distribution(generation["distributions"][position])
+                    kl(lp, lp)
                 else:
                     continue
                 top1 = max(lp, key=lp.get)
-                partition = coarse_partition(lp) if args.metric == "coarse" else lp
-                result["scores"].append({"position": position, "logprobs": partition,
+                result["scores"].append({"position": position, "logprobs": lp,
                                          "top1": top1, "reference_returned_keys": len(lp),
-                                         "kl_available": bool(partition)})
+                                         "kl_available": True})
         _store_sample(directory, result)
         return result
 
@@ -158,6 +218,8 @@ def evaluate(args):
     baseline_summary = json.loads((reference / "summary.json").read_text())
     if baseline_summary["status"] != "complete":
         raise ValueError("Reference cache is incomplete; resume it before evaluating")
+    if metadata["metric"] not in ("full", "agreement", "chat", "responses"):
+        raise ValueError("Unsupported reference metric; recapture a full-vocabulary reference")
     rows = metadata["dataset"]
     server = Server(args.base_url, args.model, args.api_key_env, args.timeout)
     server.discover()
@@ -168,6 +230,8 @@ def evaluate(args):
         "dataset_sha256": metadata["dataset_sha256"], "candidate_model": server.model,
         "candidate_url": public_url(server.base), "metric": metric, "tokens": metadata["tokens"],
         "positions": metadata["positions"], "prompt_policy": "reference_raw_ids" if args.use_reference_prompt else "matching_rendered_tokens"}
+    if metric == "full":
+        run_metadata["probability_storage"] = "reference: complete raw logprobs (binary arrays for new caches); candidate: full distribution scored in memory, digest and top-token evidence retained"
     reused = {}
     prior_elapsed = 0.0
     if args.resume_from:
@@ -220,35 +284,25 @@ def evaluate(args):
         for scored in cache["scores"]:
             position = scored["position"]
             p = {int(k): float(v) for k, v in scored["logprobs"].items()}
-            full = metric == "full"
             try:
-                generated_score = server.generate(tokens + cache["generation"]["token_ids"][:position], 1,
-                    -1 if full else metadata["top_k"], requested=None if full or not p else list(p))
+                generated_score = server.generate(tokens + cache["generation"]["token_ids"][:position], 1, -1)
                 q = _distribution(generated_score["distributions"][0])
-                try:
-                    measured = kl(p, q, full=full) if p else {
-                        "kl": None, "reference_coverage": None, "candidate_coverage": None,
-                        "kl_unavailable_reason": "near-deterministic reference; no numerically resolvable fixed partition"}
-                except ValueError as exc:
-                    if full or str(exc) != "Candidate other bucket has zero probability":
-                        raise
-                    # The returned probabilities cannot support a finite coarse KL.
-                    # Retain the raw evidence and argmax; do not invent a positive tail
-                    # or discard the other scored positions of this prompt.
-                    measured = {"kl": None, "reference_coverage": None,
-                                "candidate_coverage": None,
-                                "kl_unavailable_reason": "candidate_zero_other_mass; finite KL unavailable from returned probabilities",
-                                "probability_data_error": str(exc)}
+                measured = kl(p, q)
             except Exception as exc:
                 result["scored_positions"].append({"position": position, "kl": None,
                     "error": str(exc), "reference_coverage": None})
                 result["error"] = "One or more requested positions failed; see scored_positions"
                 continue
-            # Greedy sampled ID is the global argmax even when only reference IDs
-            # were requested. raw_logprobs must still be temperature-1 probabilities.
+            # raw_logprobs are temperature-1 probabilities; sampled IDs are greedy.
+            evidence = {"candidate_distribution_sha256": digest(q),
+                         "candidate_vocab_size": len(q),
+                         "reference_top1": scored["top1"],
+                         "candidate_top1": generated_score["token_ids"][0],
+                         "reference_top1_logprob": p[scored["top1"]],
+                         "candidate_reference_top1_logprob": q[scored["top1"]]}
             result["scored_positions"].append({"position": position, **measured,
                                                "top1_agreement": generated_score["token_ids"][0] == scored["top1"],
-                                               "candidate_logprobs": q})
+                                               **evidence})
         informative = [r for r in result["scored_positions"] if r["kl"] is not None]
         result["mean_kl"] = statistics.mean(r["kl"] for r in informative) if informative else None
         result["kl_positions"] = len(informative)
@@ -272,7 +326,7 @@ def evaluate(args):
                    "chat_message_exact_rate": statistics.mean(r["chat_message_exact"] for r in ok) if ok else None,
                    "status": "complete" if len(ok) == len(rows) else "incomplete"}
     else:
-        summary = summarize(completed, "full_kl" if metric == "full" else "fixed_reference_partition_kl_lower_bound" if metric == "coarse" else "greedy_token_agreement")
+        summary = summarize(completed, "full_kl" if metric == "full" else "greedy_token_agreement")
         summary["by_split"] = {split: summarize([r for r in completed if r.get("split") == split], summary["metric"])
                                for split in sorted({r.get("split") for r in completed if r.get("split")})}
     current_elapsed = time.monotonic() - start
@@ -355,6 +409,16 @@ def doctor(args):
                 ids = list(generated["distributions"][0])
                 measured = server.generate(tokens, 1, 2, requested=ids, score=True)
                 report["requested_token_logprobs"] = set(ids) <= measured["distributions"][0].keys()
+        if getattr(args, "probe_full", False):
+            measured = server.generate(tokens, 1, -1)
+            distribution = _distribution(measured["distributions"][0])
+            kl(distribution, distribution)
+            expected = getattr(args, "expected_vocab_size", None)
+            if expected is not None and set(distribution) != set(range(expected)):
+                raise CapabilityError(f"Full vocabulary mismatch: returned {len(distribution)}, expected all {expected} IDs")
+            report["full_vocabulary_logprobs"] = True
+            report["full_vocab_size"] = len(distribution)
+            report["full_probability_mass"] = math.fsum(math.exp(v) for v in distribution.values())
     except Exception as exc:
         report["native_error"] = str(exc)
         if args.probe:

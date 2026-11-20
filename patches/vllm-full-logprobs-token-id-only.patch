@@ -1,0 +1,27 @@
+--- a/vllm/entrypoints/openai/completion/protocol.py
++++ b/vllm/entrypoints/openai/completion/protocol.py
+@@ -388,6 +388,9 @@
+         echo_without_generation = self.echo and self.max_tokens == 0
+ 
+         extra_args: dict[str, Any] = self.vllm_xargs if self.vllm_xargs else {}
++        if self.return_tokens_as_token_ids and self.logprobs == -1:
++            extra_args = dict(extra_args)
++            extra_args["_logprobs_token_ids_only"] = True
+         if self.kv_transfer_params:
+             # Pass in kv_transfer_params via extra_args
+             extra_args["kv_transfer_params"] = self.kv_transfer_params
+--- a/vllm/v1/engine/logprobs.py
++++ b/vllm/v1/engine/logprobs.py
+@@ -54,7 +54,11 @@
+         num_logprobs = sampling_params.num_logprobs
+         num_prompt_logprobs = sampling_params.prompt_logprobs
+         return cls(
+-            tokenizer=tokenizer,
++            tokenizer=(
++                None
++                if (sampling_params.extra_args or {}).get("_logprobs_token_ids_only")
++                else tokenizer
++            ),
+             cumulative_logprob=(None if num_logprobs is None else 0.0),
+             logprobs=(
+                 None

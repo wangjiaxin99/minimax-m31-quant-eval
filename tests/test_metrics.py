@@ -1,7 +1,7 @@
 import math
 import unittest
 
-from m31eval.metrics import agreement, cluster_bootstrap, coarse_partition, kl
+from m31eval.metrics import agreement, cluster_bootstrap, kl
 from m31eval.common import json_compatible
 
 
@@ -10,17 +10,15 @@ def lp(values):
 
 
 class MetricsTests(unittest.TestCase):
+    def test_full_kl_keeps_near_deterministic_reference_positions(self):
+        p = {0: math.log(1 - 2e-12), 1: math.log(1e-12), 2: math.log(1e-12)}
+        q = {0: math.log(.9), 1: math.log(.05), 2: math.log(.05)}
+        self.assertAlmostEqual(kl(p, q)["kl"], -math.log(.9), places=9)
+
     def test_known_kl_values(self):
         p = lp([.7, .2, .1])
-        self.assertAlmostEqual(kl(p, lp([.65, .25, .1]), full=True)["kl"], .007246869, places=8)
-        self.assertAlmostEqual(kl(p, lp([.5, .3, .2]), full=True)["kl"], .085122826, places=8)
-
-    def test_coarse_is_lower_bound_with_real_other_mass(self):
-        p, q = lp([.7, .2, .1]), lp([.65, .25, .1])
-        coarse = kl({0: p[0]}, {0: q[0]})
-        self.assertGreater(coarse["kl"], 0)
-        self.assertLess(coarse["kl"], kl(p, q, full=True)["kl"])
-        self.assertAlmostEqual(coarse["reference_coverage"], .7)
+        self.assertAlmostEqual(kl(p, lp([.65, .25, .1]))["kl"], .007246869, places=8)
+        self.assertAlmostEqual(kl(p, lp([.5, .3, .2]))["kl"], .085122826, places=8)
 
     def test_missing_candidate_probability_is_an_error(self):
         with self.assertRaisesRegex(ValueError, "omitted"):
@@ -28,24 +26,16 @@ class MetricsTests(unittest.TestCase):
 
     def test_partial_mass_cannot_be_called_full(self):
         with self.assertRaisesRegex(ValueError, "complete vocabulary"):
-            kl(lp([.7, .2]), lp([.65, .25]), full=True)
+            kl(lp([.7, .2]), lp([.65, .25]))
 
     def test_probability_mass_not_renormalized(self):
         with self.assertRaises(ValueError):
             kl(lp([.7, .7]), lp([.5, .5]))
 
-    def test_reference_partition_avoids_unresolvable_tail(self):
-        rounded = {0: math.log(.9999999), 1: math.log(.0000002)}
-        self.assertEqual(coarse_partition(rounded), {})
-        selected = coarse_partition(lp([.7, .2, .1]))
-        self.assertEqual(set(selected), {0, 1})
-        self.assertAlmostEqual(sum(math.exp(v) for v in selected.values()), .9)
-        self.assertEqual(kl(selected, selected)["kl"], 0)
-
     def test_explicit_zero_probability_is_valid_and_serializable(self):
         p = {0: 0.0, 1: -math.inf}
         q = {0: math.log(.9), 1: math.log(.1)}
-        self.assertAlmostEqual(kl(p, q, full=True)["kl"], -math.log(.9))
+        self.assertAlmostEqual(kl(p, q)["kl"], -math.log(.9))
         encoded = json_compatible(p)
         self.assertEqual(encoded[1], "-Infinity")
         self.assertEqual(float(encoded[1]), -math.inf)

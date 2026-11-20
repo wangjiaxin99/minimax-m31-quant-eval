@@ -1,6 +1,6 @@
 # Original MiniMax M3.1 overall results
 
-These are the original three-round overall results on the historical **300-prompt** input set. They are retained as numerical aggregates only. The current public repository bundles a different **240-prompt** set; the table below must not be presented as a new evaluation on that public dataset.
+These are the original three-round overall results on the historical **300-prompt** input set. They are retained as numerical aggregates only. The original 300-prompt inputs were restored on 2026-11-18. These remain historical measurements with their original reference and environment, distinct from the later **240-prompt** reruns.
 
 | Model | Mean bucketed KL (nat) ↓ | Shared-prefix Top-1 agreement ↑ | Exact 32-token agreement ↑ |
 |---|---:|---:|---:|
@@ -17,4 +17,4 @@ QADv1 improved mean bucketed KL by 17.37% relative to ordinary MXFP4. Top-1 agre
 
 All 32 positions were requested, but finite KL was available at 6,383/9,600 positions in each QADv1 round under the existing numerical policy. Top-1 used all 9,600 positions. Fidelity improvements are not task-success measurements and do not isolate every possible checkpoint difference.
 
-[Recomputed results for the four retained public categories](results.md) use a different aggregation scope: 240 prompts per round rather than 300. Capture a new reference cache with the bundled `quick240.jsonl` to evaluate the current public dataset.
+[Recomputed results for the four retained public categories](results.md) use a different aggregation scope: 240 prompts per round rather than 300. Use a matching reference for the selected dataset: the default is restored `quick300.jsonl`; `quick240.jsonl` is retained for the four-category scope.
