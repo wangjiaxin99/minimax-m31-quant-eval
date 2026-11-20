@@ -166,3 +166,5 @@ Harbor is an evaluation framework and registry; Terminal-Bench is a benchmark th
 ```bash
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
+
+Fixed Top-2000 with stable GPU tail export is available as a separate [experimental workflow](docs/sparse-experiment.md). It retains all positions without the old minimum-tail pruning rule; the full-vocabulary CLI above is unchanged. No fixed-2000 model results are claimed yet.

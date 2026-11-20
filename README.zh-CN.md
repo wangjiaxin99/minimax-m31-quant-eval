@@ -154,3 +154,5 @@ Harbor 是评估框架与 registry，Terminal-Bench 是可以在其中运行的 
 ```bash
 PYTHONPATH=src python -m unittest discover -s tests -v
 ```
+
+固定 Top-2000 与 GPU 稳定尾部导出见[实验工作流](docs/sparse-experiment.md)。该路径不使用旧的最小尾部阈值剔除位置；上面的全词表 CLI 保持不变。目前尚未运行固定 Top-2000 模型评估。
