@@ -84,6 +84,8 @@ vLLM 使用 `--max-logprobs -1 --logprobs-mode raw_logprobs`。正式评估前�
 
 工具只连接已有 server，不负责启动服务、安装模型补丁或配置量化 kernel。
 
+完整词表返回的服务端开销及跳过词表文本解码的 vLLM 补丁，见[服务端性能说明](docs/server-performance.md)。
+
 ## 指标定义
 
 | 指标 | 含义 | 方向 |

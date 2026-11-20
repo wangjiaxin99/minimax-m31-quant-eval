@@ -93,6 +93,8 @@ For vLLM, use `--max-logprobs -1 --logprobs-mode raw_logprobs`. Check `tokenize`
 
 The evaluator connects to an existing server. Model loading, quantization kernels, engine patches, GPU allocation, and server startup are managed separately.
 
+For full-vocabulary exports, see [server performance](docs/server-performance.md) and the token-ID-only vLLM patch that avoids internally decoding the entire vocabulary at each position.
+
 ## Metrics
 
 | Metric | Meaning | Direction |
