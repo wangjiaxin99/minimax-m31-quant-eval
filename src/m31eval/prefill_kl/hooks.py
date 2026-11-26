@@ -99,7 +99,13 @@ class KLWorker:
         return 'v2'
 
     def prefill_kl_kernels(self) -> dict[str, list[str]]:
-        got: dict[str, set] = {}
+        """Quant methods per layer kind, plus the GEMM kernels the quantized dense layers actually bound.
+
+        ``dense`` / ``moe`` name the quant methods (MoE: the fused-experts class). ``linear_kernels`` names the
+        kernel objects held by a dense layer's method or its scheme (e.g. Quark MXFP4 ->
+        ``EmulationMxfp4LinearKernel`` or ``AiterMxfp4LinearKernel``); empty when no dense layer is quantized.
+        """
+        got: dict[str, set] = {'linear_kernels': set()}
         for _, m in self.model_runner.model.named_modules():
             qm = getattr(m, 'quant_method', None)
             if qm is None:
@@ -108,6 +114,8 @@ class KLWorker:
             mk = getattr(qm, 'moe_kernel', None)
             experts = getattr(mk, 'fused_experts', None) or getattr(qm, 'fused_experts', None)
             got.setdefault(kind, set()).add(type(experts or qm).__name__)
+            if kind == 'dense':
+                got['linear_kernels'].update(_kernel_names(qm) | _kernel_names(getattr(m, 'scheme', None)))
         return {k: sorted(v) for k, v in got.items()}
 
     def prefill_kl_begin(self, mode: str, seqs: dict[str, tuple[int, list[int]]], k: int = 0,
@@ -177,6 +185,11 @@ class KLWorker:
             got = {'missing': np.array(missing)} if missing else {n: v.cpu().numpy() for n, v in t.out.items()}
             out[key] = {n: (arr.dtype.str, list(arr.shape), arr.tobytes()) for n, arr in got.items()}
         return out
+
+
+def _kernel_names(obj: Any) -> set[str]:
+    """Class names of the attributes of ``obj`` that are kernel objects (class name ends with ``Kernel``)."""
+    return {type(v).__name__ for v in getattr(obj, '__dict__', {}).values() if type(v).__name__.endswith('Kernel')}
 
 
 def unpack(packed: dict[str, tuple[str, list[int], bytes]]) -> dict[str, np.ndarray]:

@@ -16,7 +16,7 @@ Reference capture obtains all 32 full-vocabulary distributions in one greedy gen
 
 `prefill-kl` scores up to 8,192 answer tokens per prompt in one prefill, with the same prefill path on the reference
 and candidate side, so BF16 against itself gives KL 0. It runs on vLLM 0.34 as an offline engine with a worker
-extension. [Method and settings](docs/prefill-kl.md) · [Qwen3.6-35B-A3B MXFP4 results and progress](docs/qwen36-mxfp4-progress.md)
+extension: `render` -> `gen` -> `ref` -> `score` -> `compare`, plus an offline `analyze` report (NumPy only). [Method and settings](docs/prefill-kl.md) · [Qwen3.6-35B-A3B MXFP4 results and progress](docs/qwen36-mxfp4-progress.md)
 
 ## Dataset restored to 300 prompts — 2026-11-18
 

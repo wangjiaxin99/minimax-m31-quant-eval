@@ -52,6 +52,12 @@ Notes:
 - "Identical" means all 600 answers and all 1,709,308 positions are bitwise equal between the two runs.
 - X1-RTN was exported twice: once through Quark file-to-file and once through `quark-cli`. Both gave the same KL at
   every position.
+- The X1 runs selected the dense emulation kernel through `VLLM_DISABLED_KERNELS=AiterMxfp4LinearKernel`.
+  X1-GPTQ was scored again with the new `--linear-backend emulation` and no environment variable. It matched at all
+  1,709,308 positions, and the manifest recorded `EmulationMxfp4LinearKernel`. Without the option, the manifest
+  records `AiterMxfp4LinearKernel`.
+- The tables above and in the GPQA section are produced by `prefill-kl analyze`, which reproduces the experiment's
+  earlier analysis script exactly.
 - Order among the routed-expert checkpoints: RTN < LH < GPTQ ~ GPTAQ < Qronos. Nine of the ten pairs are separated;
   GPTQ and GPTAQ differ by 0.09% and are not.
 - None of the four algorithms lowers the KL below RTN on the routed experts. On X1, GPTQ lowers it by 9.2%.

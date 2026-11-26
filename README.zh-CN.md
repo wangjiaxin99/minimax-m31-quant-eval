@@ -14,7 +14,7 @@
 
 ## vLLM 内的长 prefill KL（`prefill-kl`）
 
-`prefill-kl` 用一次 prefill 读取每条回答的最多 8,192 个 token。参考侧和候选侧走同一条 prefill 路径，所以 BF16 对自己的 KL 为 0。它以 vLLM 0.34 离线引擎加 worker extension 的方式运行。[方法与设置](docs/prefill-kl.md) · [Qwen3.6-35B-A3B MXFP4 结果与进展](docs/qwen36-mxfp4-progress.md)
+`prefill-kl` 用一次 prefill 读取每条回答的最多 8,192 个 token。参考侧和候选侧走同一条 prefill 路径，所以 BF16 对自己的 KL 为 0。它以 vLLM 0.34 离线引擎加 worker extension 的方式运行。流程为 `render` → `gen` → `ref` → `score` → `compare`，另有离线的 `analyze` 报告，只依赖 NumPy。[方法与设置](docs/prefill-kl.md) · [Qwen3.6-35B-A3B MXFP4 结果与进展](docs/qwen36-mxfp4-progress.md)
 
 ## 2026-11-18：恢复 300 条保真度输入
 

@@ -1,25 +1,29 @@
 """``m31-eval prefill-kl``: generate reference answers, capture the reference Top-K, score candidates, compare runs.
 
-All steps run an offline ``vllm.LLM`` on one GPU (set ``HIP_VISIBLE_DEVICES`` / ``VLLM_ROCM_USE_AITER_MOE`` in the
-environment). Prefix caching is off, sequences are read one at a time, and torch inductor runs with
+All model steps run an offline ``vllm.LLM`` on one GPU (set ``HIP_VISIBLE_DEVICES`` / ``VLLM_ROCM_USE_AITER_MOE`` in
+the environment). Prefix caching is off, sequences are read one at a time, and torch inductor runs with
 ``deterministic=True`` so that a sequence's prefill does not depend on other requests or on autotuning.
+``--moe-backend`` and ``--linear-backend`` choose the MoE and quantized dense GEMM kernels (``emulation`` for
+MXFP4); every manifest records the kernels the engine actually bound and the ``VLLM_*`` environment, and a step
+stops if a requested emulation backend was not bound.
 
+  render  dataset.jsonl -> prompts.jsonl  (chat template -> prompt token ids; no GPU)
   gen     prompts.jsonl -> answers.jsonl  (the reference model answers each prompt --answers times, seed + d)
   ref     answers.jsonl -> reference/     (reference model prefill, Top-K per answer token)
   score   answers.jsonl + reference/ -> run/   (candidate prefill, KL for each K per answer token)
   compare run_a run_b                      (bitwise equality of two score runs)
+  analyze answers.jsonl + runs -> report    (offline: KL tables, resolution, length / K / prompt studies)
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import time
 from pathlib import Path
 
-import numpy as np
-
-from m31eval.prefill_kl import store
-from m31eval.prefill_kl.hooks import EXTENSION, TAG, unpack
+# numpy, torch and vLLM are imported inside the steps, so that registering this command keeps the main CLI
+# standard-library only.
 
 #: Qwen3.6 model-card sampling, thinking mode for general tasks.
 CARD_SAMPLING = {'temperature': 1.0, 'top_p': 0.95, 'top_k': 20, 'min_p': 0.0,
@@ -29,10 +33,12 @@ VALIDATE_TOL = 1e-3
 
 def open_engine(args):
     from vllm import LLM
+
+    from m31eval.prefill_kl.hooks import EXTENSION
     kwargs = dict(model=args.model, tensor_parallel_size=1, dtype='auto', kv_cache_dtype='auto',
                   max_model_len=args.max_model_len, gpu_memory_utilization=args.gpu_memory_utilization,
                   enable_prefix_caching=False, seed=0, language_model_only=True, moe_backend=args.moe_backend,
-                  worker_extension_cls=EXTENSION,
+                  linear_backend=args.linear_backend, worker_extension_cls=EXTENSION,
                   compilation_config={'inductor_compile_config': {'deterministic': True}})
     llm = LLM(**kwargs)
     llm.collective_rpc('prefill_kl_install')
@@ -40,9 +46,25 @@ def open_engine(args):
 
 
 def engine_record(llm, kwargs):
+    """vLLM version, engine arguments, bound kernels and kernel-relevant environment; checks emulation requests."""
     import vllm
-    return {'vllm': vllm.__version__, 'engine_args': kwargs,
-            'kernels': llm.collective_rpc('prefill_kl_kernels')[0]}
+    kernels = llm.collective_rpc('prefill_kl_kernels')[0]
+    check_backends(kernels, kwargs)
+    env = {k: v for k, v in sorted(os.environ.items())
+           if k.startswith('VLLM_') or k in ('HIP_VISIBLE_DEVICES', 'CUDA_VISIBLE_DEVICES')}
+    return {'vllm': vllm.__version__, 'engine_args': kwargs, 'kernels': kernels, 'env': env}
+
+
+def check_backends(kernels: dict, kwargs: dict) -> None:
+    """Stop when an emulation backend was requested but another kernel was bound."""
+    if kwargs['moe_backend'] == 'emulation':
+        other = [k for k in kernels.get('moe', []) if 'Emulation' not in k]
+        if other:
+            raise SystemExit(f'--moe-backend emulation requested, but the MoE layers bound {other}')
+    if kwargs['linear_backend'] == 'emulation':
+        other = [k for k in kernels.get('linear_kernels', []) if not k.startswith('Emulation')]
+        if other:
+            raise SystemExit(f'--linear-backend emulation requested, but dense layers bound {other}')
 
 
 def cmd_gen(args):
@@ -76,7 +98,10 @@ def cmd_gen(args):
 
 def _teacher_force(llm, mode, a, extra):
     """One sequence through prefill; returns the hook's arrays and the engine's own target logprobs."""
+    import numpy as np
     from vllm import SamplingParams
+
+    from m31eval.prefill_kl.hooks import TAG, unpack
     tokens = a['prompt_token_ids'] + a['answer_token_ids']
     start = a['prompt_len']
     llm.collective_rpc('prefill_kl_begin', args=(mode, {a['key']: (start, tokens)}), kwargs=extra)
@@ -91,6 +116,9 @@ def _teacher_force(llm, mode, a, extra):
 
 
 def _loop(args, mode, answers, root, extra_for):
+    import numpy as np
+
+    from m31eval.prefill_kl import store
     llm, kwargs = open_engine(args)
     started, worst = time.time(), 0.0
     for i, a in enumerate(answers):
@@ -111,6 +139,7 @@ def _loop(args, mode, answers, root, extra_for):
 
 
 def cmd_ref(args):
+    from m31eval.prefill_kl import store
     answers = store.read_answers(args.answers)
     root = Path(args.out)
     llm, kwargs, secs, worst = _loop(args, 'ref', answers, root, lambda i, a: {'k': args.topk})
@@ -121,6 +150,7 @@ def cmd_ref(args):
 
 
 def cmd_score(args):
+    from m31eval.prefill_kl import store
     answers = store.read_answers(args.answers)
     ref = Path(args.reference)
     man = store.read_manifest(ref)
@@ -138,6 +168,9 @@ def cmd_score(args):
 
 
 def summarize(answers, root, ks):
+    import numpy as np
+
+    from m31eval.prefill_kl import store
     per = {k: [] for k in ks}
     tok = {k: [0.0, 0] for k in ks}
     flips = [0, 0]
@@ -159,6 +192,7 @@ def summarize(answers, root, ks):
 
 
 def cmd_compare(args):
+    import numpy as np
     a, b = Path(args.run_a), Path(args.run_b)
     files = sorted(p.name for p in (a / 'seqs').glob('*.npz'))
     same = pos_same = pos_total = 0
@@ -183,6 +217,16 @@ def cmd_compare(args):
         Path(args.out).write_text(json.dumps(res, indent=1))
 
 
+def cmd_render(args):
+    from m31eval.prefill_kl.render import cmd_render as run
+    run(args)
+
+
+def cmd_analyze(args):
+    from m31eval.prefill_kl.analyze import cmd_analyze as run
+    run(args)
+
+
 def add_parser(commands):
     p = commands.add_parser('prefill-kl', help='Long teacher-forced KL scored inside vLLM (offline engine)')
     sub = p.add_subparsers(dest='action', required=True)
@@ -190,9 +234,17 @@ def add_parser(commands):
     def engine_opts(q):
         q.add_argument('--model', required=True)
         q.add_argument('--moe-backend', default='triton', help='triton for BF16, emulation for MXFP4')
+        q.add_argument('--linear-backend', default='auto',
+                       help='quantized dense GEMM backend (vLLM --linear-backend); emulation for MXFP4 dense layers')
         q.add_argument('--max-model-len', type=int, default=65536)
         q.add_argument('--gpu-memory-utilization', type=float, default=0.80)
 
+    rd = sub.add_parser('render')
+    rd.add_argument('--src', required=True, help='JSONL rows {id, domain, messages, tools?}')
+    rd.add_argument('--model', required=True, help='model directory with the tokenizer and chat template')
+    rd.add_argument('--chat-template-kwargs', help='JSON passed to apply_chat_template, e.g. {"enable_thinking": false}')
+    rd.add_argument('--out', required=True)
+    rd.set_defaults(func=cmd_render)
     g = sub.add_parser('gen')
     engine_opts(g)
     g.add_argument('--prompts', required=True, help='JSONL rows {id, domain, prompt_token_ids}')
@@ -222,6 +274,17 @@ def add_parser(commands):
     c.add_argument('run_b')
     c.add_argument('--out')
     c.set_defaults(func=cmd_compare)
+    an = sub.add_parser('analyze')
+    an.add_argument('--answers', required=True)
+    an.add_argument('--run', action='append', required=True, help='NAME=score_dir, once per model')
+    an.add_argument('--accuracy', action='append', help='NAME=jsonl of {question, score} rows; a NAME without '
+                                                       'a run is the reference model (KL 0)')
+    an.add_argument('--ks', help='K values to analyse (default: those every run has)')
+    an.add_argument('--lens', default='32,64,128,256,512,1024,2048,4096,8192')
+    an.add_argument('--prompt-counts', default='48,96,150')
+    an.add_argument('--boot', type=int, default=4000)
+    an.add_argument('--out', required=True, help='output prefix; writes .json and .md')
+    an.set_defaults(func=cmd_analyze)
     return p
 
 
