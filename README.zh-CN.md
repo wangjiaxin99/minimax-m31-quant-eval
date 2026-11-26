@@ -12,6 +12,10 @@
 
 参考捕获通过一次 greedy 生成请求返回全部 32 个位置的完整词表概率。完整原始 logprobs 保存为未压缩的小端 float64 二进制数组；少量逐 prompt JSON 元数据用 gzip 级别 1 压缩。词表 ID 为 0 至词表大小减 1 时隐含按 ID 排列，其他 ID 映射单独保存。MiniMax 的 300 × 32 × 200,064 × 8 字节约为 **15.37 GB（14.31 GiB）**，另加少量元数据。候选使用完整分布在内存中计算，保存逐位置KL、Top-1、参考Top-1的概率证据、词表项数及完整分布hash，同时保存生成token ID/text；候选完整分布计算后释放，不写入大型JSON。
 
+## vLLM 内的长 prefill KL（`prefill-kl`）
+
+`prefill-kl` 用一次 prefill 读取每条回答的最多 8,192 个 token。参考侧和候选侧走同一条 prefill 路径，所以 BF16 对自己的 KL 为 0。它以 vLLM 0.34 离线引擎加 worker extension 的方式运行。[方法与设置](docs/prefill-kl.md) · [Qwen3.6-35B-A3B MXFP4 结果与进展](docs/qwen36-mxfp4-progress.md)
+
 ## 2026-11-18：恢复 300 条保真度输入
 
 默认测试集已加回原来的 60 条 DeepSWE prompt，恢复为五类各 60 条，共 300 条。移除的仅是独立 DeepSWE 解题 benchmark。11 月 16–18 日已完成的复测仍属于 240 条范围，加回输入不会自动改变这些历史结果。

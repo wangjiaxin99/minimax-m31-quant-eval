@@ -12,6 +12,12 @@ The evaluator scores the complete vocabulary at every one of the 32 continuation
 
 Reference capture obtains all 32 full-vocabulary distributions in one greedy generation request. The cache retains complete raw log probabilities as uncompressed little-endian float64 arrays, with small per-prompt JSON metadata compressed at gzip level 1. Token IDs 0 through vocabulary-size minus one are implicit; other ID maps are stored explicitly. For MiniMax, 300 × 32 × 200,064 × 8 bytes requires 15.37 GB (14.31 GiB) of probability storage, plus small metadata. Candidates are scored with complete distributions in memory; output keeps per-position KL, Top-1, reference-token probability evidence, vocabulary size and a full-distribution digest, alongside generated token IDs/text. Candidate full distributions are not persisted.
 
+## Long prefill KL inside vLLM (`prefill-kl`)
+
+`prefill-kl` scores up to 8,192 answer tokens per prompt in one prefill, with the same prefill path on the reference
+and candidate side, so BF16 against itself gives KL 0. It runs on vLLM 0.34 as an offline engine with a worker
+extension. [Method and settings](docs/prefill-kl.md) · [Qwen3.6-35B-A3B MXFP4 results and progress](docs/qwen36-mxfp4-progress.md)
+
 ## Dataset restored to 300 prompts — 2026-11-18
 
 The default fidelity dataset again includes the original 60 DeepSWE prompts: five categories, 60 prompts each. Only the standalone DeepSWE task benchmark was removed. The November 16–18 reruns remain 240-prompt results; restoring inputs does not turn them into 300-prompt measurements.
