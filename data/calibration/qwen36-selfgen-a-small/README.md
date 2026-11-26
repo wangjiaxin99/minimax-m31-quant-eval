@@ -48,8 +48,14 @@ generated as surplus so that each domain could reach its token share.
      code 18%, chat 15%, tool 5%, multilingual 5%.
    - The samples are shuffled and concatenated as prompt + answer + EOS.
    - The result is cut into 128 segments of 4,096 tokens (524,288 tokens) with no padding.
-5. **Calibrate.** Quark's default pileval set, 512 x 512 and unchanged, is followed by the 128 segments. Every other
-   GPTQ argument is the same as the pileval-only build.
+5. **Calibrate.** Quark's default pileval set, 512 x 512 and unchanged, is followed by the packed tokens. Every
+   other GPTQ argument is the same as the pileval-only build.
+   - Quark's layer-wise calibration reuses the first row's rotary embeddings for every row, so all rows must have the
+     same length. Mixing 512-token and 4,096-token rows fails.
+   - The 524,288 packed tokens were therefore cut into 1,024 rows of 512 tokens: the same tokens in the same order.
+6. **Result.** On 2026-11-26 the build took 3.0 h, against 1.0 h with pileval alone (3x the positions). The prefill KL
+   (K = 2000, answer mean) was 0.08433, against 0.09308 for the pileval-only X1-GPTQ (-9.4%) and 0.10253 for
+   X1-RTN. Both KL scores were bitwise identical.
 
 ## License and attribution
 
