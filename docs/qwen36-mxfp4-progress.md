@@ -127,7 +127,9 @@ Notes:
   - BF16 IFBench x16, last samples;
   - BF16 AIME26 x32, 445 of 960 samples, as the paper's math protocol.
 - Next, under discussion:
-  1. X1-GPTQ calibrated on BF16 self-generated answers, as in the QDA paper. There, this lowered the KL by 30% on this
+  1. X1-GPTQ calibrated on BF16 self-generated answers, as in the QDA paper. The first set, A-small, is
+     [`data/calibration/qwen36-selfgen-a-small`](../data/calibration/qwen36-selfgen-a-small/README.md): 280 decontaminated
+     prompts, of which 123 answers are packed into 128 x 4,096 tokens, added to Quark's default pileval set. There, this lowered the KL by 30% on this
      model at W4A16. The question is whether the KL can be lowered well beyond the 9% that GPTQ alone gives.
   2. If it can, the X1 checkpoints form a KL ladder. They would then get GPQA x16 and AIME, to test whether accuracy
      follows the KL.
