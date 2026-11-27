@@ -16,8 +16,8 @@ The experiment asks whether the prefill KL can be trusted. It measures:
 | MXFP4-RTN / LH / GPTQ / GPTAQ / Qronos | Routed experts only: 92.9% of text parameters (Quark `qwen3_5_moe` template default) | as named | Quark default: first 512 pileval documents, 512 tokens each |
 | X1-RTN | Routed experts, full attention q/k/v/o (10 layers), Gated DeltaNet `in_proj_qkv`, `in_proj_z`, `out_proj` (30 layers) | RTN | none |
 | X1-GPTQ (pileval) | as X1-RTN | GPTQ | as above |
-| X1-GPTQ (A-small) | as X1-RTN | GPTQ | pileval + 524,288 self-generated tokens ([data](../data/calibration/qwen36-selfgen-a-small/README.md)) |
 | X1-GPTQ (paper calibration) | as X1-RTN | GPTQ | The QDA W4A16 recipe's own `mix2_4096.jsonl` (qda-recipe-inputs): first 1,024 rows truncated to 4,096 tokens, as QDA reads them, re-packed to 902 x 4,096 (3.69M tokens); no pileval |
+| X1-GPTQ (A-small) | as X1-RTN | GPTQ | pileval + 524,288 self-generated tokens ([data](../data/calibration/qwen36-selfgen-a-small/README.md)) |
 
 - Format: MXFP4 W4A4 with E2M1 values and an E8M0 scale per 32, and dynamic activation quantization.
 - Kept in BF16 in every checkpoint: router, shared expert and its gate, Gated DeltaNet `in_proj_a`/`in_proj_b` and
@@ -104,8 +104,8 @@ IFBench x16 (prompt-level loose):
 |---|---|
 | Quantize RTN | 1-2 min |
 | Quantize GPTQ, routed experts or X1, pileval (262k positions) | 1.0 h |
-| Quantize GPTQ, A-small (786k positions, 1,536 rows of 512) | 3.0 h |
 | Quantize GPTQ, paper calibration (3.69M tokens, 902 rows of 4,096) | 3.5 h |
+| Quantize GPTQ, A-small (786k positions, 1,536 rows of 512) | 3.0 h |
 | Quantize GPTAQ / Qronos | 2.85 h each |
 | KL reference | 14 min, once |
 | KL score per candidate | 3.7-4.1 min |
