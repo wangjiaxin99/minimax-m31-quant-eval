@@ -54,8 +54,8 @@ generated as surplus so that each domain could reach its token share.
      same length. Mixing 512-token and 4,096-token rows fails.
    - The 524,288 packed tokens were therefore cut into 1,024 rows of 512 tokens: the same tokens in the same order.
 6. **Result.** On 2026-11-26 the build took 3.0 h, against 1.0 h with pileval alone (3x the positions). The prefill KL
-   (K = 2000, answer mean) was 0.08433, against 0.09308 for the pileval-only X1-GPTQ (-9.4%) and 0.10253 for
-   X1-RTN. Both KL scores were bitwise identical.
+   (K = 2000, token mean) was 0.07164, against 0.08159 for the pileval-only X1-GPTQ (-12.2%) and 0.08961 for
+   X1-RTN. With the answer mean: 0.08433, 0.09308 (-9.4%) and 0.10253. Both KL scores were bitwise identical.
 
 ## License and attribution
 

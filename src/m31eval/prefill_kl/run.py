@@ -79,7 +79,16 @@ def cmd_gen(args):
             params.append(SamplingParams(max_tokens=args.max_tokens, seed=args.seed + d, **sampling))
             meta.append((r, d))
     started = time.time()
-    outs = llm.generate(prompts, params)
+    if args.batch_size:
+        # A fixed number of sequences per engine call: with 1, no request ever shares a batch, so greedy
+        # continuations do not depend on scheduling (a batch's size changes the kernels' numerics).
+        outs = []
+        for i in range(0, len(prompts), args.batch_size):
+            outs += llm.generate(prompts[i:i + args.batch_size], params[i:i + args.batch_size], use_tqdm=False)
+            if i % 50 == 0:
+                print(f'gen {i + 1}/{len(prompts)} {time.time() - started:.0f}s', flush=True)
+    else:
+        outs = llm.generate(prompts, params)
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with out_path.open('w') as f:
@@ -90,6 +99,7 @@ def cmd_gen(args):
                                 'finish_reason': c.finish_reason, 'prompt_token_ids': r['prompt_token_ids'],
                                 'answer_token_ids': list(c.token_ids)}) + '\n')
     rec = {'step': 'gen', 'model': args.model, 'answers': args.answers, 'seed': args.seed,
+           'batch_size': args.batch_size,
            'max_tokens': args.max_tokens, 'sampling': sampling, 'seconds': time.time() - started,
            **engine_record(llm, kwargs)}
     Path(str(out_path) + '.manifest.json').write_text(json.dumps(rec, indent=1))
@@ -252,6 +262,8 @@ def add_parser(commands):
     g.add_argument('--seed', type=int, default=17)
     g.add_argument('--max-tokens', type=int, default=8192)
     g.add_argument('--sampling', help='JSON overriding the model-card sampling fields')
+    g.add_argument('--batch-size', type=int, help='sequences per engine call (1 = no shared batches, for '
+                                                   'scheduling-independent greedy output); default: all at once')
     g.add_argument('--out', required=True)
     g.set_defaults(func=cmd_gen)
     r = sub.add_parser('ref')

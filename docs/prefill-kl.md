@@ -72,7 +72,7 @@ These are the settings of the current experiment. [Results and progress](qwen36-
 | Engine | vLLM 0.34.0 (`vllm/vllm-rocm:v0.34.0`), one GPU, `gpu_memory_utilization` 0.80, prefix caching off, `language_model_only`, inductor `deterministic=True` |
 | K | 20, 128 and 2000 from one reference |
 | Repeats | Every candidate scored twice; `compare` must report every position identical |
-| Main metric | Answer mean: mean KL over an answer's positions, then mean over the 600 answers (each answer weighs the same). The token mean (long answers dominate) is reported as well |
+| Main metric | Token mean, as in the QDA paper (`qda_kl/tally.py` `reading`): the sum of the per-position KL over all answer positions, divided by their number. The answer mean (mean over an answer's positions, then over the 600 answers) is reported as well |
 | Self-check | BF16 scored against its own reference: KL 0 and no top-1 flip at all 1,709,308 positions |
 
 ### Offline analysis (`analyze`)
@@ -96,8 +96,13 @@ On the Qwen3.6 runs, `analyze` reproduces the experiment's earlier analysis scri
 by length and by prompt count, GPQA accuracy and its intervals, tau and the permutation p-value.
 
 Main findings on the five routed-expert MXFP4 checkpoints:
-- The detection threshold falls from 7.5% at 32 positions to 3.0% at 256, and stays at about 2.4% from 1K positions.
-- It shrinks about as 1/sqrt(prompts): 6.2% with 48 prompts, 2.4% with 300.
+- Token mean, the main metric:
+  - The detection threshold falls from 7.5% at 32 positions to 2.3% at 256, 1.1% at 1K, and 0.6% at 8,192.
+    Longer answers keep adding resolution, because long answers carry most of the weight.
+  - With 48 prompts it is 1.4%; with 300, 0.6%.
+- Answer mean: the threshold stays at about 2.4% from 1K positions and shrinks about as 1/sqrt(prompts), from 6.2%
+  with 48 prompts.
+- Both metrics give the same order for the routed-expert checkpoints.
 - K = 20, 128 and 2000 give the same order and the same threshold, and their KL differs by less than 2%.
 
 ### Cost (one MI355)

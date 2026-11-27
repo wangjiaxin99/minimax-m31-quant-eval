@@ -81,7 +81,8 @@ class AnalyzeTest(unittest.TestCase):
             res = analyze(meta, runs, lens=(1000,), boot=200, prompt_counts=(), accuracy=acc)
             a = res['accuracy']
             self.assertEqual(a['questions'], 40)
-            self.assertEqual(a['pairs']['ref|b']['dKL'], -res['kl']['answer']['b'][1][-1])
+            self.assertEqual(a['pairs']['ref|b']['dKL'], -res['kl'][res['main']]['b'][1][-1])
+            self.assertEqual(res['main'], 'token')
             self.assertTrue(a['pairs']['ref|b']['concordant'])
             self.assertAlmostEqual(a['tau_by_len'][res['lens'][-1]]['tau'], 1.0)
 

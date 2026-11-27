@@ -4,8 +4,9 @@ Reads only ``answers.jsonl`` and the runs' ``seqs/*.npz`` (row j = answer token 
 studied without running a model again. NumPy only.
 
 Aggregations of the per-position KL:
-  answer  mean over an answer's first L positions, then mean over answers (each answer weighs the same; main metric)
-  token   all positions pooled (long answers dominate)
+  token   all positions pooled: sum of KL / number of positions (main metric, the QDA paper's mean per-token KL,
+          qda_kl/tally.py `reading`); long answers weigh more
+  answer  mean over an answer's first L positions, then mean over answers (each answer weighs the same)
   domain  answer mean within each domain, then mean over domains
 
 Uncertainty: paired bootstrap over prompts. Prompts are resampled with replacement within each domain and the
@@ -30,6 +31,8 @@ from m31eval.prefill_kl import store
 LENS = (32, 64, 128, 256, 512, 1024, 2048, 4096, 8192)
 BUCKETS = (0, 32, 128, 512, 2048, 8192)
 MODES = ('answer', 'token', 'domain')
+#: The main aggregation: the paper's mean per-token KL.
+MAIN = 'token'
 
 
 # ----------------------------------------------------------------------------- loading
@@ -176,16 +179,18 @@ def analyze(answers: list[dict], runs: dict[str, Path], ks=None, lens=LENS, boot
 
     # KL table
     res['kl'] = {mode: {m: point[mode][m].tolist() for m in names} for mode in MODES}
-    res['kl_ci'] = {m: ci(boots['answer'][m][:, ki, full]) for m in names}
+    res['main'] = MAIN
+    res['kl_ci'] = {m: ci(boots[MAIN][m][:, ki, full]) for m in names}
+    res['kl_ci_by_mode'] = {mode: {m: ci(boots[mode][m][:, ki, full]) for m in names} for mode in MODES}
     res['top1_flip_rate'] = {m: float(data[m]['flips'].sum() / data[m]['total'].sum()) for m in names}
 
     # pairs and thresholds by length / K / aggregation
-    positive = [m for m in names if point['answer'][m][ki, full] > 0]
+    positive = [m for m in names if point[MAIN][m][ki, full] > 0]
     res['pairs'], res['threshold'] = {}, {}
     for mode in MODES:
         for li, L in enumerate(lens):
             for kj, k in enumerate(ks):
-                if mode != 'answer' and (k != kmax or li != full):
+                if mode == 'domain' and (k != kmax or li != full):
                     continue
                 ps = {f'{a}|{b}': pair_stats(point[mode][a][kj, li], point[mode][b][kj, li],
                                              boots[mode][a][:, kj, li], boots[mode][b][:, kj, li])
@@ -203,7 +208,7 @@ def analyze(answers: list[dict], runs: dict[str, Path], ks=None, lens=LENS, boot
     if len(positive) >= 2:
         for n in [c for c in prompt_counts if c < n_prompts] + [n_prompts]:
             Wf = prompt_weights(answers, subset_boot, np.random.default_rng(7), frac=n / n_prompts)
-            bf = {m: aggregate(Wf, data[m], answers, 'answer') for m in positive}
+            bf = {m: aggregate(Wf, data[m], answers, MAIN) for m in positive}
             res['threshold_vs_prompts'][n] = {
                 L: threshold([np.std(np.log(bf[a][:, ki, li]) - np.log(bf[b][:, ki, li]))
                               for a, b in itertools.combinations(positive, 2)])['median']
@@ -238,8 +243,8 @@ def analyze(answers: list[dict], runs: dict[str, Path], ks=None, lens=LENS, boot
 
     # ranking stability over length: Kendall tau against the full-length order
     if len(positive) >= 2:
-        ref_order = np.array([point['answer'][m][ki, full] for m in positive])
-        res['rank_tau_vs_full'] = {L: float(kendall_tau_b(np.array([point['answer'][m][ki, li] for m in positive]),
+        ref_order = np.array([point[MAIN][m][ki, full] for m in positive])
+        res['rank_tau_vs_full'] = {L: float(kendall_tau_b(np.array([point[MAIN][m][ki, li] for m in positive]),
                                                           ref_order)[0]) for li, L in enumerate(lens)}
 
     if accuracy:
@@ -263,7 +268,7 @@ def agreement(accuracy: dict[str, Path], point, boots, names, ki, lens, boot) ->
     def kl_of(m, li, boot_rows=False):
         if m not in names:
             return np.zeros(boot) if boot_rows else 0.0
-        return boots['answer'][m][:, ki, li] if boot_rows else point['answer'][m][ki, li]
+        return boots[MAIN][m][:, ki, li] if boot_rows else point[MAIN][m][ki, li]
 
     full = len(lens) - 1
     for a, b in itertools.combinations(models, 2):
@@ -300,30 +305,32 @@ def report(res: dict) -> str:
     ks, lens, names = res['ks'], res['lens'], res['models']
     ki, full, kmax = len(ks) - 1, len(lens) - 1, ks[-1]
     L = lens[full]
-    base = next((m for m in names if res['kl']['answer'][m][ki][full] > 0), None)
+    mm = res.get('main', 'answer')
+    other = 'answer' if mm == 'token' else 'token'
+    base = next((m for m in names if res['kl'][mm][m][ki][full] > 0), None)
     out = [f"# prefill-kl analysis\n\n{res['answers']} answers of {res['prompts']} prompts, {res['positions']:,} "
            f"positions; bootstrap {res['boot']} over prompts, stratified by domain.\n",
-           f'## KL (first {L} positions, K = {kmax}, answer mean)\n',
-           '| Model | KL | 95% interval | KL (token mean) | Top-1 flip | vs ' + str(base) + ' |', '|---|---|---|---|---|---|']
+           f'## KL (first {L} positions, K = {kmax}, {mm} mean)\n',
+           '| Model | KL | 95% interval | KL (' + other + ' mean) | Top-1 flip | vs ' + str(base) + ' |', '|---|---|---|---|---|---|']
     for m in names:
-        v = res['kl']['answer'][m][ki][full]
+        v = res['kl'][mm][m][ki][full]
         lo, hi = res['kl_ci'][m]
-        rel = _pct(100 * (v / res['kl']['answer'][base][ki][full] - 1)) if base and v > 0 and m != base else '-'
-        out.append(f"| {m} | {v:.5f} | [{lo:.5f}, {hi:.5f}] | {res['kl']['token'][m][ki][full]:.5f} | "
+        rel = _pct(100 * (v / res['kl'][mm][base][ki][full] - 1)) if base and v > 0 and m != base else '-'
+        out.append(f"| {m} | {v:.5f} | [{lo:.5f}, {hi:.5f}] | {res['kl'][other][m][ki][full]:.5f} | "
                    f"{100 * res['top1_flip_rate'][m]:.2f}% | {rel} |")
-    key = f'answer|L{L}|K{kmax}'
+    key = f'{mm}|L{L}|K{kmax}'
     if key in res['pairs']:
         out += ['\n## Pairs (relative KL difference, 95% interval of ln ratio)\n',
                 '| A / B | A vs B | ln ratio 95% | significant | order reproduced |', '|---|---|---|---|---|']
         for p, v in res['pairs'][key].items():
             out.append(f"| {p.replace('|', ' / ')} | {_pct(v['rel_pct'])} | [{v['ci'][0]:+.3f}, {v['ci'][1]:+.3f}] | "
                        f"{'yes' if v['sig'] else 'no'} | {100 * v['repro']:.1f}% |")
-        out += ['\n## Detection threshold by length (answer mean)\n',
+        out += [f'\n## Detection threshold by length ({mm} mean)\n',
                 '| L | ' + ' | '.join(f'K={k}' for k in ks) + ' | pairs separated (K=' + str(kmax) + ') |',
                 '|---' * (len(ks) + 2) + '|']
         for L2 in lens:
-            cells = [f"{res['threshold'][f'answer|L{L2}|K{k}']['median']:.2f}%" for k in ks]
-            t = res['threshold'][f'answer|L{L2}|K{kmax}']
+            cells = [f"{res['threshold'][f'{mm}|L{L2}|K{k}']['median']:.2f}%" for k in ks]
+            t = res['threshold'][f'{mm}|L{L2}|K{kmax}']
             out.append(f"| {L2} | " + ' | '.join(cells) + f" | {t['n_sig']}/{t['n_pairs']} |")
         out += ['\n## Detection threshold by aggregation (full length)\n', '| Aggregation | threshold | separated |',
                 '|---|---|---|']
@@ -331,7 +338,7 @@ def report(res: dict) -> str:
             t = res['threshold'][f'{mode}|L{L}|K{kmax}']
             out.append(f"| {mode} | {t['median']:.2f}% | {t['n_sig']}/{t['n_pairs']} |")
     if res.get('threshold_vs_prompts'):
-        out += ['\n## Detection threshold by number of prompts (answer mean, K=' + str(kmax) + ')\n',
+        out += [f'\n## Detection threshold by number of prompts ({mm} mean, K=' + str(kmax) + ')\n',
                 '| prompts | ' + ' | '.join(f'L={x}' for x in lens) + ' |', '|---' * (len(lens) + 1) + '|']
         for n, row in res['threshold_vs_prompts'].items():
             out.append(f'| {n} | ' + ' | '.join(f'{row[x]:.1f}%' for x in lens) + ' |')
