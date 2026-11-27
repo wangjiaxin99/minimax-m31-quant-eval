@@ -1,0 +1,167 @@
+{
+ "schema": 1,
+ "name": "qwen36-selfgen-a-small",
+ "created": "2026-11-26",
+ "count": 280,
+ "prompts_sha256": "0e495064ac559aecf2557619f6eaabaaa8a816ac7f246e0a3dc12272b07cc3dd",
+ "purpose": "Prompts whose BF16 Qwen3.6-35B-A3B answers form the self-generated calibration set A-small (GPTQ, MXFP4 X1 scope).",
+ "domain_counts": {
+  "math": 55,
+  "science": 40,
+  "code": 30,
+  "chat": 75,
+  "tool": 40,
+  "multilingual": 40
+ },
+ "used_in_a_small": {
+  "samples": 123,
+  "by_domain": {
+   "code": 14,
+   "science": 29,
+   "chat": 33,
+   "math": 28,
+   "tool": 9,
+   "multilingual": 10
+  },
+  "token_share": {
+   "chat": 0.1479,
+   "code": 0.1792,
+   "math": 0.356,
+   "multilingual": 0.0533,
+   "science": 0.2043,
+   "tool": 0.0592
+  }
+ },
+ "sources": {
+  "math": {
+   "dataset": "project-numina/NuminaMath-CoT",
+   "revision": "9d8d210c9f6a36c8f3cd84045668c9b7800ef517",
+   "license": "Apache-2.0",
+   "field": "problem",
+   "filter": "source in {olympiads, cn_k12, math, synthetic_math}; len < 3000 chars",
+   "count": 55
+  },
+  "science": {
+   "dataset": "open-thoughts/OpenThoughts-114k (metadata)",
+   "revision": "bd093c3994fd54d2390985b66988ddf282a55eb6",
+   "license": "Apache-2.0",
+   "field": "problem",
+   "filter": "domain in {biology, chemistry, physics}; len < 6000 chars; whole file streamed, then shuffled",
+   "count": 40
+  },
+  "code": {
+   "dataset": "open-thoughts/OpenThoughts-114k (metadata)",
+   "revision": "bd093c3994fd54d2390985b66988ddf282a55eb6",
+   "license": "Apache-2.0",
+   "field": "problem",
+   "filter": "domain == code; len < 6000 chars",
+   "count": 30
+  },
+  "chat": [
+   {
+    "dataset": "HuggingFaceH4/ultrachat_200k (train_sft)",
+    "revision": "8049631c405ae6576f93f445c6b8166f76f5505a",
+    "license": "MIT",
+    "field": "prompt (first user turn)",
+    "filter": "20 < len < 4000 chars",
+    "count": 50
+   },
+   {
+    "dataset": "databricks/databricks-dolly-15k",
+    "revision": "bdd27f4d94b9c1f951818a7da7fd7aeea5dbff1a",
+    "license": "CC-BY-SA-3.0",
+    "field": "instruction + context",
+    "count": 25
+   }
+  ],
+  "tool": {
+   "dataset": "NousResearch/hermes-function-calling-v1 (func_calling_singleturn)",
+   "revision": "dae3e1d28cfbcf4b915c04ea1e072030529b4bda",
+   "license": "Apache-2.0",
+   "field": "system (tool signatures) + first user turn",
+   "count": 40,
+   "note": "Salesforce/xlam-function-calling-60k was the first choice; it is gated"
+  },
+  "multilingual": {
+   "dataset": "CohereLabs/aya_dataset",
+   "revision": "f9ea04583f02a8f86404ff6c58bf75fe637df8a2",
+   "license": "Apache-2.0",
+   "field": "inputs",
+   "filter": "non-Latin-script language codes; 30 < len < 3000 chars",
+   "count": 40
+  }
+ },
+ "selection": "datasets streamed; shuffle(seed=0) with a buffer, then Python random.Random(0); revisions are the Hub heads on 2026-11-26",
+ "decontamination": {
+  "method": "drop a prompt sharing any 13-gram of lowercased word tokens, or its normalized text, with an evaluation text",
+  "against": [
+   "data/mixed/quick300.jsonl (KL prompts, all messages)",
+   "GPQA-Diamond (198 prompts as sent by evalscope)",
+   "IFBench (300 prompts as sent by evalscope)",
+   "AIME 2025 (math-ai/aime25 @ 563bb840)",
+   "AIME 2026 (math-ai/aime26 @ 79037aeb, plus prompts as sent by evalscope)"
+  ],
+  "dropped": 0,
+  "not_checked": [
+   "HMMT",
+   "LiveCodeBench"
+  ]
+ },
+ "generation": {
+  "model": "Qwen/Qwen3.6-35B-A3B (BF16)",
+  "tool": "m31-eval prefill-kl render + gen",
+  "chat_template": "thinking on (template default)",
+  "sampling": {
+   "temperature": 1.0,
+   "top_p": 0.95,
+   "top_k": 20,
+   "min_p": 0.0,
+   "presence_penalty": 1.5,
+   "repetition_penalty": 1.0
+  },
+  "answers_per_prompt": 1,
+  "seed": 17,
+  "max_tokens": 8192,
+  "mean_answer_tokens": {
+   "math": 6326,
+   "code": 6663,
+   "chat": 2009,
+   "tool": 2163,
+   "multilingual": 2120,
+   "science": 3605
+  },
+  "answers_at_max_tokens": {
+   "math": 29,
+   "code": 18,
+   "chat": 0,
+   "tool": 0,
+   "multilingual": 0,
+   "science": 3
+  }
+ },
+ "packing": {
+  "segments": 128,
+  "seqlen": 4096,
+  "tokens": 524288,
+  "padding": "none (prompt + answer + EOS 248046 concatenated, cut, tail dropped)",
+  "domain_token_targets": {
+   "math": 0.36,
+   "science": 0.21,
+   "code": 0.18,
+   "chat": 0.15,
+   "tool": 0.05,
+   "multilingual": 0.05
+  },
+  "seed": 0
+ },
+ "calibration_use": "Quark default pileval (512 x 512, unchanged) followed by the packed tokens re-cut into 1024 rows of 512 (Quark reuses the first row's rotary embeddings, so rows must share one length); GPTQ, MXFP4 on routed experts + attention + Gated DeltaNet",
+ "result": {
+  "quantize_seconds": 10927,
+  "kl_2000_token_mean": 0.07164,
+  "baseline_pileval_only_token_mean": 0.08159,
+  "x1_rtn_token_mean": 0.08961,
+  "kl_2000_answer_mean": 0.08433,
+  "baseline_pileval_only_answer_mean": 0.09308,
+  "x1_rtn_answer_mean": 0.10253
+ }
+}

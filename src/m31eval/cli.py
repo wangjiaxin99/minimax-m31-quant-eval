@@ -66,12 +66,16 @@ def parser():
     co.add_argument("--noise-floor", type=float, default=0.0, help="Require paired CI to exceed this A/A-calibrated absolute KL difference (nat)")
     co.add_argument("--aggregation", choices=["task", "domain_macro"], default="task",
                     help="Use equal domain weight with task resampling for mixed datasets")
+    from .prefill_kl.run import add_parser as add_prefill_kl
+    add_prefill_kl(commands)
     return p
 
 
 def main():
     args = parser().parse_args()
     try:
+        if args.command == "prefill-kl":
+            return args.func(args)
         if args.command == "mixed":
             from .mixed import fetch, build, audit
             return {"fetch": fetch, "build": build, "audit": audit}[args.action](args)
